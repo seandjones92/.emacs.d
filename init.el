@@ -144,8 +144,7 @@
 (require 'package)
 (add-to-list
  'package-archives
- '("mepla" . "http://melpa.org/packages/")
- t)
+ '("mepla" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;; Refresh package list

@@ -22,13 +22,28 @@ $ git clone git@bitbucket.org:sean_jones/.emacs.d.git
 ### Windows
 
 If you are installing on windows make sure that the HOME environment
-variable exists and is correct. Clone the repository to the value of
-HOME.
+variable exists and is correct.
 
 An example of HOME would be:
 ```
-C:\Users\MyAccount
+C:\Users\MyAccount\
 ```
+
+You will also need to use [Cygwin](https://www.cygwin.com/) to install
+your Linux tools. I use the default Cygwin install. Make sure that
+your Cygwin install is in the Windows path. This usually looks like:
+
+```
+C:\cygwin64\bin\
+```
+
+To get TRAMP working on windows you will need to install
+[Putty](http://www.putty.org/). Next you will need to, once again,
+modify your windows path to allow access to "plink.exe". The init.el
+file in this repo is configured to use this executable from the path
+when running on windows.
+
+Once that is all done clone the repository to the value of HOME.
 
 ## Gnus Configuration
 
