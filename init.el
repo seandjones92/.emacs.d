@@ -234,6 +234,7 @@
 (setq gmail2bbdb-bbdb-file "~/.emacs.d/bbdb")
 (setq smtpmail-smtp-server "smtp.gmail.com")
 (setq smtpmail-smtp-service 587)
+(require 'gnus)
 (gnus-demon-add-handler 'gnus-demon-scan-news 2 t)
 (setq send-mail-function 'smtpmail-send-it)
 
@@ -448,8 +449,6 @@ This will first empty the kill-ring (clipboard)"
 (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
 (require 'dired)
 (define-key dired-mode-map [?%?h] 'dired-show-only)
-;; TODO - require gnus, see if that fixes it
-(require 'gnus)
 (define-key gnus-group-mode-map (kbd "o") 'my-gnus-group-list-subscribed-groups)
 
 ;; Enabled bindings

@@ -22,7 +22,11 @@ $ git clone git@bitbucket.org:sean_jones/.emacs.d.git
 ### Windows
 
 If you are installing on windows make sure that the HOME environment
-variable exists and is correct.
+variable exists and is correct. You will need to install some
+[DLLs](https://sourceforge.net/projects/ezwinports/) and external
+programs to ensure a working Emacs installation. At the time of this
+writting there are still some issues on Windows (ispell comes to
+mind).
 
 An example of HOME would be:
 ```
