@@ -185,24 +185,6 @@
 		      restclient
 		      yaml-mode)))
 
-;; Auto-install packages
-;; (dolist (package '(bbdb			; Define a windows and linux list
-;; 		   gmail2bbdb
-;; 		   helm
-;; 		   helm-w32-launcher
-;; 		   ledger-mode
-;; 		   magit
-;; 		   markdown-mode
-;; 		   moe-theme
-;; 		   multiple-cursors
-;; 		   password-store
-;; 		   powerline
-;; 		   request
-;; 		   restclient
-;; 		   yaml-mode))
-;;   (if (ignore-errors (require package))
-;;       (message "%s is already installed..." package)
-;;     (package-install package)))
 (dolist (package my-packages)
   (if (ignore-errors (require package))
       (message "%s is already installed..." package)
@@ -216,7 +198,6 @@
 ;; changing bell behavior, global minor modes, etc.
 
 ;; Load my theme
-;; (load-theme 'wombat t)
 (require 'powerline)
 (require 'moe-theme)
 (powerline-moe-theme)
@@ -248,17 +229,9 @@
 ;; Spell check dictionary
 (setq ispell-dictionary "american")
 
-;; Enable 'Interactive Do'
-; (setq ido-enable-flex-matching t)
-; (setq ido-everywhere t)
-; (ido-mode 1)
-; (icomplete-mode 1)
-
 ;; Initial screen
 (setq inhibit-startup-screen t)
 (setq initial-scratch-message ";; Run some elisp yo\n\n")
-;;(setq initial-major-mode 'org-mode)
-
 
 
 ;;;; Package dependant configuration ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -449,6 +422,7 @@ This will first empty the kill-ring (clipboard)"
 (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
 (require 'dired)
 (define-key dired-mode-map [?%?h] 'dired-show-only)
+;; TODO - require gnus, see if that fixes it
 ;; (define-key gnus-group-mode-map (kbd "o") 'my-gnus-group-list-subscribed-groups)
 
 ;; Enabled bindings
@@ -506,6 +480,8 @@ This will first empty the kill-ring (clipboard)"
 ;;
 ;;     'M-x gnus' then do 'G p' in the group buffer
 ;;     Add '(modeline-notify t)' to the properties
+
+;; TODO - see if there is a require that can fix this
 
 (setq user-mail-address "sean.d.jones92@gmail.com")
 (setq gnus-use-cache t)
