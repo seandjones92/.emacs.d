@@ -4,23 +4,6 @@
 ;; Started: 7/25/16
 
 
-;;;; TO-DO ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; 1) Get ispell working for windows
-;;
-;; 2) PDF rendering does not work on windows
-;;
-;; 3) Configure a section for Helm to replace Ido (at least test it)
-;;   a) Try out helm-ispell
-;;   b) helm-systemd
-;;   c) helm-themes
-;;   d) helm-w32-launcher - I think this is a windows thing
-;;
-;; 4) Package management section needs some love. When on windows
-;; initialization hangs on "package-refresh-contents". Added a work
-;; around for the time being. This needs to be handled in a better way.
-
-
 ;;;; Instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Welcome to my Emacs configuration.
@@ -62,6 +45,11 @@
 ;; There are several other useful commands related to pages I will
 ;; not describe here. Use 'C-h a' "page" <RET> to get a list of
 ;; functions related to pages.
+;;
+;; A note on require. In this config file I use the convention of
+;; requiring a package directly before the configuration that needs
+;; it. This keeps the file understandable. Why is this package
+;; required? Look at the line below and there's your answer.
 
 
 ;;;; Systemd Unit Configuration for Emacs Daemon ;;;;;;;;;;;;;;;;;;;;;
@@ -104,26 +92,24 @@
 
 ;;;; Package Management ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; This section is for package management. There are three persistant
-;; subsections: Repositories, Refreash package list, and Auto-install
-;; packages. The repositories subsection defines additional repos for
-;; Emacs to use and then initializes 'package'. The refresh package
-;; list subsection gets all of the packages from all of the configured
-;; repos and makes them available for install. The Auto-install
-;; subsection defines a list of packages that should always be present
-;; and checks that they are. If the package is already present nothing
-;; is done, if the package is not present it will automatically be
+;; This section is for package management. There are four persistant
+;; subsections: Repositories, Refreash package content, Package lists
+;; and Auto-install packages. The repositories subsection defines
+;; additional repos for Emacs to use and then initializes
+;; 'package'. The refresh package content subsection gets all of the
+;; packages from all of the configured repos and makes them available
+;; for install. The Define package list subsection defines a list of
+;; packages that should always be present. The Auto-install subsection
+;; looks at the list of packages that should always be present and
+;; checks that they are. If the package is already present nothing is
+;; done, if the package is not present it will automatically be
 ;; installed.
+;;
+;; TODO - Package management should be able to fail gracefully. If a
+;; repo is down initialization should continue as normal. If packages
+;; are missing and cannot be installed the init should adapt.
 
 ;; Proxy
-;;
-;; If running Emacs on GNU/Linux this should 'just work' if your proxy
-;; information is defined as environment variables. For windows there
-;; is some user intervention that needs to take place.
-;;
-;; I have chosen to configure the proxy this way so that my proxy
-;; configurations are not put up on GitHub when I push my config
-;; changes.
 ;;
 ;; Put this in (~/.emacs.d/proxy-info.el) and fill in the blanks with
 ;; your proxy information.
@@ -144,14 +130,11 @@
 (require 'package)
 (add-to-list
  'package-archives
- '("melpa" . "https://melpa.org/packages/") t)
+ '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
 ;; Refresh package list
-(if (eq system-type 'windows-nt)	; Ugly fix for ugly problem
-    (if (y-or-n-p "Should the package list be refreshed? ")
-	(package-refresh-contents))
-  (package-refresh-contents))
+(package-refresh-contents)
 
 ;; Define package lists
 ;; Top list is windows, bottom is linux
@@ -165,6 +148,7 @@
 			markdown-mode
 			moe-theme
 			multiple-cursors
+			org-bullets
 			password-store
 			powerline
 			request
@@ -178,12 +162,14 @@
 		      markdown-mode
 		      moe-theme
 		      multiple-cursors
+		      org-bullets
 		      password-store
 		      powerline
 		      request
 		      restclient
 		      yaml-mode)))
 
+;; Confirm / Install packages
 (dolist (package my-packages)
   (if (ignore-errors (require package))
       (message "%s is already installed..." package)
@@ -194,9 +180,9 @@
 ;;
 ;; This page is for configuration that changes either the look of
 ;; Emacs or the basic functionality. Things such as defining a theme,
-;; changing bell behavior, global minor modes, etc.
+;; changing bell behavior, initial screen, etc...
 
-;; Load my theme
+;; Theming
 (require 'powerline)
 (require 'moe-theme)
 (powerline-moe-theme)
@@ -219,14 +205,8 @@
 ;; No bell
 (setq ring-bell-function 'ignore)
 
-;; Enable Electric Pair (auto bracket closing)
-(electric-pair-mode 1)
-
 ;; Column numbers mode
 (column-number-mode 1)
-
-;; Spell check dictionary
-(setq ispell-dictionary "american")
 
 ;; Initial screen
 (setq inhibit-startup-screen t)
@@ -238,6 +218,24 @@
 ;; These are configurations that depend on an external package to be
 ;; installed. Configurations here can be anything from keybindings to
 ;; variables to functions.
+
+;; Electric Pair
+(electric-pair-mode 1)
+
+;; Gnus
+;;
+;; To monitor a Gnus group for fresh news/mail do the following:
+;;
+;;     'M-x gnus' then do 'G p' in the group buffer
+;;     Add '(modeline-notify t)' to the properties
+
+(setq user-mail-address "sean.d.jones92@gmail.com")
+(setq gnus-use-cache t)
+(setq gmail2bbdb-bbdb-file "~/.emacs.d/bbdb")
+(setq smtpmail-smtp-server "smtp.gmail.com")
+(setq smtpmail-smtp-service 587)
+(gnus-demon-add-handler 'gnus-demon-scan-news 2 t)
+(setq send-mail-function 'smtpmail-send-it)
 
 ;; Helm
 (require 'helm)
@@ -287,6 +285,13 @@
 
 (helm-mode 1)
 
+;; iSpell
+(setq ispell-dictionary "american")
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+
 ;; Mulitple cursors
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -294,16 +299,53 @@
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; Magit
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+;; Org Mode
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
+
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+(setq diary-file "~/.emacs.d/diary")
+(setq org-agenda-include-diary t)
+(setq org-log-done 'time)
+(setq org-src-fontify-natively t)
+(setq org-default-notes-file "~/.emacs.d/notes.org")
+(setq org-agenda-files '("~/.emacs.d/notes.org"))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((java       . t)
+   (js         . t)
+   (sql        . t)
+   (emacs-lisp . t)
+   (latex      . t)
+   (ledger     . t)
+   (lisp       . t)
+   (org        . t)
+   (perl       . t)
+   (python     . t)
+   (sh         . t)))
 
 
 ;;;; Custom functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; If this page grows too large I may put its content into another
-;; file and load it from here instead. This would allow for handling
-;; my functions more like an external library.
+;; My custom functions
+
+(defun diary-drawer ()
+  "Open the Emacs diary in a pop up fashion."
+  (interactive)
+  (find-file-other-window "~/.emacs.d/diary")
+  (diary-mode))
+
+(defun dired-show-only (regexp)
+  "Only show files matching the regexp."
+  (interactive "sFiles to show (regexp): ")
+  (dired-mark-files-regexp regexp)
+  (dired-toggle-marks)
+  (dired-do-kill-lines))
 
 (defun go-local ()
   "Clean up all remote connections and be a little funny about it."
@@ -312,11 +354,15 @@
   (ignore-errors (tramp-cleanup-all-buffers))
   (message "Don't you know I'm local?!"))
 
-(defun save-buffer-clean ()
-  "Strip the trailing whitespace from a file and save it."
+(defun init-drawer ()
+  "Open '~/.emacs.d/init.el' in a pop up fashion."
   (interactive)
-  (delete-trailing-whitespace)
-  (save-buffer))
+  (find-file-other-window "~/.emacs.d/init.el"))
+
+(defun my-gnus-group-list-subscribed-groups ()
+  "List all subscribed groups with or without un-read messages."
+  (interactive)
+  (gnus-group-list-all-groups 5))
 
 (defun proxy ()
   "set http_proxy env variable"
@@ -334,6 +380,19 @@
       (setenv "http_proxy" (concat hostname ":" port))
       (setenv "https_proxy" (concat hostname ":" port))
       (setenv "ftp_proxy" (concat hostname ":" port)))))
+
+(defun save-buffer-clean ()
+  "Strip the trailing whitespace from a file and save it."
+  (interactive)
+  (delete-trailing-whitespace)
+  (save-buffer))
+
+(defun smart-buffer-kill ()
+  "Kill buffers in a way that makes sense."
+  (interactive)
+  (if (= (count-windows) 1)
+      (kill-buffer)
+    (kill-buffer-and-window)))
 
 (defun ssh-clip ()
   "Copy '~/.ssh/id_rsa.pub' to clipboard.
@@ -356,41 +415,13 @@ This will first empty the kill-ring (clipboard)"
     (switch-to-buffer-other-window origin)
     (message "Public key copied to clipboard"))))
 
-(defun smart-buffer-kill ()
-  "Kill buffers in a way that makes sense."
-  (interactive)
-  (if (= (count-windows) 1)
-      (kill-buffer)
-    (kill-buffer-and-window)))
-
-(defun diary-drawer ()
-  "Open the Emacs diary in a pop up fashion."
-  (interactive)
-  (find-file-other-window "~/.emacs.d/diary")
-  (diary-mode))
-
-(defun init-drawer ()
-  "Open '~/.emacs.d/init.el' in a pop up fashion."
-  (interactive)
-  (find-file-other-window "~/.emacs.d/init.el"))
-
-(defun dired-show-only (regexp)
-  "Only show files matching the regexp."
-  (interactive "sFiles to show (regexp): ")
-  (dired-mark-files-regexp regexp)
-  (dired-toggle-marks)
-  (dired-do-kill-lines))
-
-(defun my-gnus-group-list-subscribed-groups ()
-  "List all subscribed groups with or without un-read messages."
-  (interactive)
-  (gnus-group-list-all-groups 5))
-
 
 ;;;; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; This section has configurations to make this init file function
 ;; properly in a windows environment.
+;;
+;; TODO - DocView (PDF rendering) does not work on windows
 
 (if (eq system-type 'windows-nt)
     (setq tramp-default-method "plink"))
@@ -406,10 +437,6 @@ This will first empty the kill-ring (clipboard)"
 
 ;;;; Custom keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; These keybindings are for 'baked-in' or custom
-;; functions/macros. Nothing defined here should rely on an external
-;; package.
-;;
 ;; The subsection of this page titled 'Enabled bindings' is for
 ;; keybindings that are disabled by default in emacs that I have
 ;; chosen to enable.
@@ -422,70 +449,8 @@ This will first empty the kill-ring (clipboard)"
 (require 'dired)
 (define-key dired-mode-map [?%?h] 'dired-show-only)
 ;; TODO - require gnus, see if that fixes it
-;; (define-key gnus-group-mode-map (kbd "o") 'my-gnus-group-list-subscribed-groups)
+(require 'gnus)
+(define-key gnus-group-mode-map (kbd "o") 'my-gnus-group-list-subscribed-groups)
 
 ;; Enabled bindings
 (put 'narrow-to-page 'disabled nil)
-
-
-;;;; Org Mode ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This page contains all things 'org-mode'. Keybindings, variables,
-;; everything. It's just too big to spread out. It's easier to have
-;; all the org-mode configuration here.
-
-;; UTF-8 Bullets
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
-
-;; Keybindings
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
-;; Variables
-(setq diary-file "~/.emacs.d/diary")
-(setq org-agenda-include-diary t)
-(setq org-log-done 'time)
-(setq org-src-fontify-natively t)
-(setq org-default-notes-file "~/.emacs.d/notes.org")
-(setq org-agenda-files '("~/.emacs.d/notes.org"))
-
-;; Babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((java       . t)
-   (js         . t)
-   (sql        . t)
-   (emacs-lisp . t)
-   (latex      . t)
-   (ledger     . t)
-   (lisp       . t)
-   (org        . t)
-   (perl       . t)
-   (python     . t)
-   (sh         . t)))
-
-
-;;;; Mail Config ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This section is at the end because I still need to work out some of
-;; the finer points. For example, Sometimes on startup there is an
-;; error that 'send-mail-function' has a null value or some such
-;; nonsense.
-;;
-;; To monitor a Gnus group for fresh news/mail do the following:
-;;
-;;     'M-x gnus' then do 'G p' in the group buffer
-;;     Add '(modeline-notify t)' to the properties
-
-;; TODO - see if there is a require that can fix this
-
-(setq user-mail-address "sean.d.jones92@gmail.com")
-(setq gnus-use-cache t)
-(setq gmail2bbdb-bbdb-file "~/.emacs.d/bbdb")
-;; (smtpmail-smtp-server "smtp.gmail.com")
-;; (smtpmail-smtp-service 587)
-;; (gnus-demon-add-handler 'gnus-demon-scan-news 2 t)
-;; (send-mail-function 'smtpmail-send-it)
