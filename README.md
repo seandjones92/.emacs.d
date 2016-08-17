@@ -1,13 +1,9 @@
 # My Emacs Configuration
 
-This configuration aims to be a little different from what seems to be
-a typical Emacs configuration. To me, a typical config is aimed at
-turning Emacs into a specialized development environment targeted at
-specific programming languages and development workflows. What I am
-trying to create here is an Emacs config for Sys Admins. This should
-turn Emacs into a toolbox that augments a persons ability to
-interactively administer local and remote systems while remaining
-unbiased in terms of programming/scripting preferences.
+This configuration is for System Administrators. I am beginning to
+tailor it for remote administration and popular scripting
+languages. I'm currently in the process of tweaking the init.el file
+for Go, Python, and Ruby code.
 
 ## Installation
 

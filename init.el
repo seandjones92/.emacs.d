@@ -8,16 +8,6 @@
 ;;
 ;; Welcome to my Emacs configuration.
 ;;
-;; This configuration aims to be a little different from what
-;; seems to be a typical Emacs configuration. To me, a typical config
-;; is aimed at turning Emacs into a specialized development
-;; environment targeted at specific programming languages and
-;; development workflows. What I am trying to create here is an
-;; Emacs config for Sys Admins. This should turn Emacs into a
-;; toolbox that augments a persons ability to interactively administer
-;; local and remote systems while remaining unbiased in terms of
-;; programming/scripting preferences.
-;;
 ;; The organization of this config uses a single, large file broken
 ;; into 'pages'. Each 'page' contains a category or type of
 ;; configuration.
@@ -141,6 +131,7 @@
 (if (eq system-type 'windows-nt)
     (setq my-packages '(bbdb
 			gmail2bbdb
+			go-mode
 			helm
 			helm-w32-launcher
 			ledger-mode
@@ -156,6 +147,7 @@
 			yaml-mode))
   (setq my-packages '(bbdb
 		      gmail2bbdb
+		      go-mode
 		      helm
 		      ledger-mode
 		      magit
@@ -206,7 +198,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; Column numbers mode
-(column-number-mode 1)
+(column-number-mode 1)			; TODO - Look into highlighted linum-mode
 
 ;; Initial screen
 (setq inhibit-startup-screen t)
@@ -355,11 +347,6 @@
   (ignore-errors (tramp-cleanup-all-buffers))
   (message "Don't you know I'm local?!"))
 
-(defun init-drawer ()
-  "Open '~/.emacs.d/init.el' in a pop up fashion."
-  (interactive)
-  (find-file-other-window "~/.emacs.d/init.el"))
-
 (defun my-gnus-group-list-subscribed-groups ()
   "List all subscribed groups with or without un-read messages."
   (interactive)
@@ -443,7 +430,6 @@ This will first empty the kill-ring (clipboard)"
 ;; chosen to enable.
 
 (global-set-key "\C-cp" 'bbdb)
-(global-set-key "\C-ci" 'init-drawer)
 (global-set-key "\C-cd" 'diary-drawer)
 (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
 (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
