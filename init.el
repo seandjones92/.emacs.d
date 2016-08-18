@@ -168,7 +168,6 @@ does not reflect any dependancies or 'built in' packages.")
 		    go-mode
 		    helm
 		    hlinum
-		    ledger-mode
 		    magit
 		    markdown-mode
 		    moe-theme
@@ -176,8 +175,6 @@ does not reflect any dependancies or 'built in' packages.")
 		    org-bullets
 		    password-store
 		    powerline
-		    request
-		    restclient
 		    yaml-mode))
 
 ;; Windows packages
@@ -277,7 +274,7 @@ does not reflect any dependancies or 'built in' packages.")
 (global-unset-key (kbd "C-x c"))
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x b") 'helm-mini)
+(global-set-key (kbd "C-x x") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
 (global-set-key (kbd "C-c h o") 'helm-occur)
 (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
