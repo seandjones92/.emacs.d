@@ -177,6 +177,13 @@ does not reflect any dependancies or 'built in' packages.")
 		    powerline
 		    yaml-mode))
 
+;; Linux packages
+(defun linux-packages ()
+  "This function adds linux specific packages to the install list"
+  (add-to-list 'my-packages 'helm-systemd t))
+(if (eq system-type 'gnu/linux)
+    (linux-packages))
+
 ;; Windows packages
 (defun windows-packages ()
   "This function adds windows specific packages to the install list"
