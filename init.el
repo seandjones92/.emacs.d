@@ -127,13 +127,14 @@
 (package-refresh-contents)
 
 ;; Define package lists
-;; Top list is windows, bottom is linux
+;; Top list is windows, bottom is everything else
 (if (eq system-type 'windows-nt)
     (setq my-packages '(bbdb
 			gmail2bbdb
 			go-mode
 			helm
 			helm-w32-launcher
+			hlinum
 			ledger-mode
 			magit
 			markdown-mode
@@ -149,6 +150,7 @@
 		      gmail2bbdb
 		      go-mode
 		      helm
+		      hlinum
 		      ledger-mode
 		      magit
 		      markdown-mode
@@ -199,6 +201,10 @@
 
 ;; Column numbers mode
 (column-number-mode 1)			; TODO - Look into highlighted linum-mode
+
+;; Highlight line number
+(require 'hlinum)
+(hlinum-activate)
 
 ;; Initial screen
 (setq inhibit-startup-screen t)
@@ -279,6 +285,7 @@
 (helm-mode 1)
 
 ;; iSpell
+;; TODO - ispell doesn't work on windows
 (setq ispell-dictionary "american")
 
 ;; Magit
@@ -420,6 +427,7 @@ This will first empty the kill-ring (clipboard)"
 
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'org-mode-hook 'turn-on-font-lock)
+(add-hook 'go-mode-hook 'linum-mode)
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 
