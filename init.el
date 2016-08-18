@@ -80,6 +80,21 @@
 ;; emacs client with "emacsclient -c".
 
 
+;;;; Variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; This section is dedicated to declaring and defining my custom
+;; variables. The reason for this is to ensure that my configuration
+;; is documented in a way that is consistant with the rest of
+;; Emacs. Good documentation is the best!
+
+(defvar my-packages nil
+  "List of packages that should always be present for my configuration.
+
+This list is not indicative of all packages that are
+present. This list only defines what is explicitly installed. It
+does not reflect any dependancies or 'built in' packages.")
+
+
 ;;;; Package Management ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; This section is for package management. There are four persistant
@@ -126,42 +141,33 @@
 ;; Refresh package list
 (package-refresh-contents)
 
-;; Define package lists
-;; Top list is windows, bottom is everything else
+;; Define package list
+(setq my-packages '(auto-complete
+		    bbdb
+		    gmail2bbdb
+		    go-autocomplete
+		    go-eldoc
+		    go-mode
+		    helm
+		    hlinum
+		    ledger-mode
+		    magit
+		    markdown-mode
+		    moe-theme
+		    multiple-cursors
+		    org-bullets
+		    password-store
+		    powerline
+		    request
+		    restclient
+		    yaml-mode))
+
+;; Windows packages
+(defun windows-packages ()
+  "This function adds windows specific packages to the install list"
+  (add-to-list 'my-packages 'helm-w32-launcher t))
 (if (eq system-type 'windows-nt)
-    (setq my-packages '(bbdb
-			gmail2bbdb
-			go-mode
-			helm
-			helm-w32-launcher
-			hlinum
-			ledger-mode
-			magit
-			markdown-mode
-			moe-theme
-			multiple-cursors
-			org-bullets
-			password-store
-			powerline
-			request
-			restclient
-			yaml-mode))
-  (setq my-packages '(bbdb
-		      gmail2bbdb
-		      go-mode
-		      helm
-		      hlinum
-		      ledger-mode
-		      magit
-		      markdown-mode
-		      moe-theme
-		      multiple-cursors
-		      org-bullets
-		      password-store
-		      powerline
-		      request
-		      restclient
-		      yaml-mode)))
+    (windows-packages))
 
 ;; Confirm / Install packages
 (dolist (package my-packages)
@@ -200,7 +206,7 @@
 (setq ring-bell-function 'ignore)
 
 ;; Column numbers mode
-(column-number-mode 1)			; TODO - Look into highlighted linum-mode
+(column-number-mode 1)
 
 ;; Highlight line number
 (require 'hlinum)
@@ -235,6 +241,15 @@
 (require 'gnus)
 (gnus-demon-add-handler 'gnus-demon-scan-news 2 t)
 (setq send-mail-function 'smtpmail-send-it)
+
+;; Golang
+(require 'go-eldoc)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+(add-hook 'before-save-hook 'gofmt-before-save)
+(setq gofmt-command "goimports")
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(ac-config-default)
 
 ;; Helm
 (require 'helm)
@@ -285,7 +300,6 @@
 (helm-mode 1)
 
 ;; iSpell
-;; TODO - ispell doesn't work on windows
 (setq ispell-dictionary "american")
 
 ;; Magit
@@ -416,7 +430,6 @@ This will first empty the kill-ring (clipboard)"
 ;; This section has configurations to make this init file function
 ;; properly in a windows environment.
 ;;
-;; TODO - DocView (PDF rendering) does not work on windows
 
 (if (eq system-type 'windows-nt)
     (setq tramp-default-method "plink"))
