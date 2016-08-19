@@ -174,7 +174,7 @@ does not reflect any dependancies or 'built in' packages.")
 		    multiple-cursors
 		    org-bullets
 		    password-store
-		    powerline
+		    powerline		; TODO - Get rid of powerline, I'm over it
 		    yaml-mode))
 
 ;; Linux packages
@@ -230,6 +230,15 @@ does not reflect any dependancies or 'built in' packages.")
 ;; Column numbers mode
 (column-number-mode 1)
 
+
+;; Electric Pair
+(electric-pair-mode 1)
+
+;; Highlight parenthesis
+(require 'paren)
+(setq show-paren-style 'parenthesis)
+(show-paren-mode 1)
+
 ;; Highlight line number
 (require 'hlinum)
 (hlinum-activate)
@@ -245,10 +254,7 @@ does not reflect any dependancies or 'built in' packages.")
 ;; installed. Configurations here can be anything from keybindings to
 ;; variables to functions.
 
-;; Electric Pair
-(electric-pair-mode 1)
-
-;; Gnus
+;; Gnus ; TODO - Get rid of Gnus config, Not using it
 ;;
 ;; To monitor a Gnus group for fresh news/mail do the following:
 ;;
