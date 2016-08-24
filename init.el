@@ -174,7 +174,7 @@ does not reflect any dependancies or 'built in' packages.")
 		    multiple-cursors
 		    org-bullets
 		    password-store
-		    powerline		; TODO - Get rid of powerline, I'm over it
+		    powerline
 		    yaml-mode))
 
 ;; Linux packages
@@ -254,7 +254,7 @@ does not reflect any dependancies or 'built in' packages.")
 ;; installed. Configurations here can be anything from keybindings to
 ;; variables to functions.
 
-;; Gnus ; TODO - Get rid of Gnus config, Not using it
+;; Gnus
 ;;
 ;; To monitor a Gnus group for fresh news/mail do the following:
 ;;
@@ -341,7 +341,7 @@ does not reflect any dependancies or 'built in' packages.")
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; Org Mode
+;; Org Mode ; TODO - Add custom org captures for dropbox
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
 
@@ -355,7 +355,7 @@ does not reflect any dependancies or 'built in' packages.")
 (setq org-log-done 'time)
 (setq org-src-fontify-natively t)
 (setq org-default-notes-file "~/.emacs.d/notes.org")
-(setq org-agenda-files '("~/.emacs.d/notes.org"))
+(setq org-agenda-files '("~/.emacs.d/notes.org" "~/Dropbox/OrgMode/"))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -460,7 +460,8 @@ This will first empty the kill-ring (clipboard)"
 ;;
 
 (if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink"))
+    (setq tramp-default-method "plink")
+  (setq tramp-default-method "ssh"))
 
 
 ;;;; Custom hooks/modes  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
