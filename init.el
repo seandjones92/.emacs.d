@@ -357,6 +357,23 @@ does not reflect any dependancies or 'built in' packages.")
 (setq org-default-notes-file "~/.emacs.d/notes.org")
 (setq org-agenda-files '("~/.emacs.d/notes.org" "~/Dropbox/OrgMode/"))
 
+(setq org-capture-templates
+      '(("w" "Work captures")
+	("ws" "Work Schedule" entry (file "~/Dropbox/OrgMode/work.org")
+	 "* %?\n  %i\n  %a")
+	("wt" "Work TODO" entry (file "~/Dropbox/OrgMode/work.org")
+	 "* TODO %?\n  %i\n  %a")
+	("p" "Personal captures")
+	("ps" "Personal Schedule" entry (file "~/Dropbox/OrgMode/personal.org")
+	 "* %?\n  %i\n %a")
+	("pt" "Personal TODO" entry (file "~/Dropbox/OrgMode/personal.org")
+	 "* TODO %?\n  %i\n  %a")
+	("s" "School captures")
+	("ss" "School Schedule" entry (file "~/Dropbox/OrgMode/school.org")
+	 "* %?\n  %i\n  %a")
+	("st" "School TODO" entry (file "~/Dropbox/OrgMode/school.org")
+	 "* TODO %?\n  %i\n  %a")))
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((java       . t)
