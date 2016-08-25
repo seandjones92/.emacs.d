@@ -341,7 +341,7 @@ does not reflect any dependancies or 'built in' packages.")
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
-;; Org Mode ; TODO - Add custom org captures for dropbox
+;; Org Mode
 (require 'org-bullets)
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
 
