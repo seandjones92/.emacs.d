@@ -487,6 +487,7 @@ This will first empty the kill-ring (clipboard)"
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 (add-hook 'go-mode-hook 'linum-mode)
+(add-hook 'sh-mode-hook 'linum-mode)
 (add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
 
 
