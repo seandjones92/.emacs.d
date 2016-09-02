@@ -131,6 +131,8 @@ does not reflect any dependancies or 'built in' packages.")
 ;; TODO - Package management should be able to fail gracefully. If a
 ;; repo is down initialization should continue as normal. If packages
 ;; are missing and cannot be installed the init should adapt.
+;;
+;; try (network-interface-list)
 
 ;; Proxy
 ;;
