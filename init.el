@@ -176,7 +176,6 @@ does not reflect any dependancies or 'built in' packages.")
 		    multiple-cursors
 		    org-bullets
 		    password-store
-		    powerline
 		    yaml-mode))
 
 ;; Linux packages
@@ -207,9 +206,7 @@ does not reflect any dependancies or 'built in' packages.")
 ;; changing bell behavior, initial screen, etc...
 
 ;; Theming
-(require 'powerline)
 (require 'moe-theme)
-(powerline-moe-theme)
 (setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
 (setq moe-theme-resize-org-title '(1.5 1.4 1.3 1.2 1.1 1.0 1.0 1.0 1.0))
 (moe-dark)
