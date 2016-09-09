@@ -208,7 +208,7 @@ does not reflect any dependancies or 'built in' packages.")
 ;; Theming
 (require 'moe-theme)
 (setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
-(setq moe-theme-resize-org-title '(1.5 1.4 1.3 1.2 1.1 1.0 1.0 1.0 1.0))
+(setq moe-theme-resize-org-title '(1.3 1.2 1.1 1.0 1.0 1.0 1.0 1.0 1.0))
 (moe-dark)
 ;; Available Colors: blue, orange, green, magenta, yellow, purple,
 ;; red, cyan, w/b
@@ -355,6 +355,10 @@ does not reflect any dependancies or 'built in' packages.")
 (setq org-src-fontify-natively t)
 (setq org-default-notes-file "~/.emacs.d/notes.org")
 (setq org-agenda-files '("~/.emacs.d/notes.org" "~/Dropbox/OrgMode/"))
+
+;; This is slow but works, TODO - Speed this up
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "google-chrome")
 
 (setq org-capture-templates
       '(("w" "Work captures")
