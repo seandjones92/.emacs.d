@@ -1,9 +1,6 @@
 # My Emacs Configuration
 
-This configuration is for System Administrators. I am beginning to
-tailor it for remote administration and popular scripting
-languages. I'm currently in the process of tweaking the init.el file
-for Go, Python, and Ruby code.
+This configuration is aimed at remote administration, and python.
 
 ## Installation
 
