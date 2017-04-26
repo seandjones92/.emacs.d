@@ -2,16 +2,6 @@
 
 This configuration is aimed at remote administration, and python.
 
-## Installation
-
-To deploy this configuration issue the following command:
-
-```
-$ cd ~/
-
-$ git clone git@bitbucket.org:sean_jones/.emacs.d.git
-```
-
 ### Windows
 
 If you are installing on windows make sure that the HOME environment
