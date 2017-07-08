@@ -97,6 +97,13 @@
 ;; enable, or disable. Once the daemon is running you can launch an
 ;; emacs client with "emacsclient -c".
 
+;;;; Benchmarking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Generate benchamrking statistics for this init file.
+(add-to-list 'load-path "~/.emacs.d/benchmark-init-el/")
+(require 'benchmark-init-loaddefs)
+(benchmark-init/activate)
+
 
 ;;;; Variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -163,8 +170,6 @@ does not reflect any dependancies or 'built in' packages.")
 
 ;; Define package list
 (setq my-packages '(auto-complete
-		    bbdb
-		    gmail2bbdb
 		    go-autocomplete
 		    go-eldoc
 		    go-mode
@@ -172,10 +177,8 @@ does not reflect any dependancies or 'built in' packages.")
 		    hlinum
 		    magit
 		    markdown-mode
-		    moe-theme
+		    material-theme
 		    multiple-cursors
-		    org-bullets
-		    password-store
 		    yaml-mode))
 
 ;; Linux packages
@@ -205,15 +208,8 @@ does not reflect any dependancies or 'built in' packages.")
 ;; Emacs or the basic functionality. Things such as defining a theme,
 ;; changing bell behavior, initial screen, etc...
 
-;; Theming
-(require 'moe-theme)
-(setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
-(setq moe-theme-resize-org-title '(1.3 1.2 1.1 1.0 1.0 1.0 1.0 1.0 1.0))
-(moe-dark)
-;; Available Colors: blue, orange, green, magenta, yellow, purple,
-;; red, cyan, w/b
-;; Test colors interactivly with "moe-theme-select-colors"
-(moe-theme-set-color 'blue)
+;; Theme
+(require 'material-theme)
 
 ;; Remove scrollbars, menu bars, and toolbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -242,9 +238,12 @@ does not reflect any dependancies or 'built in' packages.")
 (require 'hlinum)
 (hlinum-activate)
 
+;; Truncate lines
+(set-default 'truncate-lines t)
+
 ;; Initial screen
 (setq inhibit-startup-screen t)
-(setq initial-scratch-message ";; Run some elisp yo\n\n")
+(setq initial-scratch-message ";; Scratch Buffer\n\n")
 
 
 ;;;; Package dependant configuration ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -252,22 +251,6 @@ does not reflect any dependancies or 'built in' packages.")
 ;; These are configurations that depend on an external package to be
 ;; installed. Configurations here can be anything from keybindings to
 ;; variables to functions.
-
-;; Gnus
-;;
-;; To monitor a Gnus group for fresh news/mail do the following:
-;;
-;;     'M-x gnus' then do 'G p' in the group buffer
-;;     Add '(modeline-notify t)' to the properties
-
-(setq user-mail-address "sean.d.jones92@gmail.com")
-(setq gnus-use-cache t)
-(setq gmail2bbdb-bbdb-file "~/.emacs.d/bbdb")
-(setq smtpmail-smtp-server "smtp.gmail.com")
-(setq smtpmail-smtp-service 587)
-(require 'gnus)
-(gnus-demon-add-handler 'gnus-demon-scan-news 2 t)
-(setq send-mail-function 'smtpmail-send-it)
 
 ;; Golang
 (require 'go-eldoc)
@@ -341,41 +324,14 @@ does not reflect any dependancies or 'built in' packages.")
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;; Org Mode
-(require 'org-bullets)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode)))
-
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
-(setq diary-file "~/.emacs.d/diary")
 (setq org-agenda-include-diary t)
 (setq org-log-done 'time)
 (setq org-src-fontify-natively t)
-(setq org-default-notes-file "~/.emacs.d/notes.org")
-(setq org-agenda-files '("~/.emacs.d/notes.org" "~/Dropbox/OrgMode/"))
-
-;; This is slow but works, TODO - Speed this up
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "google-chrome")
-
-(setq org-capture-templates
-      '(("w" "Work captures")
-	("ws" "Work Schedule" entry (file "~/Dropbox/OrgMode/work.org")
-	 "* %?\n  %i\n  %a")
-	("wt" "Work TODO" entry (file "~/Dropbox/OrgMode/work.org")
-	 "* TODO %?\n  %i\n  %a")
-	("p" "Personal captures")
-	("ps" "Personal Schedule" entry (file "~/Dropbox/OrgMode/personal.org")
-	 "* %?\n  %i\n %a")
-	("pt" "Personal TODO" entry (file "~/Dropbox/OrgMode/personal.org")
-	 "* TODO %?\n  %i\n  %a")
-	("s" "School captures")
-	("ss" "School Schedule" entry (file "~/Dropbox/OrgMode/school.org")
-	 "* %?\n  %i\n  %a")
-	("st" "School TODO" entry (file "~/Dropbox/OrgMode/school.org")
-	 "* TODO %?\n  %i\n  %a")))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -384,7 +340,6 @@ does not reflect any dependancies or 'built in' packages.")
    (sql        . t)
    (emacs-lisp . t)
    (latex      . t)
-   (ledger     . t)
    (lisp       . t)
    (org        . t)
    (perl       . t)
@@ -395,12 +350,6 @@ does not reflect any dependancies or 'built in' packages.")
 ;;;; Custom functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; My custom functions
-
-(defun diary-drawer ()
-  "Open the Emacs diary in a pop up fashion."
-  (interactive)
-  (find-file-other-window "~/.emacs.d/diary")
-  (diary-mode))
 
 (defun dired-show-only (regexp)
   "Only show files matching the regexp."
@@ -415,11 +364,6 @@ does not reflect any dependancies or 'built in' packages.")
   (ignore-errors (tramp-cleanup-all-connections))
   (ignore-errors (tramp-cleanup-all-buffers))
   (message "Don't you know I'm local?!"))
-
-(defun my-gnus-group-list-subscribed-groups ()
-  "List all subscribed groups with or without un-read messages."
-  (interactive)
-  (gnus-group-list-all-groups 5))
 
 (defun proxy ()
   "set http_proxy env variable"
@@ -491,7 +435,7 @@ This will first empty the kill-ring (clipboard)"
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 (add-hook 'go-mode-hook 'linum-mode)
 (add-hook 'sh-mode-hook 'linum-mode)
-(add-to-list 'auto-mode-alist '("\\.ledger$" . ledger-mode))
+(add-hook 'text-mode-hook 'linum-mode)
 
 
 ;;;; Custom keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -500,13 +444,24 @@ This will first empty the kill-ring (clipboard)"
 ;; keybindings that are disabled by default in emacs that I have
 ;; chosen to enable.
 
-(global-set-key "\C-cp" 'bbdb)
-(global-set-key "\C-cd" 'diary-drawer)
 (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
 (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
 (require 'dired)
 (define-key dired-mode-map [?%?h] 'dired-show-only)
-(define-key gnus-group-mode-map (kbd "o") 'my-gnus-group-list-subscribed-groups)
 
 ;; Enabled bindings
 (put 'narrow-to-page 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (yaml-mode multiple-cursors markdown-mode magit hlinum helm-systemd go-eldoc go-autocomplete))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
