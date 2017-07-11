@@ -97,10 +97,11 @@
 ;; enable, or disable. Once the daemon is running you can launch an
 ;; emacs client with "emacsclient -c".
 
-;;;; Benchmarking ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;; Benchmarking init ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Generate benchamrking statistics for this init file.
-(add-to-list 'load-path "~/.emacs.d/benchmark-init-el/")
+;; Gather benchmarking information on this file
+(add-to-list 'load-path "C:\\Users\\jonessean\\.emacs.d\\benchmark-init-el\\")
 (require 'benchmark-init-loaddefs)
 (benchmark-init/activate)
 
@@ -170,6 +171,7 @@ does not reflect any dependancies or 'built in' packages.")
 
 ;; Define package list
 (setq my-packages '(auto-complete
+		    csv-nav
 		    go-autocomplete
 		    go-eldoc
 		    go-mode
@@ -177,8 +179,9 @@ does not reflect any dependancies or 'built in' packages.")
 		    hlinum
 		    magit
 		    markdown-mode
-		    material-theme
 		    multiple-cursors
+		    password-store
+		    powershell
 		    yaml-mode))
 
 ;; Linux packages
@@ -195,11 +198,11 @@ does not reflect any dependancies or 'built in' packages.")
 (if (eq system-type 'windows-nt)
     (windows-packages))
 
-;; Confirm / Install packages
-(dolist (package my-packages)
-  (if (ignore-errors (require package))
-      (message "%s is already installed..." package)
-    (package-install package)))
+;; ;; Confirm / Install packages
+;; (dolist (package my-packages)
+;;   (if (ignore-errors (require package))
+;;       (message "%s is already installed..." package)
+;;     (package-install package)))
 
 
 ;;;; Look and Feel ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -225,7 +228,6 @@ does not reflect any dependancies or 'built in' packages.")
 ;; Column numbers mode
 (column-number-mode 1)
 
-
 ;; Electric Pair
 (electric-pair-mode 1)
 
@@ -243,7 +245,7 @@ does not reflect any dependancies or 'built in' packages.")
 
 ;; Initial screen
 (setq inhibit-startup-screen t)
-(setq initial-scratch-message ";; Scratch Buffer\n\n")
+(setq initial-scratch-message ";; Scratch buffer\n\n")
 
 
 ;;;; Package dependant configuration ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -251,6 +253,9 @@ does not reflect any dependancies or 'built in' packages.")
 ;; These are configurations that depend on an external package to be
 ;; installed. Configurations here can be anything from keybindings to
 ;; variables to functions.
+
+;; CSV mode
+(require 'csv-nav)
 
 ;; Golang
 (require 'go-eldoc)
@@ -290,6 +295,7 @@ does not reflect any dependancies or 'built in' packages.")
         helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
 
 (helm-autoresize-mode 1)
+(setq helm-autoresize-max-height 65)
 
 (setq helm-split-window-in-side-p t
       helm-move-to-line-cycle-in-source t
@@ -329,9 +335,33 @@ does not reflect any dependancies or 'built in' packages.")
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
 
+(setq diary-file "~/.emacs.d/diary")
 (setq org-agenda-include-diary t)
 (setq org-log-done 'time)
 (setq org-src-fontify-natively t)
+(setq org-default-notes-file "~/.emacs.d/notes.org")
+(setq org-agenda-files '("~/.emacs.d/notes.org" "~/Dropbox/OrgMode/"))
+
+;; This is slow but works, TODO - Speed this up
+;; (setq browse-url-browser-function 'browse-url-generic
+;;       browse-url-generic-program "google-chrome")
+
+(setq org-capture-templates
+      '(("w" "Work captures")
+	("ws" "Work Schedule" entry (file "~/Dropbox/OrgMode/work.org")
+	 "* %?\n  %i\n  %a")
+	("wt" "Work TODO" entry (file "~/Dropbox/OrgMode/work.org")
+	 "* TODO %?\n  %i\n  %a")
+	("p" "Personal captures")
+	("ps" "Personal Schedule" entry (file "~/Dropbox/OrgMode/personal.org")
+	 "* %?\n  %i\n %a")
+	("pt" "Personal TODO" entry (file "~/Dropbox/OrgMode/personal.org")
+	 "* TODO %?\n  %i\n  %a")
+	("s" "School captures")
+	("ss" "School Schedule" entry (file "~/Dropbox/OrgMode/school.org")
+	 "* %?\n  %i\n  %a")
+	("st" "School TODO" entry (file "~/Dropbox/OrgMode/school.org")
+	 "* TODO %?\n  %i\n  %a")))
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -427,15 +457,23 @@ This will first empty the kill-ring (clipboard)"
     (setq tramp-default-method "plink")
   (setq tramp-default-method "ssh"))
 
+(if (eq system-type 'windows-nt)
+    (setenv "PATH"
+	    (concat
+	     "C:\\cygwin64\\bin;"
+	     (getenv "PATH"))))
+
 
 ;;;; Custom hooks/modes  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 
 (add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'text-mode-hook 'linum-mode)
+(add-hook 'text-mode-hook 'toggle-truncate-lines)
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 (add-hook 'go-mode-hook 'linum-mode)
 (add-hook 'sh-mode-hook 'linum-mode)
-(add-hook 'text-mode-hook 'linum-mode)
+(add-hook 'powershell-mode-hook 'linum-mode)
 
 
 ;;;; Custom keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -451,17 +489,3 @@ This will first empty the kill-ring (clipboard)"
 
 ;; Enabled bindings
 (put 'narrow-to-page 'disabled nil)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (yaml-mode multiple-cursors markdown-mode magit hlinum helm-systemd go-eldoc go-autocomplete))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
