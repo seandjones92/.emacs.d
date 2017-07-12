@@ -212,7 +212,13 @@ does not reflect any dependancies or 'built in' packages.")
 ;; changing bell behavior, initial screen, etc...
 
 ;; Theme
-(require 'material-theme)
+(defun load-material-theme (frame)
+  (select-frame frame)
+  (load-theme 'material t))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions #'load-material-theme)
+  (load-theme 'material t))
 
 ;; Remove scrollbars, menu bars, and toolbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
