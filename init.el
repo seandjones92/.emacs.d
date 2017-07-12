@@ -101,9 +101,9 @@
 ;;;; Benchmarking init ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Gather benchmarking information on this file
-(add-to-list 'load-path "C:\\Users\\jonessean\\.emacs.d\\benchmark-init-el\\")
-(require 'benchmark-init-loaddefs)
-(benchmark-init/activate)
+; (add-to-list 'load-path "C:\\Users\\jonessean\\.emacs.d\\benchmark-init-el\\")
+; (require 'benchmark-init-loaddefs)
+; (benchmark-init/activate)
 
 
 ;;;; Variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -179,6 +179,7 @@ does not reflect any dependancies or 'built in' packages.")
 		    hlinum
 		    magit
 		    markdown-mode
+            material-theme
 		    multiple-cursors
 		    password-store
 		    powershell
@@ -199,10 +200,10 @@ does not reflect any dependancies or 'built in' packages.")
     (windows-packages))
 
 ;; ;; Confirm / Install packages
-;; (dolist (package my-packages)
-;;   (if (ignore-errors (require package))
-;;       (message "%s is already installed..." package)
-;;     (package-install package)))
+(dolist (package my-packages)
+  (if (ignore-errors (require package))
+      (message "%s is already installed..." package)
+    (package-install package)))
 
 
 ;;;; Look and Feel ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
