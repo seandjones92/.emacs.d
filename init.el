@@ -263,6 +263,10 @@ does not reflect any dependancies or 'built in' packages.")
 
 ;; CSV mode
 (require 'csv-nav)
+(add-hook 'find-file-hooks 'my-csv-hook)
+(defun my-csv-hook ()
+  (when (string= (file-name-extension buffer-file-) "csv")
+    (read-only-mode)))
 
 ;; Golang
 (require 'go-eldoc)
