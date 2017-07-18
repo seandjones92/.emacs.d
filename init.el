@@ -265,7 +265,7 @@ does not reflect any dependancies or 'built in' packages.")
 (require 'csv-nav)
 (add-hook 'find-file-hooks 'my-csv-hook)
 (defun my-csv-hook ()
-  (when (string= (file-name-extension buffer-file-) "csv")
+  (when (string= (file-name-extension buffer-file-name) "csv")
     (read-only-mode)))
 
 ;; Golang
