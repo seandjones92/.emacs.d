@@ -1,4 +1,4 @@
-# My Emacs Configuration
+# My Emacs Configuration (UNMAINTAINED)
 
 This configuration is aimed at remote administration, and python.
 
