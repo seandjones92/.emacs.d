@@ -1,4 +1,4 @@
-;;;; Emacs for Sys Admins ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Emacs ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; By: Sean Jones
 ;; Started: 7/25/16
@@ -98,14 +98,6 @@
 ;; emacs client with "emacsclient -c".
 
 
-;;;; Benchmarking init ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Gather benchmarking information on this file
-; (add-to-list 'load-path "C:\\Users\\jonessean\\.emacs.d\\benchmark-init-el\\")
-; (require 'benchmark-init-loaddefs)
-; (benchmark-init/activate)
-
-
 ;;;; Variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; This section is dedicated to declaring and defining my custom
@@ -172,18 +164,11 @@ does not reflect any dependancies or 'built in' packages.")
 ;; Define package list
 (setq my-packages '(auto-complete
 		    csv-nav
-		    go-autocomplete
-		    go-eldoc
-		    go-mode
 		    helm
 		    hlinum
 		    magit
 		    markdown-mode
-            material-theme
-		    multiple-cursors
-		    password-store
-		    powershell
-		    yaml-mode))
+		    multiple-cursors))
 
 ;; Linux packages
 (defun linux-packages ()
@@ -191,13 +176,6 @@ does not reflect any dependancies or 'built in' packages.")
   (add-to-list 'my-packages 'helm-systemd t))
 (if (eq system-type 'gnu/linux)
     (linux-packages))
-
-;; Windows packages
-(defun windows-packages ()
-  "This function adds windows specific packages to the install list"
-  (add-to-list 'my-packages 'helm-w32-launcher t))
-(if (eq system-type 'windows-nt)
-    (windows-packages))
 
 ;; ;; Confirm / Install packages
 (dolist (package my-packages)
@@ -211,15 +189,6 @@ does not reflect any dependancies or 'built in' packages.")
 ;; This page is for configuration that changes either the look of
 ;; Emacs or the basic functionality. Things such as defining a theme,
 ;; changing bell behavior, initial screen, etc...
-
-;; Theme
-(defun load-material-theme (frame)
-  (select-frame frame)
-  (load-theme 'material t))
-
-(if (daemonp)
-    (add-hook 'after-make-frame-functions #'load-material-theme)
-  (load-theme 'material t))
 
 ;; Remove scrollbars, menu bars, and toolbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -267,15 +236,6 @@ does not reflect any dependancies or 'built in' packages.")
 (defun my-csv-hook ()
   (when (string= (file-name-extension buffer-file-name) "csv")
     (read-only-mode)))
-
-;; Golang
-(require 'go-eldoc)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-(add-hook 'before-save-hook 'gofmt-before-save)
-(setq gofmt-command "goimports")
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(ac-config-default)
 
 ;; Helm
 (require 'helm)
@@ -339,53 +299,6 @@ does not reflect any dependancies or 'built in' packages.")
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;; Org Mode
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
-(setq diary-file "~/.emacs.d/diary")
-(setq org-agenda-include-diary t)
-(setq org-log-done 'time)
-(setq org-src-fontify-natively t)
-(setq org-default-notes-file "~/.emacs.d/notes.org")
-(setq org-agenda-files '("~/.emacs.d/notes.org" "~/Dropbox/OrgMode/"))
-
-;; This is slow but works, TODO - Speed this up
-;; (setq browse-url-browser-function 'browse-url-generic
-;;       browse-url-generic-program "google-chrome")
-
-(setq org-capture-templates
-      '(("w" "Work captures")
-	("ws" "Work Schedule" entry (file "~/Dropbox/OrgMode/work.org")
-	 "* %?\n  %i\n  %a")
-	("wt" "Work TODO" entry (file "~/Dropbox/OrgMode/work.org")
-	 "* TODO %?\n  %i\n  %a")
-	("p" "Personal captures")
-	("ps" "Personal Schedule" entry (file "~/Dropbox/OrgMode/personal.org")
-	 "* %?\n  %i\n %a")
-	("pt" "Personal TODO" entry (file "~/Dropbox/OrgMode/personal.org")
-	 "* TODO %?\n  %i\n  %a")
-	("s" "School captures")
-	("ss" "School Schedule" entry (file "~/Dropbox/OrgMode/school.org")
-	 "* %?\n  %i\n  %a")
-	("st" "School TODO" entry (file "~/Dropbox/OrgMode/school.org")
-	 "* TODO %?\n  %i\n  %a")))
-
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((java       . t)
-   (js         . t)
-   (sql        . t)
-   (emacs-lisp . t)
-   (latex      . t)
-   (lisp       . t)
-   (org        . t)
-   (perl       . t)
-   (python     . t)
-   (sh         . t)))
 
 
 ;;;; Custom functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -465,10 +378,6 @@ This will first empty the kill-ring (clipboard)"
 ;;
 
 (if (eq system-type 'windows-nt)
-    (setq tramp-default-method "plink")
-  (setq tramp-default-method "ssh"))
-
-(if (eq system-type 'windows-nt)
     (setenv "PATH"
 	    (concat
 	     "C:\\cygwin64\\bin;"
@@ -482,9 +391,7 @@ This will first empty the kill-ring (clipboard)"
 (add-hook 'text-mode-hook 'linum-mode)
 (add-hook 'text-mode-hook 'toggle-truncate-lines)
 (add-hook 'org-mode-hook 'turn-on-font-lock)
-(add-hook 'go-mode-hook 'linum-mode)
 (add-hook 'sh-mode-hook 'linum-mode)
-(add-hook 'powershell-mode-hook 'linum-mode)
 
 
 ;;;; Custom keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
