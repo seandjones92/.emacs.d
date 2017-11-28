@@ -165,10 +165,12 @@ does not reflect any dependancies or 'built in' packages.")
 (setq my-packages '(auto-complete
 		    csv-nav
 		    helm
+		    helm-projectile
 		    hlinum
 		    magit
 		    markdown-mode
-		    multiple-cursors))
+		    multiple-cursors
+		    projectile))
 
 ;; Linux packages
 (defun linux-packages ()
@@ -300,6 +302,9 @@ does not reflect any dependancies or 'built in' packages.")
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
+;; Projectile
+(projectile-mode)
+
 
 ;;;; Custom functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -376,6 +381,9 @@ This will first empty the kill-ring (clipboard)"
 ;; This section has configurations to make this init file function
 ;; properly in a windows environment.
 ;;
+
+(if (eq system-type 'windows-nt)
+    (setq default-directory "C:\\Users\\jonessean\\"))
 
 (if (eq system-type 'windows-nt)
     (setenv "PATH"
