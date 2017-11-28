@@ -43,16 +43,15 @@
 ;;
 ;; 'systemctl <action> --user emacs.service'
 
+;; Prevent encoding prompt at start
+(set-language-environment "UTF-8")
 
-;; Repositories
-(require 'package)
-(add-to-list
- 'package-archives
- '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-
-;; Refresh package list
-(package-refresh-contents)
+;; check if internet is available
+(if (eq system-type 'windows-nt)
+    (defun internet-up ()
+	(call-process "ping" nil nil nil "-n" "1" "www.google.com"))
+  (defun internet-up ()
+      (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
 
 ;; Define package list
 (setq my-packages '(auto-complete
@@ -64,11 +63,23 @@
 		    multiple-cursors
 		    projectile))
 
-;; ;; Confirm / Install packages
-(dolist (package my-packages)
-  (if (ignore-errors (require package))
-      (message "%s is already installed..." package)
-    (package-install package)))
+;; Package management
+(defun auto-package-mgmt ()
+  "Install my packages"
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/") t)
+  (package-initialize)
+  (package-refresh-contents)
+  (dolist (package my-packages)
+    (if (ignore-errors (require package))
+	(message "%s is already installed..." package)
+      (package-install package))))
+
+;; package management with internet check
+(if (internet-up)
+    (auto-package-mgmt))
 
 ;; Remove scrollbars, menu bars, and toolbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -92,81 +103,14 @@
 (setq show-paren-style 'parenthesis)
 (show-paren-mode 1)
 
-;; Highlight line number
-(require 'hlinum)
-(hlinum-activate)
-
 ;; Truncate lines
 (set-default 'truncate-lines t)
 
 ;; Initial screen
 (setq inhibit-startup-screen t)
 
-;; Helm
-(require 'helm)
-(require 'helm-config)
 
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x x") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-c h o") 'helm-occur)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(if (eq system-type 'windows-nt)
-    (global-set-key (kbd "C-c h w") 'helm-w32-launcher))
-
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z") 'helm-select-action)
-
-(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
-
-(when (executable-find "ack-grep")
-  (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-        helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
-
-(helm-autoresize-mode 1)
-(setq helm-autoresize-max-height 65)
-
-(setq helm-split-window-in-side-p t
-      helm-move-to-line-cycle-in-source t
-      helm-ff-search-library-in-sexp t
-      helm-scroll-amount 8
-      helm-ff-file-name-history-recentf t)
-
-(setq helm-M-x-fuzzy-match t
-      helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match t
-      helm-semantic-fuzzy-match t
-      helm-imenu-fuzzy-match t
-      helm-apropos-fuzzy-match t
-      helm-lisp-fuzzy-completion t
-      helm-mode-fuzzy-match t
-      helm-completion-in-region-fuzzy-match t)
-
-(helm-mode 1)
-
-;; iSpell
-(setq ispell-dictionary "american")
-
-;; Magit
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
-
-;; Mulitple cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-
-;; Projectile
-(projectile-mode)
+;;;; FUNCTIONS
 
 (defun dired-show-only (regexp)
   "Only show files matching the regexp."
@@ -244,3 +188,76 @@ This will first empty the kill-ring (clipboard)"
 
 ;; Enabled bindings
 (put 'narrow-to-page 'disabled nil)
+
+;;;; PACKAGES
+;; eval after load
+
+;; Helm
+(require 'helm)
+(require 'helm-config)
+
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+(global-set-key (kbd "M-x") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+(global-set-key (kbd "C-x x") 'helm-mini)
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+(global-set-key (kbd "C-c h o") 'helm-occur)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(if (eq system-type 'windows-nt)
+    (global-set-key (kbd "C-c h w") 'helm-w32-launcher))
+
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+(define-key helm-map (kbd "C-z") 'helm-select-action)
+
+(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+
+(when (executable-find "curl")
+  (setq helm-google-suggest-use-curl-p t))
+
+(when (executable-find "ack-grep")
+  (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
+        helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+
+(helm-autoresize-mode 1)
+(setq helm-autoresize-max-height 65)
+
+(setq helm-split-window-in-side-p t
+      helm-move-to-line-cycle-in-source t
+      helm-ff-search-library-in-sexp t
+      helm-scroll-amount 8
+      helm-ff-file-name-history-recentf t)
+
+(setq helm-M-x-fuzzy-match t
+      helm-buffers-fuzzy-matching t
+      helm-recentf-fuzzy-match t
+      helm-semantic-fuzzy-match t
+      helm-imenu-fuzzy-match t
+      helm-apropos-fuzzy-match t
+      helm-lisp-fuzzy-completion t
+      helm-mode-fuzzy-match t
+      helm-completion-in-region-fuzzy-match t)
+
+(helm-mode 1)
+
+;; iSpell
+(setq ispell-dictionary "american")
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+
+;; Mulitple cursors
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+;; Projectile
+(projectile-mode)
+
+;; Highlight line number
+(require 'hlinum)
+(hlinum-activate)
