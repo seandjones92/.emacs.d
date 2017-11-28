@@ -3,7 +3,6 @@
 ;; By: Sean Jones
 ;; Started: 7/25/16
 
-
 ;;;; Copyright and License ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; © Copyright 2016 Sean Jones
@@ -21,54 +20,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
-;;;; Instructions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Welcome to my Emacs configuration.
-;;
-;; The organization of this config uses a single, large file broken
-;; into 'pages'. Each 'page' contains a category or type of
-;; configuration.
-;;
-;; There are two indicators of pages. The first is a comment
-;; starting with four semi-colons (;;;;). The second is (^L).
-;; The comment line is to dilimit pages visually while the (^L)
-;; character is to add functionality to the pages. Below is a brief
-;; introduction to using pages.
-;;
-;; First you may wish to create additional pages or redefine the pages
-;; currently in place. To create the (^L) character in a way that is
-;; functional use the key chord 'C-q C-l'.
-;;
-;; Next is how to edit pages without distraction. Place the cursor
-;; between two page delimiters and use the key chord 'C-x n p' or
-;; evaluate (narrow-to-page). This will take you to a buffer that
-;; edits the area between two page delimiters. To leave this special
-;; buffer and return to the file in its entirety use the key chord
-;; 'C-x n w' or evaluate (widen).
-;;
-;; You can use these functional delimiters in other useful ways.
-;; To jump forward a page you would use 'C-x ]' or (forward-page).
-;; To jump backwords you would use 'C-x [' or (backward-page).
-;; There are several other useful commands related to pages I will
-;; not describe here. Use 'C-h a' "page" <RET> to get a list of
-;; functions related to pages.
-;;
-;; A note on require. In this config file I use the convention of
-;; requiring a package directly before the configuration that needs
-;; it. This keeps the file understandable. Why is this package
-;; required? Look at the line below and there's your answer.
-
-
 ;;;; Systemd Unit Configuration for Emacs Daemon ;;;;;;;;;;;;;;;;;;;;;
-;;
-;; The Emacs daemon is one of my favorite features. On a system with
-;; the traditional linux init system this is straight forward to
-;; use. On a machine utilizing Systemd this is still easy but requires
-;; the use of a Unit file, which is not provided in Emacs. Because of
-;; this I like to keep a usable template in my config so I don't have
-;; to hunt one down on the web or try to remember all the things a
-;; good Unit file should have.
 ;;
 ;; Place this in (~/.config/systemd/user/emacs.service).
 ;;
@@ -89,67 +41,8 @@
 ;;
 ;; ------------------------------------------------------------------
 ;;
-;; You can then use the command:
-;;
-;;     'systemctl <action> --user emacs.service'
-;;
-;; In this command '<action>' can be either start, stop, restart,
-;; enable, or disable. Once the daemon is running you can launch an
-;; emacs client with "emacsclient -c".
+;; 'systemctl <action> --user emacs.service'
 
-
-;;;; Variables ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This section is dedicated to declaring and defining my custom
-;; variables. The reason for this is to ensure that my configuration
-;; is documented in a way that is consistant with the rest of
-;; Emacs. Good documentation is the best!
-
-(defvar my-packages nil
-  "List of packages that should always be present for my configuration.
-
-This list is not indicative of all packages that are
-present. This list only defines what is explicitly installed. It
-does not reflect any dependancies or 'built in' packages.")
-
-
-;;;; Package Management ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This section is for package management. There are four persistant
-;; subsections: Repositories, Refreash package content, Package lists
-;; and Auto-install packages. The repositories subsection defines
-;; additional repos for Emacs to use and then initializes
-;; 'package'. The refresh package content subsection gets all of the
-;; packages from all of the configured repos and makes them available
-;; for install. The Define package list subsection defines a list of
-;; packages that should always be present. The Auto-install subsection
-;; looks at the list of packages that should always be present and
-;; checks that they are. If the package is already present nothing is
-;; done, if the package is not present it will automatically be
-;; installed.
-;;
-;; TODO - Package management should be able to fail gracefully. If a
-;; repo is down initialization should continue as normal. If packages
-;; are missing and cannot be installed the init should adapt.
-;;
-;; try (network-interface-list)
-
-;; Proxy
-;;
-;; Put this in (~/.emacs.d/proxy-info.el) and fill in the blanks with
-;; your proxy information.
-;;
-;; ------------------------------------------------------------------
-;;
-;; (setq url-proxy-service '(("http"  . "")
-;;                           ("https" . "")
-;; 		             ("ftp"   . "")))
-;;
-;; ------------------------------------------------------------------
-;;
-;; Once that is in place uncomment the 'load-file' line below
-;;
-;; (load-file "~/.emacs.d/proxy-info.el")
 
 ;; Repositories
 (require 'package)
@@ -163,7 +56,6 @@ does not reflect any dependancies or 'built in' packages.")
 
 ;; Define package list
 (setq my-packages '(auto-complete
-		    csv-nav
 		    helm
 		    helm-projectile
 		    hlinum
@@ -172,25 +64,11 @@ does not reflect any dependancies or 'built in' packages.")
 		    multiple-cursors
 		    projectile))
 
-;; Linux packages
-(defun linux-packages ()
-  "This function adds linux specific packages to the install list"
-  (add-to-list 'my-packages 'helm-systemd t))
-(if (eq system-type 'gnu/linux)
-    (linux-packages))
-
 ;; ;; Confirm / Install packages
 (dolist (package my-packages)
   (if (ignore-errors (require package))
       (message "%s is already installed..." package)
     (package-install package)))
-
-
-;;;; Look and Feel ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This page is for configuration that changes either the look of
-;; Emacs or the basic functionality. Things such as defining a theme,
-;; changing bell behavior, initial screen, etc...
 
 ;; Remove scrollbars, menu bars, and toolbars
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -223,21 +101,6 @@ does not reflect any dependancies or 'built in' packages.")
 
 ;; Initial screen
 (setq inhibit-startup-screen t)
-(setq initial-scratch-message ";; Scratch buffer\n\n")
-
-
-;;;; Package dependant configuration ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; These are configurations that depend on an external package to be
-;; installed. Configurations here can be anything from keybindings to
-;; variables to functions.
-
-;; CSV mode
-(require 'csv-nav)
-(add-hook 'find-file-hooks 'my-csv-hook)
-(defun my-csv-hook ()
-  (when (string= (file-name-extension buffer-file-name) "csv")
-    (read-only-mode)))
 
 ;; Helm
 (require 'helm)
@@ -305,11 +168,6 @@ does not reflect any dependancies or 'built in' packages.")
 ;; Projectile
 (projectile-mode)
 
-
-;;;; Custom functions ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; My custom functions
-
 (defun dired-show-only (regexp)
   "Only show files matching the regexp."
   (interactive "sFiles to show (regexp): ")
@@ -323,23 +181,6 @@ does not reflect any dependancies or 'built in' packages.")
   (ignore-errors (tramp-cleanup-all-connections))
   (ignore-errors (tramp-cleanup-all-buffers))
   (message "Don't you know I'm local?!"))
-
-(defun proxy ()
-  "set http_proxy env variable"
-  (interactive)
-  (if (y-or-n-p "Does this proxy require a login? ")
-      (let ((hostname (read-from-minibuffer "What is the hostname? "))
-	    (port     (read-from-minibuffer "What is the port? "))
-	    (user     (read-from-minibuffer "What is the username? "))
-	    (password (read-from-minibuffer "What is the password? ")))
-	(setenv "http_proxy" (concat user ":" password "@" hostname ":" port))
-	(setenv "https_proxy" (concat user ":" password "@" hostname ":" port))
-	(setenv "ftp_proxy" (concat user ":" password "@" hostname ":" port)))
-    (let ((hostname (read-from-minibuffer "What is the hostname? "))
-	  (port     (read-from-minibuffer "What is the port? ")))
-      (setenv "http_proxy" (concat hostname ":" port))
-      (setenv "https_proxy" (concat hostname ":" port))
-      (setenv "ftp_proxy" (concat hostname ":" port)))))
 
 (defun save-buffer-clean ()
   "Strip the trailing whitespace from a file and save it."
@@ -375,13 +216,7 @@ This will first empty the kill-ring (clipboard)"
     (switch-to-buffer-other-window origin)
     (message "Public key copied to clipboard"))))
 
-
 ;;;; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; This section has configurations to make this init file function
-;; properly in a windows environment.
-;;
-
 (if (eq system-type 'windows-nt)
     (setq default-directory "C:\\Users\\jonessean\\"))
 
@@ -391,7 +226,6 @@ This will first empty the kill-ring (clipboard)"
 	     "C:\\cygwin64\\bin;"
 	     (getenv "PATH"))))
 
-
 ;;;; Custom hooks/modes  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 
@@ -401,12 +235,7 @@ This will first empty the kill-ring (clipboard)"
 (add-hook 'org-mode-hook 'turn-on-font-lock)
 (add-hook 'sh-mode-hook 'linum-mode)
 
-
 ;;;; Custom keybindings ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; The subsection of this page titled 'Enabled bindings' is for
-;; keybindings that are disabled by default in emacs that I have
-;; chosen to enable.
 
 (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
 (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
