@@ -250,15 +250,19 @@ This will first empty the kill-ring (clipboard)"
     (my-magit-setup))
 
 ;; Mulitple cursors
-(require 'multiple-cursors)
-(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(defun my-multicursor-setup ()
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+(if (require 'multiple-cursors)
+    (my-multicursor-setup))
 
 ;; Projectile
-(projectile-mode)
+(if (require 'projectile)
+    (projectile-mode))
 
 ;; Highlight line number
-(require 'hlinum)
-(hlinum-activate)
+(if (require 'hlinum)
+    (hlinum-activate))
