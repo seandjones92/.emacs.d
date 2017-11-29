@@ -275,17 +275,3 @@ This will first empty the kill-ring (clipboard)"
 
 (if (require 'moe-theme)
     (my-moetheme-setup))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (multiple-cursors moe-theme markdown-mode magit hlinum helm-projectile csv-nav auto-complete))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

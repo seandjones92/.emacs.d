@@ -7,3 +7,9 @@
 #+PROPERTY: header-args :tangle yes
 
 * About
+
+This configuration is based off of the system shown [[https://github.com/larstvei/dot-emacs][here]].
+
+#+BEGIN_SRC sh :tangle no
+  git clone https://github.com/seandjones92/Emacs.git ~/.emacs.d
+#+END_SRC
