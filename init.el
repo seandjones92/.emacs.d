@@ -46,6 +46,10 @@
 ;; Prevent encoding prompt at start
 (set-language-environment "UTF-8")
 
+;;;; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(if (eq system-type 'windows-nt)
+    (setq default-directory "C:\\Users\\jonessean\\"))
+
 ;; check if internet is available
 (if (eq system-type 'windows-nt)
     (defun internet-up ()
@@ -64,12 +68,13 @@
 		    projectile))
 
 ;; Package management
+(require 'package)
+(add-to-list
+ 'package-archives
+ '("melpa" . "http://melpa.org/packages/") t)
+
 (defun auto-package-mgmt ()
   "Install my packages"
-  (require 'package)
-  (add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.org/packages/") t)
   (package-initialize)
   (package-refresh-contents)
   (dolist (package my-packages)
@@ -103,6 +108,9 @@
 (setq show-paren-style 'parenthesis)
 (show-paren-mode 1)
 
+;; iSpell
+(setq ispell-dictionary "american")
+
 ;; Truncate lines
 (set-default 'truncate-lines t)
 
@@ -120,11 +128,10 @@
   (dired-do-kill-lines))
 
 (defun go-local ()
-  "Clean up all remote connections and be a little funny about it."
+  "Clean up all remote connections."
   (interactive)
   (ignore-errors (tramp-cleanup-all-connections))
-  (ignore-errors (tramp-cleanup-all-buffers))
-  (message "Don't you know I'm local?!"))
+  (ignore-errors (tramp-cleanup-all-buffers)))
 
 (defun save-buffer-clean ()
   "Strip the trailing whitespace from a file and save it."
@@ -143,32 +150,22 @@
   "Copy '~/.ssh/id_rsa.pub' to clipboard.
 This will first empty the kill-ring (clipboard)"
   (interactive)
-(if (= (count-windows) 1)
+  (if (= (count-windows) 1)
+      (let ((origin (current-buffer)))
+	(setq kill-ring nil)
+	(find-file "~/.ssh/id_rsa.pub")
+	(mark-page)
+	(kill-ring-save (point-min) (point-max))
+	(kill-buffer)
+	(message "Public key copied to clipboard"))
     (let ((origin (current-buffer)))
       (setq kill-ring nil)
-      (find-file "~/.ssh/id_rsa.pub")
+      (find-file-other-window "~/.ssh/id_rsa.pub")
       (mark-page)
       (kill-ring-save (point-min) (point-max))
       (kill-buffer)
-      (message "Public key copied to clipboard"))
-  (let ((origin (current-buffer)))
-    (setq kill-ring nil)
-    (find-file-other-window "~/.ssh/id_rsa.pub")
-    (mark-page)
-    (kill-ring-save (point-min) (point-max))
-    (kill-buffer)
-    (switch-to-buffer-other-window origin)
-    (message "Public key copied to clipboard"))))
-
-;;;; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(if (eq system-type 'windows-nt)
-    (setq default-directory "C:\\Users\\jonessean\\"))
-
-(if (eq system-type 'windows-nt)
-    (setenv "PATH"
-	    (concat
-	     "C:\\cygwin64\\bin;"
-	     (getenv "PATH"))))
+      (switch-to-buffer-other-window origin)
+      (message "Public key copied to clipboard"))))
 
 ;;;; Custom hooks/modes  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -193,60 +190,64 @@ This will first empty the kill-ring (clipboard)"
 ;; eval after load
 
 ;; Helm
-(require 'helm)
-(require 'helm-config)
+(defun my-helm-setup ()
+  (require 'helm-config)
 
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-unset-key (kbd "C-x c"))
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "C-x x") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(global-set-key (kbd "C-c h o") 'helm-occur)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(if (eq system-type 'windows-nt)
-    (global-set-key (kbd "C-c h w") 'helm-w32-launcher))
+  (global-set-key (kbd "C-c h") 'helm-command-prefix)
+  (global-unset-key (kbd "C-x c"))
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "C-x x") 'helm-mini)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (global-set-key (kbd "C-c h o") 'helm-occur)
+  (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+  (if (eq system-type 'windows-nt)
+      (global-set-key (kbd "C-c h w") 'helm-w32-launcher))
 
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-(define-key helm-map (kbd "C-z") 'helm-select-action)
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+  (define-key helm-map (kbd "C-z") 'helm-select-action)
 
-(add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+  (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
-(when (executable-find "curl")
-  (setq helm-google-suggest-use-curl-p t))
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t))
 
-(when (executable-find "ack-grep")
-  (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-        helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+  (when (executable-find "ack-grep")
+    (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
+	  helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
 
-(helm-autoresize-mode 1)
-(setq helm-autoresize-max-height 65)
+  (helm-autoresize-mode 1)
+  (setq helm-autoresize-max-height 65)
 
-(setq helm-split-window-in-side-p t
-      helm-move-to-line-cycle-in-source t
-      helm-ff-search-library-in-sexp t
-      helm-scroll-amount 8
-      helm-ff-file-name-history-recentf t)
+  (setq helm-split-window-in-side-p t
+	helm-move-to-line-cycle-in-source t
+	helm-ff-search-library-in-sexp t
+	helm-scroll-amount 8
+	helm-ff-file-name-history-recentf t)
 
-(setq helm-M-x-fuzzy-match t
-      helm-buffers-fuzzy-matching t
-      helm-recentf-fuzzy-match t
-      helm-semantic-fuzzy-match t
-      helm-imenu-fuzzy-match t
-      helm-apropos-fuzzy-match t
-      helm-lisp-fuzzy-completion t
-      helm-mode-fuzzy-match t
-      helm-completion-in-region-fuzzy-match t)
+  (setq helm-M-x-fuzzy-match t
+	helm-buffers-fuzzy-matching t
+	helm-recentf-fuzzy-match t
+	helm-semantic-fuzzy-match t
+	helm-imenu-fuzzy-match t
+	helm-apropos-fuzzy-match t
+	helm-lisp-fuzzy-completion t
+	helm-mode-fuzzy-match t
+	helm-completion-in-region-fuzzy-match t)
 
-(helm-mode 1)
+  (helm-mode 1))
 
-;; iSpell
-(setq ispell-dictionary "american")
+(if (require 'helm)
+    (my-helm-setup))
 
 ;; Magit
-(global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
+(defun my-magit-setup ()
+  (global-set-key (kbd "C-x g") 'magit-status)
+  (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup))
+
+(if (require 'magit)
+    (my-magit-setup))
 
 ;; Mulitple cursors
 (require 'multiple-cursors)
