@@ -8,19 +8,39 @@
 
 * About
 
-This configuration is based off of the system shown [[https://github.com/larstvei/dot-emacs][here]].
+This configuration is based off of the system shown [[https://github.com/larstvei/dot-emacs][here]]. The idea is
+that the configuration serves as it's own plain english
+documentation.
 
 Install with:
 #+BEGIN_SRC sh :tangle no
-  git clone https://github.com/seandjones92/Emacs.git ~/.emacs.d
+  git clone git@github.com:seandjones92/Emacs.git ~/.emacs.d
+#+END_SRC
+
+Once the repo is cloned launch Emacs to generate the running
+config. After that is done, execute the following command to prevent
+the dynamic configuration from being tracked in git:
+#+BEGIN_SRC sh :tangle no
+  git update-index --assume-unchanged init.el
+#+END_SRC
+
+If you want to make changes to the repo-version of init.el start tracking again with:
+#+BEGIN_SRC sh :tangle no
+  git update-index --no-assume-unchanged init.el
 #+END_SRC
 
 * Configurations (Internal)
+This section contains all of the configurations that do not rely on
+external packages. If the configuration cannot be accomplished by a
+standalone Emacs installation with no internet connection then it does
+not belong here.
 
 ** Meta
 
 All changes to the config should be made to =init.org=, *not* in
-=init.el=. The =init.el= file is regularly overwritten.
+=init.el=. The running configuration is generated at first launch and
+whenever =init.org= is saved from within Emacs. Any changes made
+directly to =init.el= will be lost, it is regenerated regularly.
 
 The initial =init.el= looks like this:
 #+BEGIN_SRC emacs-lisp :tangle no
@@ -38,17 +58,7 @@ The initial =init.el= looks like this:
   (byte-compile-file (concat user-emacs-directory "init.el"))
 #+END_SRC
 
-It tangles the org-file, so that this file is overwritten with the actual configuration.
-
-There is no reason to track the init.el that is generated; by running the following command git will not bother tracking it:
-#+BEGIN_SRC sh :tangle no
-  git update-index --assume-unchanged init.el
-#+END_SRC
-
-If one wishes to make changes to the repo-version of init.el start tracking again with:
-#+BEGIN_SRC sh :tangle no
-  git update-index --no-assume-unchanged init.el
-#+END_SRC
+It tangles the org-file, replacing itself with the actual configuration.
 
 To make sure that the encoding prompt is not shown on launch we start
 the init with this line:
@@ -56,14 +66,8 @@ the init with this line:
   (set-language-environment "UTF-8")
 #+END_SRC
 
-The =init.el= file should (after the first run) mirror the source
-blocks in the =init.org=. We can use =C-c C-v t= to run
-=org-babel-tangle=, which extracts the code blocks from the current
-file into a source-specific file (in this case a =.el= file).
-
-To avoid doing this each time a change is made we can add a function
-to the =after-save-hook= ensureing to always tangle and byte-compile
-the =org= document after changes.
+The function defined below generates a new =init.el= each time
+=init.org= is saved from within Emacs.
 
 #+BEGIN_SRC emacs-lisp
   (defun tangle-init ()
@@ -90,76 +94,18 @@ put it in =private.el=, it will be loaded if it exists.
 #+END_SRC
 
 ** Windows
-This section covers any Windows specific configuration before
-continuing.
+This section is for defining any behavior needed for the configuration
+to work properly on Windows. Unfortunately I have to use Windows at
+work so these configurations are needed for me.
 
+Set the proper starting directory, this allows for flexability with
+the install location of Emacs.
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
       (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\")))
 #+END_SRC
 
-** Packages
-This section goes over the configuration of package management. To
-start this off we need to define a few things. First we will configure
-the repositories we wish to use:
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
-  (add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.org/packages/") t)
-#+END_SRC
-
-Next we define a function to determine if we have access to the internet:
-#+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (defun internet-up ()
-          (call-process "ping" nil nil nil "-n" "1" "www.google.com"))
-    (defun internet-up ()
-        (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
-#+END_SRC
-
-Next we define a list containing all of the packages that should be
-installed to take full advantage of this configuration. The Silver
-Searcher should be installed to use the =ag= and =helm-ag= packages.
-#+BEGIN_SRC emacs-lisp
-  (setq my-packages '(ag
-                      auto-complete
-                      helm
-                      helm-ag
-                      helm-projectile
-                      hlinum
-                      magit
-                      markdown-mode
-                      moe-theme
-                      multiple-cursors
-                      projectile))
-#+END_SRC
-
-The next function define is to loop through the provided list of
-packages and to check if they are present. If not, the package is
-installed:
-#+BEGIN_SRC emacs-lisp
-  (defun auto-package-mgmt ()
-    "Install my packages"
-    (package-initialize)
-    (package-refresh-contents)
-    (dolist (package my-packages)
-      (if (ignore-errors (require package))
-          (message "%s is already installed..." package)
-        (package-install package))))
-#+END_SRC
-
-To tie it all together we bring in the logic. If we have access to the
-internet loop through the list of packages to ensure they are
-installed. If we do not have access to the internet nothing is
-done. Package dependent configuration is handled gracefully so if
-there is no internet there should be no issue.
-#+BEGIN_SRC emacs-lisp
-  (if (internet-up)
-      (auto-package-mgmt))
-#+END_SRC
-
-** Package independent settings
+** Base defaults
 The settings defined here do not require anything to be
 installed. This is just the base config for emacs.
 
@@ -262,8 +208,7 @@ This is where I define custom functions.
 #+END_SRC
 
 ** Mode hooks
-This is where mode hooks are manipulated. These modes should not
-depend on any external packages.
+This is where mode hooks are manipulated.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'auto-fill-mode)
   (add-hook 'text-mode-hook 'linum-mode)
@@ -274,8 +219,8 @@ depend on any external packages.
 #+END_SRC
 
 ** Keybindings
-Configure keybindings, again, this should not rely on external
-packages.
+
+This is where I define my custom keybindings.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
   (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
@@ -292,6 +237,69 @@ Enable keybindings that are disabled by default:
 Configurations after this point rely on external packages. Anything
 added from here on out should be designed to fail gracefully in case
 the package is not available.
+
+** Packages
+This section goes over the configuration of package management. To
+start this off we need to define a few things. First we will configure
+the repositories we wish to use:
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/") t)
+#+END_SRC
+
+Next we define a function to determine if we have access to the
+internet. We need to wrap this in a check for Windows since =ping=
+options behave differently.
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (defun internet-up ()
+          (call-process "ping" nil nil nil "-n" "1" "www.google.com"))
+    (defun internet-up ()
+        (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
+#+END_SRC
+
+Next we define a list containing all of the packages that should be
+installed to take full advantage of this configuration. The Silver
+Searcher should be installed to use the =ag= and =helm-ag= packages.
+#+BEGIN_SRC emacs-lisp
+  (setq my-packages '(ag
+                      auto-complete
+                      helm
+                      helm-ag
+                      helm-projectile
+                      hlinum
+                      magit
+                      markdown-mode
+                      moe-theme
+                      multiple-cursors
+                      projectile))
+#+END_SRC
+
+The next function defined is to loop through the provided list of
+packages and to check if they are present. If not, the package is
+installed:
+#+BEGIN_SRC emacs-lisp
+  (defun auto-package-mgmt ()
+    "Install my packages"
+    (package-initialize)
+    (package-refresh-contents)
+    (dolist (package my-packages)
+      (if (ignore-errors (require package))
+          (message "%s is already installed..." package)
+        (package-install package))))
+#+END_SRC
+
+To tie it all together we bring in the logic. If we have access to the
+internet loop through the list of packages to ensure they are
+installed. If we do not have access to the internet nothing is
+done. Package dependent configuration is handled gracefully so if
+there is no internet there should be no issue.
+#+BEGIN_SRC emacs-lisp
+  (if (internet-up)
+      (auto-package-mgmt))
+#+END_SRC
 
 ** Helm
 
