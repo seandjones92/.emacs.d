@@ -303,6 +303,25 @@ there is no internet there should be no issue.
       (auto-package-mgmt))
 #+END_SRC
 
+** Auto Complete
+Here is where auto complete is configured
+#+BEGIN_SRC emacs-lisp
+  (defun my-autocomplete-setup ()
+    (ac-config-default)
+    (setq-default ac-sources '(ac-source-filename
+                               ac-source-functions
+                               ac-source-yasnippet
+                               ac-source-variables
+                               ac-source-symbols
+                               ac-source-features
+                               ac-source-abbrev
+                               ac-source-words-in-same-mode-buffers
+                               ac-source-dictionary)))
+
+  (if (require 'auto-complete-config)
+      (my-autocomplete-setup))
+#+END_SRC
+
 ** Helm
 
 #+BEGIN_SRC emacs-lisp
@@ -405,9 +424,24 @@ there is no internet there should be no issue.
 In order for this to look right the fonts for =all-the-icons= must be
 installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 #+BEGIN_SRC emacs-lisp
+  (defun neotree-project-dir ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((project-dir (projectile-project-root))
+          (file-name (buffer-file-name)))
+      (neotree-toggle)
+      (if project-dir
+          (if (neo-global--window-exists-p)
+              (progn
+                (neotree-dir project-dir)
+                (neotree-find file-name)))
+        (message "Could not find git project root."))))
+
   (defun my-neotree-setup ()
-    (global-set-key (kbd "C-c n") 'neotree-toggle)
-    (setq neo-theme 'icons))
+    (global-set-key (kbd "C-c n") 'neotree-project-dir)
+    (setq neo-theme 'icons)
+    (setq projectile-switch-project-action 'neotree-projectile-action)
+    (setq neo-window-fixed-size nil))
 
   (if (require 'neotree)
       (my-neotree-setup))
