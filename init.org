@@ -342,6 +342,9 @@ the package is not available.
           helm-completion-in-region-fuzzy-match t)
 
     (helm-mode 1))
+
+  (if (require 'helm)
+      (my-helm-setup))
 #+END_SRC
 
 ** Magit
@@ -350,6 +353,9 @@ the package is not available.
   (defun my-magit-setup ()
     (global-set-key (kbd "C-x g") 'magit-status)
     (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup))
+
+  (if (require 'magit)
+      (my-magit-setup))
 #+END_SRC
 
 ** Multiple cursors

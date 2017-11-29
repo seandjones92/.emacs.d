@@ -3,4 +3,7 @@
 
 # Do not ignore these
 !init.el
+!init.org
+!LICENSE
+!README.md
 !.gitignore
