@@ -10,6 +10,419 @@
 
 This configuration is based off of the system shown [[https://github.com/larstvei/dot-emacs][here]].
 
+Install with:
 #+BEGIN_SRC sh :tangle no
   git clone https://github.com/seandjones92/Emacs.git ~/.emacs.d
 #+END_SRC
+
+* Configurations (Internal)
+
+** Meta
+
+All changes to the config should be made to =init.org=, *not* in
+=init.el=. The =init.el= file is regularly overwritten.
+
+The initial =init.el= looks like this:
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; This file replaces itself with the actual configuration at first run.
+
+  ;; We can't tangle without org!
+  (require 'org)
+  ;; Open the configuration
+  (find-file (concat user-emacs-directory "init.org"))
+  ;; tangle it
+  (org-babel-tangle)
+  ;; load it
+  (load-file (concat user-emacs-directory "init.el"))
+  ;; finally byte-compile it
+  (byte-compile-file (concat user-emacs-directory "init.el"))
+#+END_SRC
+
+It tangles the org-file, so that this file is overwritten with the actual configuration.
+
+There is no reason to track the init.el that is generated; by running the following command git will not bother tracking it:
+#+BEGIN_SRC sh :tangle no
+  git update-index --assume-unchanged init.el
+#+END_SRC
+
+If one wishes to make changes to the repo-version of init.el start tracking again with:
+#+BEGIN_SRC sh :tangle no
+  git update-index --no-assume-unchanged init.el
+#+END_SRC
+
+To make sure that the encoding prompt is not shown on launch we start
+the init with this line:
+#+BEGIN_SRC emacs-lisp
+  (set-language-environment "UTF-8")
+#+END_SRC
+
+The =init.el= file should (after the first run) mirror the source
+blocks in the =init.org=. We can use =C-c C-v t= to run
+=org-babel-tangle=, which extracts the code blocks from the current
+file into a source-specific file (in this case a =.el= file).
+
+To avoid doing this each time a change is made we can add a function
+to the =after-save-hook= ensureing to always tangle and byte-compile
+the =org= document after changes.
+
+#+BEGIN_SRC emacs-lisp
+  (defun tangle-init ()
+    "If the current buffer is 'init.org' the code-blocks are tangled, and the tangled file is compiled"
+    (when (equal (buffer-file-name)
+                 (expand-file-name (concat user-emacs-directory "init.org")))
+      ;; Avoid running hooks when tangling
+      (let ((prog-mode-hook nil))
+        (org-babel-tangle)
+        (byte-compile-file (concat user-emacs-directory "init.el")))))
+
+  (add-hook 'after-save-hook 'tangle-init)
+#+END_SRC
+
+If there is anything that should be kept private (not tracked by git)
+put it in =private.el=, it will be loaded if it exists.
+#+BEGIN_SRC emacs-lisp
+  (add-hook
+   'after-init-hook
+   (lambda ()
+     (let ((private-file (concat user-emacs-directory "private.el")))
+       (when (file-exists-p private-file)
+         (load-file private-file)))))
+#+END_SRC
+
+** Windows
+This section covers any Windows specific configuration before
+continuing.
+
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\")))
+#+END_SRC
+
+** Packages
+This section goes over the configuration of package management. To
+start this off we need to define a few things. First we will configure
+the repositories we wish to use:
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/") t)
+#+END_SRC
+
+Next we define a function to determine if we have access to the internet:
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (defun internet-up ()
+          (call-process "ping" nil nil nil "-n" "1" "www.google.com"))
+    (defun internet-up ()
+        (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
+#+END_SRC
+
+Next we define a list containing all of the packages that should be
+installed to take full advantage of this configuration. The Silver
+Searcher should be installed to use the =ag= and =helm-ag= packages.
+#+BEGIN_SRC emacs-lisp
+  (setq my-packages '(ag
+                      auto-complete
+                      helm
+                      helm-ag
+                      helm-projectile
+                      hlinum
+                      magit
+                      markdown-mode
+                      moe-theme
+                      multiple-cursors
+                      projectile))
+#+END_SRC
+
+The next function define is to loop through the provided list of
+packages and to check if they are present. If not, the package is
+installed:
+#+BEGIN_SRC emacs-lisp
+  (defun auto-package-mgmt ()
+    "Install my packages"
+    (package-initialize)
+    (package-refresh-contents)
+    (dolist (package my-packages)
+      (if (ignore-errors (require package))
+          (message "%s is already installed..." package)
+        (package-install package))))
+#+END_SRC
+
+To tie it all together we bring in the logic. If we have access to the
+internet loop through the list of packages to ensure they are
+installed. If we do not have access to the internet nothing is
+done. Package dependent configuration is handled gracefully so if
+there is no internet there should be no issue.
+#+BEGIN_SRC emacs-lisp
+  (if (internet-up)
+      (auto-package-mgmt))
+#+END_SRC
+
+** Package independent settings
+The settings defined here do not require anything to be
+installed. This is just the base config for emacs.
+
+Remove scrollbars, menu bars, and toolbars:
+#+BEGIN_SRC emacs-lisp
+  (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+  (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+#+END_SRC
+
+A quicker 'yes or no' prompt:
+#+BEGIN_SRC emacs-lisp
+  (defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+Disable the system bell:
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+
+Enable column numbers:
+#+BEGIN_SRC emacs-lisp
+  (column-number-mode 1)
+#+END_SRC
+
+Enable better handling of parens, quotes, etc.
+#+BEGIN_SRC emacs-lisp
+  (electric-pair-mode 1)
+  (require 'paren)
+  (setq show-paren-style 'parenthesis)
+  (show-paren-mode 1)
+#+END_SRC
+
+Enable spell checking:
+#+BEGIN_SRC emacs-lisp
+  (setq ispell-dictionary "american")
+#+END_SRC
+
+Disable word wrapping:
+#+BEGIN_SRC emacs-lisp
+  (set-default 'truncate-lines t)
+#+END_SRC
+
+Use =*scratch*= as initial screen:
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-screen t)
+#+END_SRC
+
+** Functions
+This is where I define custom functions.
+
+#+BEGIN_SRC emacs-lisp
+  (defun dired-show-only (regexp)
+    "Only show files matching the regexp."
+    (interactive "sFiles to show (regexp): ")
+    (dired-mark-files-regexp regexp)
+    (dired-toggle-marks)
+    (dired-do-kill-lines))
+
+  (defun go-local ()
+    "Clean up all remote connections."
+    (interactive)
+    (ignore-errors (tramp-cleanup-all-connections))
+    (ignore-errors (tramp-cleanup-all-buffers)))
+
+  (defun save-buffer-clean ()
+    "Strip the trailing whitespace from a file and save it."
+    (interactive)
+    (delete-trailing-whitespace)
+    (save-buffer))
+
+  (defun smart-buffer-kill ()
+    "Kill buffers in a way that makes sense."
+    (interactive)
+    (if (= (count-windows) 1)
+        (kill-buffer)
+      (kill-buffer-and-window)))
+
+  (defun ssh-clip ()
+    "Copy '~/.ssh/id_rsa.pub' to clipboard.
+  This will first empty the kill-ring (clipboard)"
+    (interactive)
+    (if (= (count-windows) 1)
+        (let ((origin (current-buffer)))
+          (setq kill-ring nil)
+          (find-file "~/.ssh/id_rsa.pub")
+          (mark-page)
+          (kill-ring-save (point-min) (point-max))
+          (kill-buffer)
+          (message "Public key copied to clipboard"))
+      (let ((origin (current-buffer)))
+        (setq kill-ring nil)
+        (find-file-other-window "~/.ssh/id_rsa.pub")
+        (mark-page)
+        (kill-ring-save (point-min) (point-max))
+        (kill-buffer)
+        (switch-to-buffer-other-window origin)
+        (message "Public key copied to clipboard"))))
+#+END_SRC
+
+** Mode hooks
+This is where mode hooks are manipulated. These modes should not
+depend on any external packages.
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+  (add-hook 'text-mode-hook 'linum-mode)
+  (add-hook 'text-mode-hook 'toggle-truncate-lines)
+  (add-hook 'org-mode-hook 'turn-on-font-lock)
+  (add-hook 'sh-mode-hook 'linum-mode)
+  (add-hook 'python-mode-hook 'linum-mode)
+#+END_SRC
+
+** Keybindings
+Configure keybindings, again, this should not rely on external
+packages.
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
+  (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
+  (require 'dired)
+  (define-key dired-mode-map [?%?h] 'dired-show-only)
+#+END_SRC
+
+Enable keybindings that are disabled by default:
+#+BEGIN_SRC emacs-lisp
+  (put 'narrow-to-page 'disabled nil)
+#+END_SRC
+
+* Configurations (External)
+Configurations after this point rely on external packages. Anything
+added from here on out should be designed to fail gracefully in case
+the package is not available.
+
+** Helm
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-helm-setup ()
+    (require 'helm-config)
+
+    (global-set-key (kbd "C-c h") 'helm-command-prefix)
+    (global-unset-key (kbd "C-x c"))
+    (global-set-key (kbd "M-x") 'helm-M-x)
+    (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+    (global-set-key (kbd "C-x x") 'helm-mini)
+    (global-set-key (kbd "C-x C-f") 'helm-find-files)
+    (global-set-key (kbd "C-c h o") 'helm-occur)
+    (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+    (if (eq system-type 'windows-nt)
+        (global-set-key (kbd "C-c h w") 'helm-w32-launcher))
+
+    (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-z") 'helm-select-action)
+
+    (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+
+    (when (executable-find "curl")
+      (setq helm-google-suggest-use-curl-p t))
+
+    (when (executable-find "ack-grep")
+      (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
+            helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+
+    (helm-autoresize-mode 1)
+    (setq helm-autoresize-max-height 65)
+
+    (setq helm-split-window-in-side-p t
+          helm-move-to-line-cycle-in-source t
+          helm-ff-search-library-in-sexp t
+          helm-scroll-amount 8
+          helm-ff-file-name-history-recentf t)
+
+    (setq helm-M-x-fuzzy-match t
+          helm-buffers-fuzzy-matching t
+          helm-recentf-fuzzy-match t
+          helm-semantic-fuzzy-match t
+          helm-imenu-fuzzy-match t
+          helm-apropos-fuzzy-match t
+          helm-lisp-fuzzy-completion t
+          helm-mode-fuzzy-match t
+          helm-completion-in-region-fuzzy-match t)
+
+    (helm-mode 1))
+#+END_SRC
+
+** Magit
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-magit-setup ()
+    (global-set-key (kbd "C-x g") 'magit-status)
+    (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup))
+#+END_SRC
+
+** Multiple cursors
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-multicursor-setup ()
+    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
+
+  (if (require 'multiple-cursors)
+      (my-multicursor-setup))
+#+END_SRC
+
+** Projectile
+
+#+BEGIN_SRC emacs-lisp
+  (if (require 'projectile)
+      (projectile-mode))
+#+END_SRC
+
+** Highlight line number
+
+#+BEGIN_SRC emacs-lisp
+  (if (require 'hlinum)
+      (hlinum-activate))
+#+END_SRC
+
+** Themeing
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-moetheme-setup ()
+    (moe-dark))
+
+  (if (require 'moe-theme)
+      (my-moetheme-setup))
+#+END_SRC
+
+* Systemd unit file
+Here is an example of a unit file for the emacs daemon. Place this in
+=~/.config/systemd/user/emacs.service=.
+
+#+BEGIN_SRC sh :tangle no
+  [Unit]
+  Description=Emacs: the extensible, self-documenting text editor
+
+  [Service]
+  Type=forking
+  ExecStart=/usr/bin/emacs --daemon
+  ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+  Environment=SSH_AUTH_DOCK=%t/keyring/ssh
+  Restart=always
+
+  [Install]
+  WantedBy=default.target
+#+END_SRC
+
+Once this is created run =systemctl enable --user emacs.service= to
+enable the daemon, and =systemctl start --user emacs.service=
+
+* Licensing
+© Copyright 2016 Sean Jones
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

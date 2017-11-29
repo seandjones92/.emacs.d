@@ -58,8 +58,10 @@
       (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
 
 ;; Define package list
-(setq my-packages '(auto-complete
+(setq my-packages '(ag
+		    auto-complete
 		    helm
+		    helm-ag
 		    helm-projectile
 		    hlinum
 		    magit
