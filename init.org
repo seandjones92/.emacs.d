@@ -246,7 +246,8 @@ the repositories we wish to use:
   (require 'package)
   (add-to-list
    'package-archives
-   '("melpa" . "http://melpa.org/packages/") t)
+   '("elpy" . "https://jorgenschaefer.github.io/packages/")
+   '("melpa" . "http://melpa.org/packages/")); t)
 #+END_SRC
 
 Next we define a function to determine if we have access to the
@@ -267,6 +268,7 @@ Searcher should be installed to use the =ag= and =helm-ag= packages.
   (setq my-packages '(ag
                       all-the-icons
                       auto-complete
+                      elpy
                       helm
                       helm-ag
                       helm-projectile
@@ -320,6 +322,15 @@ Here is where auto complete is configured
 
   (if (require 'auto-complete-config)
       (my-autocomplete-setup))
+#+END_SRC
+
+** Elpy
+Elpy is used to get IDE like functionality for Python. To get full use
+of this package run =pip install jedi flake8 importmagic autopep8=.
+
+#+BEGIN_SRC emacs-lisp
+  (package-initialize)
+  (elpy-enable)
 #+END_SRC
 
 ** Helm
@@ -406,6 +417,7 @@ Here is where auto complete is configured
 #+BEGIN_SRC emacs-lisp
   (defun my-projectile-setup ()
     (projectile-mode)
+    (projectile-discover-projects-in-directory default-directory)
     (global-set-key (kbd "C-c p C-s") 'helm-projectile-ag)
     (global-set-key (kbd "C-c p C-p") 'helm-projectile-switch-project))
 
@@ -439,9 +451,11 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 
   (defun my-neotree-setup ()
     (global-set-key (kbd "C-c n") 'neotree-project-dir)
-    (setq neo-theme 'icons)
+    (if (eq system-type 'windows-nt)
+        (setq neo-theme 'arrow)
+      (setq neo-theme 'icons))
     (setq projectile-switch-project-action 'neotree-projectile-action)
-    (setq neo-window-fixed-size nil))
+    (setq neo-window-width 30))
 
   (if (require 'neotree)
       (my-neotree-setup))
