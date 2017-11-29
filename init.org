@@ -206,6 +206,7 @@ Disable word wrapping:
 Use =*scratch*= as initial screen:
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
+  (setq initial-scratch-message ";; Scratch page\n\n")
 #+END_SRC
 
 ** Functions
