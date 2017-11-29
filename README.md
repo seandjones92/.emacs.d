@@ -1,3 +1,1 @@
-# My Emacs Configuration
-
-In progress again!
+/home/sean/.emacs.d/init.org
