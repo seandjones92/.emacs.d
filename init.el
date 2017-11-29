@@ -46,9 +46,9 @@
 ;; Prevent encoding prompt at start
 (set-language-environment "UTF-8")
 
-;;;; Windows ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Set Windows home
 (if (eq system-type 'windows-nt)
-    (setq default-directory "C:\\Users\\jonessean\\"))
+    (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\")))
 
 ;; check if internet is available
 (if (eq system-type 'windows-nt)
@@ -64,6 +64,7 @@
 		    hlinum
 		    magit
 		    markdown-mode
+		    moe-theme
 		    multiple-cursors
 		    projectile))
 
@@ -266,3 +267,10 @@ This will first empty the kill-ring (clipboard)"
 ;; Highlight line number
 (if (require 'hlinum)
     (hlinum-activate))
+
+;; Moe theme
+(defun my-moetheme-setup ()
+  (moe-dark))
+
+(if (require 'moe-theme)
+    (my-moetheme-setup))
