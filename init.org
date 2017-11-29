@@ -265,6 +265,7 @@ installed to take full advantage of this configuration. The Silver
 Searcher should be installed to use the =ag= and =helm-ag= packages.
 #+BEGIN_SRC emacs-lisp
   (setq my-packages '(ag
+                      all-the-icons
                       auto-complete
                       helm
                       helm-ag
@@ -274,6 +275,7 @@ Searcher should be installed to use the =ag= and =helm-ag= packages.
                       markdown-mode
                       moe-theme
                       multiple-cursors
+                      neotree
                       projectile))
 #+END_SRC
 
@@ -383,8 +385,13 @@ there is no internet there should be no issue.
 ** Projectile
 
 #+BEGIN_SRC emacs-lisp
+  (defun my-projectile-setup ()
+    (projectile-mode)
+    (global-set-key (kbd "C-c p C-s") 'helm-projectile-ag)
+    (global-set-key (kbd "C-c p C-p") 'helm-projectile-switch-project))
+
   (if (require 'projectile)
-      (projectile-mode))
+      (my-projectile-setup))
 #+END_SRC
 
 ** Highlight line number
@@ -392,6 +399,18 @@ there is no internet there should be no issue.
 #+BEGIN_SRC emacs-lisp
   (if (require 'hlinum)
       (hlinum-activate))
+#+END_SRC
+
+** Neotree
+In order for this to look right the fonts for =all-the-icons= must be
+installed. This is accomplished by =M-x all-the-icons-install-fonts=.
+#+BEGIN_SRC emacs-lisp
+  (defun my-neotree-setup ()
+    (global-set-key (kbd "C-c n") 'neotree-toggle)
+    (setq neo-theme 'icons))
+
+  (if (require 'neotree)
+      (my-neotree-setup))
 #+END_SRC
 
 ** Themeing
