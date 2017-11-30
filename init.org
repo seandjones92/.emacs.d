@@ -1,5 +1,6 @@
 #+TITLE: Emacs configuration file
 #+AUTHOR: Sean Jones
+#+OPTIONS: toc:2
 #+BABEL: :cache yes
 #+LATEX_HEADER: \usepackage{parskip}
 #+LATEX_HEADER: \usepackage{inconsolata}
