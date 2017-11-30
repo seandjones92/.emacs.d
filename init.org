@@ -340,9 +340,9 @@ of this package run =pip install jedi flake8 importmagic autopep8=.
 
 ** Helm
 [[https://github.com/emacs-helm/helm][Helm]] is an Emacs framework for incremental completions and narrowing
-selections. It's a much better way to interact with Emacs. Since this
-package can take a lot of customization I will break it out into
-chunks and explain along the way.
+selections. It's a much better way to interact with Emacs. I'm working
+on a way to split this out into smaller functions so I can explain
+this config one chunk at a time.
 #+BEGIN_SRC emacs-lisp
   (defun my-helm-setup ()
     (require 'helm-config)
@@ -362,7 +362,7 @@ chunks and explain along the way.
     (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
     (when (executable-find "curl")
-      (setq helm-google-suggest-use-curl-p t))
+      (setq helm-net-prefer-curl t))
 
     (when (executable-find "ack-grep")
       (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
@@ -371,7 +371,7 @@ chunks and explain along the way.
     (helm-autoresize-mode 1)
     (setq helm-autoresize-max-height 65)
 
-    (setq helm-split-window-in-side-p t
+    (setq helm-split-window-inside-p t
           helm-move-to-line-cycle-in-source t
           helm-ff-search-library-in-sexp t
           helm-scroll-amount 8
