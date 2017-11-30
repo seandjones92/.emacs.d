@@ -340,13 +340,31 @@ of this package run =pip install jedi flake8 importmagic autopep8=.
 
 ** Helm
 [[https://github.com/emacs-helm/helm][Helm]] is an Emacs framework for incremental completions and narrowing
-selections. It's a much better way to interact with Emacs. I'm working
-on a way to split this out into smaller functions so I can explain
-this config one chunk at a time.
-#+BEGIN_SRC emacs-lisp
-  (defun my-helm-setup ()
-    (require 'helm-config)
+selections. It's a much better way to interact with Emacs. I've broken
+it out into smaller chunks so I can better explain what's going on.
 
+This section enables fuzzy finding in almost everything Helm
+does. This helps to really speed up interaction with emacs since you
+can just type a couple partially completed words to get full phrases
+instead of spelling everything out.
+#+BEGIN_SRC emacs-lisp
+  (defun my-helm-fuzzy-settings ()
+    (setq helm-M-x-fuzzy-match t
+          helm-buffers-fuzzy-matching t
+          helm-recentf-fuzzy-match t
+          helm-semantic-fuzzy-match t
+          helm-imenu-fuzzy-match t
+          helm-apropos-fuzzy-match t
+          helm-lisp-fuzzy-completion t
+          helm-mode-fuzzy-match t
+          helm-completion-in-region-fuzzy-match t))
+#+END_SRC
+
+This part is where keybindings relevant to Helm are defined. The one
+I've found to be most useful is =helm-mini= which is activated with
+=C-x x=. This will show you currently open buffers and recent files.
+#+BEGIN_SRC emacs-lisp
+  (defun my-helm-keybindings ()
     (global-set-key (kbd "C-c h") 'helm-command-prefix)
     (global-unset-key (kbd "C-x c"))
     (global-set-key (kbd "M-x") 'helm-M-x)
@@ -357,8 +375,14 @@ this config one chunk at a time.
     (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
     (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-    (define-key helm-map (kbd "C-z") 'helm-select-action)
+    (define-key helm-map (kbd "C-z") 'helm-select-action))
+#+END_SRC
 
+This section has some more miscellaneous settings. In all honesty I
+need to research them a bit more to accuratly describe what each of
+these does.
+#+BEGIN_SRC emacs-lisp
+  (defun my-helm-misc ()
     (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
 
     (when (executable-find "curl")
@@ -368,27 +392,38 @@ this config one chunk at a time.
       (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
             helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
 
-    (helm-autoresize-mode 1)
-    (setq helm-autoresize-max-height 65)
-
     (setq helm-split-window-inside-p t
           helm-move-to-line-cycle-in-source t
           helm-ff-search-library-in-sexp t
           helm-scroll-amount 8
-          helm-ff-file-name-history-recentf t)
+          helm-ff-file-name-history-recentf t))
+#+END_SRC
 
-    (setq helm-M-x-fuzzy-match t
-          helm-buffers-fuzzy-matching t
-          helm-recentf-fuzzy-match t
-          helm-semantic-fuzzy-match t
-          helm-imenu-fuzzy-match t
-          helm-apropos-fuzzy-match t
-          helm-lisp-fuzzy-completion t
-          helm-mode-fuzzy-match t
-          helm-completion-in-region-fuzzy-match t)
+This section tells the Helm interface that it should resize itself
+depending on how much content it has to display, but should take up no
+more than 65 percent of the Emacs interface.
+#+BEGIN_SRC emacs-lisp
+  (defun my-helm-sizing ()
+    (helm-autoresize-mode 1)
+    (setq helm-autoresize-max-height 65))
+#+END_SRC
 
+Next we tie all of these pieces together in a setup function. It is
+important to have the =(require 'helm-config)= on top or else the
+configuration will fail.
+#+BEGIN_SRC emacs-lisp
+  (defun my-helm-setup ()
+    (require 'helm-config)
+    (my-helm-fuzzy-settings)
+    (my-helm-keybindings)
+    (my-helm-misc)
+    (my-helm-sizing)
     (helm-mode 1))
+#+END_SRC
 
+Finally we will check to see if Helm is available before applying any
+of these settings.
+#+BEGIN_SRC emacs-lisp
   (if (require 'helm)
       (my-helm-setup))
 #+END_SRC
