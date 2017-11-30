@@ -444,7 +444,8 @@ of these settings.
 #+END_SRC
 
 ** Magit
-
+Magit is something that, in my opinion, should be shipped by default
+with Emacs. It's the most robust Git interface out there.
 #+BEGIN_SRC emacs-lisp
   (defun my-magit-setup ()
     (global-set-key (kbd "C-x g") 'magit-status)

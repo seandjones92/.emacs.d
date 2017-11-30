@@ -104,6 +104,19 @@ The function defined below generates a new `init.el` each time
     
     (add-hook 'after-save-hook 'tangle-init)
 
+This section will generate `README.md` after each save.
+
+    (defun generate-init-readme ()
+      "If the current buffer is 'init.org' then 'README.md' is generated"
+      (when (equal (buffer-file-name)
+                   (expand-file-name (concat user-emacs-directory "init.org")))
+        ;; Avoid running hooks
+        (let ((prog-mode-hook nil))
+          (org-md-export-to-markdown)
+          (rename-file "init.md" "README.md" t))))
+    
+    (add-hook 'after-save-hook 'generate-init-readme)
+
 If there is anything that should be kept private (not tracked by git)
 put it in `private.el`, it will be loaded if it exists.
 
@@ -431,6 +444,9 @@ of these settings.
         (my-helm-setup))
 
 ## Magit<a id="sec-3-5" name="sec-3-5"></a>
+
+Magit is something that, in my opinion, should be shipped by default
+with Emacs. It's the most robust Git interface out there.
 
     (defun my-magit-setup ()
       (global-set-key (kbd "C-x g") 'magit-status)
