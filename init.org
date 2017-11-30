@@ -245,10 +245,9 @@ the repositories we wish to use. The =jorgenschaefer.github.io= repo
 is only needed for the Elpy package.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (add-to-list
-   'package-archives
-   '("elpy" . "https://jorgenschaefer.github.io/packages/")
-   '("melpa" . "http://melpa.org/packages/")); t)
+  (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                           ("melpa" . "https://melpa.org/packages/")
+                           ("elpy" . "https://jorgenschaefer.github.io/packages/")))
 #+END_SRC
 
 Next we define a function to determine if we have access to the
