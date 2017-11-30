@@ -241,7 +241,8 @@ the package is not available.
 ** Packages
 This section goes over the configuration of package management. To
 start this off we need to define a few things. First we will configure
-the repositories we wish to use:
+the repositories we wish to use. The =jorgenschaefer.github.io= repo
+is only needed for the Elpy package.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (add-to-list
@@ -306,7 +307,8 @@ there is no internet there should be no issue.
 #+END_SRC
 
 ** Auto Complete
-Here is where auto complete is configured
+Here is where auto complete is configured. The =ac-sources= variable
+needs to be set or the completion framework won't kick in.
 #+BEGIN_SRC emacs-lisp
   (defun my-autocomplete-setup ()
     (ac-config-default)
@@ -329,12 +331,19 @@ Elpy is used to get IDE like functionality for Python. To get full use
 of this package run =pip install jedi flake8 importmagic autopep8=.
 
 #+BEGIN_SRC emacs-lisp
-  (package-initialize)
-  (elpy-enable)
+  (defun my-elpy-setup ()
+    (package-initialize)
+    (elpy-enable))
+
+  (if (require 'elpy)
+      (my-elpy-setup))
 #+END_SRC
 
 ** Helm
-
+[[https://github.com/emacs-helm/helm][Helm]] is an Emacs framework for incremental completions and narrowing
+selections. It's a much better way to interact with Emacs. Since this
+package can take a lot of customization I will break it out into
+chunks and explain along the way.
 #+BEGIN_SRC emacs-lisp
   (defun my-helm-setup ()
     (require 'helm-config)
@@ -347,9 +356,6 @@ of this package run =pip install jedi flake8 importmagic autopep8=.
     (global-set-key (kbd "C-x C-f") 'helm-find-files)
     (global-set-key (kbd "C-c h o") 'helm-occur)
     (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-    (if (eq system-type 'windows-nt)
-        (global-set-key (kbd "C-c h w") 'helm-w32-launcher))
-
     (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
     (define-key helm-map (kbd "C-z") 'helm-select-action)
