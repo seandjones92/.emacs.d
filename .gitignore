@@ -4,5 +4,5 @@
 # Do not ignore these
 !init.org
 !LICENSE
-!README.org
+!README.md
 !.gitignore

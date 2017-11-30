@@ -83,6 +83,20 @@ The function defined below generates a new =init.el= each time
   (add-hook 'after-save-hook 'tangle-init)
 #+END_SRC
 
+This section will generate =README.md= after each save.
+#+BEGIN_SRC emacs-lisp
+  (defun generate-init-readme ()
+    "If the current buffer is 'init.org' then 'README.md' is generated"
+    (when (equal (buffer-file-name)
+                 (expand-file-name (concat user-emacs-directory "init.org")))
+      ;; Avoid running hooks
+      (let ((prog-mode-hook nil))
+        (org-md-export-to-markdown)
+        (rename-file "init.md" "README.md" t))))
+
+  (add-hook 'after-save-hook 'generate-init-readme)
+#+END_SRC
+
 If there is anything that should be kept private (not tracked by git)
 put it in =private.el=, it will be loaded if it exists.
 #+BEGIN_SRC emacs-lisp
