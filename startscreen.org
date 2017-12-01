@@ -1,3 +1,7 @@
+If the buffer is "startscreen.org" then I don't want number lines and
+the buffer should be read only
+
+Code here should help generate dynamic content, it will be put into "init.org"
 #+BEGIN_SRC emacs-lisp
   (defun my-projects ()
     (insert "My Projects:\n")
