@@ -1,0 +1,21 @@
+#+BEGIN_SRC emacs-lisp
+  (defun my-projects ()
+    (insert "My Projects:\n")
+    (dolist (project projectile-known-projects)
+      (insert (concat "[[file+emacs:" project "][" project "]]\n"))))
+
+  (defun my-recent-files ()
+    (insert "Recently Opened files:\n")
+    (dolist (rfile recentf-list)
+      (insert (concat "[[" rfile "]]\n"))))
+
+  (defun full-dashboard ()
+    (my-projects)
+    (insert "\n")
+    (my-recent-files))
+
+  (defun my-dashboard ()
+    (if (require 'projectile)
+        (full-dashboard)
+      (my-recent-files)))
+#+END_SRC
