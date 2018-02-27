@@ -133,11 +133,14 @@ This section is for defining any behavior needed for the configuration
 to work properly on Windows. Unfortunately I have to use Windows at
 work so these configurations are needed for me.
 
-Set the proper starting directory, this allows for flexability with
-the install location of Emacs.
+    (defun my-windows-config ()
+      (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\"))
+      (setq python-shell-interpreter "py.exe")
+      (setq shell-file-name "c:\\Windows\\System32\\bash.exe")
+      (setq explicit-shell-file-name "c:\\Windows\\System32\\bash.exe"))
 
     (if (eq system-type 'windows-nt)
-        (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\")))
+        (my-windows-config))
 
 ## Base defaults<a id="sec-2-3" name="sec-2-3"></a>
 

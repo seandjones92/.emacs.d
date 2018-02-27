@@ -113,11 +113,17 @@ This section is for defining any behavior needed for the configuration
 to work properly on Windows. Unfortunately I have to use Windows at
 work so these configurations are needed for me.
 
-Set the proper starting directory, this allows for flexability with
-the install location of Emacs.
+#+BEGIN_SRC emacs-lisp
+  (defun my-windows-config ()
+    (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\"))
+    (setq python-shell-interpreter "py.exe")
+    (setq shell-file-name "c:\\Windows\\System32\\bash.exe")
+    (setq explicit-shell-file-name "c:\\Windows\\System32\\bash.exe"))
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (if (eq system-type 'windows-nt)
-      (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\")))
+      (my-windows-config))
 #+END_SRC
 
 ** Base defaults
