@@ -296,6 +296,7 @@ Searcher should be installed to use the `ag` and `helm-ag` packages.
                         all-the-icons
                         auto-complete
                         elpy
+                        geiser
                         helm
                         helm-ag
                         helm-projectile
