@@ -320,6 +320,24 @@ installed:
             (message "%s is already installed..." package)
           (package-install package))))
 
+I am trying this new way out, I hope it gives me better startup times
+after the first launch.
+
+    (defun install-my-pacakges ()
+      "Loop through my-packages and install them."
+      (package-refresh-contents)
+      (dolist (package my-packages)
+        (package-install package)))
+    
+    (defun check-my-packages ()
+      "Loop through my-packages and check if they are installed."
+      (package-initialize)
+      (dolist (package my-packages)
+        (if (ignore-errors (require package))
+            (message "%s is already installed" package)
+          ((install-my-pacakges)
+           (return)))))
+
 To tie it all together we bring in the logic. If we have access to the
 internet loop through the list of packages to ensure they are
 installed. If we do not have access to the internet nothing is
@@ -327,7 +345,7 @@ done. Package dependent configuration is handled gracefully so if
 there is no internet there should be no issue.
 
     (if (internet-up)
-        (auto-package-mgmt))
+        (check-my-packages))
 
 ## Auto Complete<a id="sec-3-2" name="sec-3-2"></a>
 
