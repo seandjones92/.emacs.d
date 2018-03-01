@@ -116,9 +116,7 @@ work so these configurations are needed for me.
 #+BEGIN_SRC emacs-lisp
   (defun my-windows-config ()
     (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\"))
-    (setq python-shell-interpreter "py.exe")
-    (setq shell-file-name "c:\\Windows\\System32\\bash.exe")
-    (setq explicit-shell-file-name "c:\\Windows\\System32\\bash.exe"))
+    (setq python-shell-interpreter "py.exe"))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
