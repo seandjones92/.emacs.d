@@ -484,6 +484,7 @@ This is for better handling of S-expressions in lisp languages
     (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
     (add-hook 'eshell-mode-hook           #'enable-paredit-mode)
     (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
+    (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 ## Projectile<a id="sec-3-8" name="sec-3-8"></a>
 
