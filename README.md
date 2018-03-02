@@ -21,10 +21,11 @@
 <li><a href="#sec-3-4">3.4. Helm</a></li>
 <li><a href="#sec-3-5">3.5. Magit</a></li>
 <li><a href="#sec-3-6">3.6. Multiple cursors</a></li>
-<li><a href="#sec-3-7">3.7. Projectile</a></li>
-<li><a href="#sec-3-8">3.8. Highlight line number</a></li>
-<li><a href="#sec-3-9">3.9. Neotree</a></li>
-<li><a href="#sec-3-10">3.10. Themeing</a></li>
+<li><a href="#sec-3-7">3.7. Paredit</a></li>
+<li><a href="#sec-3-8">3.8. Projectile</a></li>
+<li><a href="#sec-3-9">3.9. Highlight line number</a></li>
+<li><a href="#sec-3-10">3.10. Neotree</a></li>
+<li><a href="#sec-3-11">3.11. Themeing</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Systemd unit file</a></li>
@@ -469,7 +470,20 @@ with Emacs. It's the most robust Git interface out there.
     (if (require 'multiple-cursors)
         (my-multicursor-setup))
 
-## Projectile<a id="sec-3-7" name="sec-3-7"></a>
+## Paredit<a id="sec-3-7" name="sec-3-7"></a>
+
+This is for better handling of S-expressions in lisp languages
+
+    (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+    (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+    (add-hook 'eshell-mode-hook           #'enable-paredit-mode)
+
+## Projectile<a id="sec-3-8" name="sec-3-8"></a>
 
     (defun my-projectile-setup ()
       (projectile-mode)
@@ -480,12 +494,12 @@ with Emacs. It's the most robust Git interface out there.
     (if (require 'projectile)
         (my-projectile-setup))
 
-## Highlight line number<a id="sec-3-8" name="sec-3-8"></a>
+## Highlight line number<a id="sec-3-9" name="sec-3-9"></a>
 
     (if (require 'hlinum)
         (hlinum-activate))
 
-## Neotree<a id="sec-3-9" name="sec-3-9"></a>
+## Neotree<a id="sec-3-10" name="sec-3-10"></a>
 
 In order for this to look right the fonts for `all-the-icons` must be
 installed. This is accomplished by `M-x all-the-icons-install-fonts`.
@@ -514,7 +528,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
     (if (require 'neotree)
         (my-neotree-setup))
 
-## Themeing<a id="sec-3-10" name="sec-3-10"></a>
+## Themeing<a id="sec-3-11" name="sec-3-11"></a>
 
     (defun my-moetheme-setup ()
       (moe-dark))

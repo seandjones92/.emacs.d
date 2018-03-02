@@ -474,6 +474,19 @@ with Emacs. It's the most robust Git interface out there.
       (my-multicursor-setup))
 #+END_SRC
 
+** Paredit
+This is for better handling of S-expressions in lisp languages
+#+BEGIN_SRC emacs-lisp
+  (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
+  (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
+  (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
+  (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
+  (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
+  (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
+  (add-hook 'eshell-mode-hook           #'enable-paredit-mode)
+#+END_SRC
+
 ** Projectile
 
 #+BEGIN_SRC emacs-lisp
