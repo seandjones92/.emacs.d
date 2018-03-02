@@ -304,6 +304,7 @@ Searcher should be installed to use the `ag` and `helm-ag` packages.
                         moe-theme
                         multiple-cursors
                         neotree
+                        paredit
                         projectile))
 
 The next function defined is to loop through the provided list of
