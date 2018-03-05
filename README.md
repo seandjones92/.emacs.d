@@ -26,6 +26,7 @@
 <li><a href="#sec-3-9">3.9. Highlight line number</a></li>
 <li><a href="#sec-3-10">3.10. Neotree</a></li>
 <li><a href="#sec-3-11">3.11. Themeing</a></li>
+<li><a href="#sec-3-12">3.12. Zeal</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Systemd unit file</a></li>
@@ -307,7 +308,8 @@ Searcher should be installed to use the `ag` and `helm-ag` packages.
                         multiple-cursors
                         neotree
                         paredit
-                        projectile))
+                        projectile
+                        zeal-at-point))
 
 The next function defined is to loop through the provided list of
 packages and to check if they are present. If not, the package is
@@ -538,6 +540,17 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
     
     (if (require 'moe-theme)
         (my-moetheme-setup))
+
+## Zeal<a id="sec-3-12" name="sec-3-12"></a>
+
+Offline documentation. Make sure [Zeal](https://zealdocs.org/) is installed first.
+
+    (global-set-key "\C-cd" 'zeal-at-point)
+
+If you are on Windows you need to add Zeal to the exec path.
+
+    (if (eq system-type 'windows-nt)
+        (add-to-list 'exec-path "C:/Program Files/Zeal"))
 
 # Systemd unit file<a id="sec-4" name="sec-4"></a>
 

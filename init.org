@@ -300,7 +300,8 @@ Searcher should be installed to use the =ag= and =helm-ag= packages.
                       multiple-cursors
                       neotree
                       paredit
-                      projectile))
+                      projectile
+                      zeal-at-point))
 #+END_SRC
 
 The next function defined is to loop through the provided list of
@@ -547,6 +548,19 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 
   (if (require 'moe-theme)
       (my-moetheme-setup))
+#+END_SRC
+
+** Zeal
+
+Offline documentation. Make sure [[https://zealdocs.org/][Zeal]] is installed first.
+#+BEGIN_SRC emacs-lisp
+  (global-set-key "\C-cd" 'zeal-at-point)
+#+END_SRC
+
+If you are on Windows you need to add Zeal to the exec path.
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (add-to-list 'exec-path "C:/Program Files/Zeal"))
 #+END_SRC
 
 * Systemd unit file
