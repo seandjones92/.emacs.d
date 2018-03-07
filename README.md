@@ -9,8 +9,9 @@
 <li><a href="#sec-2-2">2.2. Windows</a></li>
 <li><a href="#sec-2-3">2.3. Base defaults</a></li>
 <li><a href="#sec-2-4">2.4. Functions</a></li>
-<li><a href="#sec-2-5">2.5. Mode hooks</a></li>
-<li><a href="#sec-2-6">2.6. Keybindings</a></li>
+<li><a href="#sec-2-5">2.5. Org Mode</a></li>
+<li><a href="#sec-2-6">2.6. Mode hooks</a></li>
+<li><a href="#sec-2-7">2.7. Keybindings</a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3. Configurations (External)</a>
@@ -236,7 +237,26 @@ This is where I define custom functions.
           (switch-to-buffer-other-window origin)
           (message "Public key copied to clipboard"))))
 
-## Mode hooks<a id="sec-2-5" name="sec-2-5"></a>
+## Org Mode<a id="sec-2-5" name="sec-2-5"></a>
+
+Here is my functional configuration of Org Mode.
+
+Enable Babel languages.
+
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((java . t)
+       (js . t)
+       (sql . t)
+       (clojure . t)
+       (lisp . t)
+       (perl . t)
+       (python . t)
+       (ruby . t)
+       (scheme . t)
+       (sh . t)))
+
+## Mode hooks<a id="sec-2-6" name="sec-2-6"></a>
 
 This is where mode hooks are manipulated.
 
@@ -246,7 +266,7 @@ This is where mode hooks are manipulated.
     (add-hook 'sh-mode-hook 'linum-mode)
     (add-hook 'python-mode-hook 'linum-mode)
 
-## Keybindings<a id="sec-2-6" name="sec-2-6"></a>
+## Keybindings<a id="sec-2-7" name="sec-2-7"></a>
 
 This is where I define my custom keybindings.
 

@@ -226,6 +226,26 @@ This is where I define custom functions.
         (message "Public key copied to clipboard"))))
 #+END_SRC
 
+** Org Mode
+
+Here is my functional configuration of Org Mode.
+
+Enable Babel languages.
+#+BEGIN_SRC emacs-lisp
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((java . t)
+     (js . t)
+     (sql . t)
+     (clojure . t)
+     (lisp . t)
+     (perl . t)
+     (python . t)
+     (ruby . t)
+     (scheme . t)
+     (sh . t)))
+#+END_SRC
+
 ** Mode hooks
 This is where mode hooks are manipulated.
 #+BEGIN_SRC emacs-lisp
