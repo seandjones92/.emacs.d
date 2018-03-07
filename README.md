@@ -566,7 +566,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
       (powerline-moe-theme)
       (setq moe-theme-highlight-buffer-id t)
       (setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
-      (setq moe-theme-resize-org-title '(2.2 1.8 1.6 1.4 1.2 1.0 1.0 1.0 1.0))
+      (setq moe-theme-resize-org-title '(2.0 1.7 1.5 1.3 1.0 1.0 1.0 1.0 1.0))
       (moe-dark))
     
     (if (require 'powerline)
