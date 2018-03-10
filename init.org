@@ -374,9 +374,13 @@ Elpy is used to get IDE like functionality for Python. To get full use
 of this package run =pip install jedi flake8 importmagic autopep8=.
 
 #+BEGIN_SRC emacs-lisp
+  (defun my-elpy-keybindings ()
+    (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition-other-window))
+
   (defun my-elpy-setup ()
     (package-initialize)
-    (elpy-enable))
+    (elpy-enable)
+    (add-hook 'elpy-mode-hook 'my-elpy-keybindings))
 
   (if (require 'elpy)
       (my-elpy-setup))
@@ -515,10 +519,14 @@ This is for better handling of S-expressions in lisp languages
 ** Projectile
 
 #+BEGIN_SRC emacs-lisp
+  (defun my-projectile-keybindings ()
+    (define-key projectile-mode-map (kbd "C-c f") 'helm-projectile-find-file)
+    (define-key projectile-mode-map (kbd "C-c a") 'helm-projectile-ag))
+
   (defun my-projectile-setup ()
     (projectile-mode)
     (projectile-discover-projects-in-directory default-directory)
-    (global-set-key (kbd "C-c p C-s") 'helm-projectile-ag)
+    (add-hook 'projectile-mode-hook 'my-projectile-keybindings)
     (global-set-key (kbd "C-c p C-p") 'helm-projectile-switch-project))
 
   (if (require 'projectile)
@@ -575,7 +583,8 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
     (setq moe-theme-highlight-buffer-id t)
     (setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
     (setq moe-theme-resize-org-title '(2.0 1.7 1.5 1.3 1.0 1.0 1.0 1.0 1.0))
-    (moe-dark))
+    (moe-dark)
+    (setq powerline-default-separator 'wave))
 
   (if (require 'powerline)
       (if (require 'moe-theme)
