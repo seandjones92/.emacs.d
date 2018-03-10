@@ -345,6 +345,9 @@ installed:
             (message "%s is already installed..." package)
           (package-install package))))
 
+**TODO:** This should only be automatic the first time emacs is loaded,
+it should be interactive from there on out.
+
 To tie it all together we bring in the logic. If we have access to the
 internet loop through the list of packages to ensure they are
 installed. If we do not have access to the internet nothing is
