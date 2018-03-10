@@ -516,14 +516,12 @@ This is for better handling of S-expressions in lisp languages
 ## Projectile<a id="sec-3-8" name="sec-3-8"></a>
 
     (defun my-projectile-keybindings ()
-      (define-key projectile-mode-map (kbd "C-c f") 'helm-projectile-find-file)
       (define-key projectile-mode-map (kbd "C-c a") 'helm-projectile-ag))
     
     (defun my-projectile-setup ()
       (projectile-mode)
       (projectile-discover-projects-in-directory default-directory)
-      (add-hook 'projectile-mode-hook 'my-projectile-keybindings)
-      (global-set-key (kbd "C-c p C-p") 'helm-projectile-switch-project))
+      (add-hook 'projectile-mode-hook 'my-projectile-keybindings))
     
     (if (require 'projectile)
         (my-projectile-setup))
