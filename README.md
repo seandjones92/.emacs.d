@@ -348,8 +348,8 @@ options behave differently.
           (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
 
 Next we define a list containing all of the packages that should be
-installed to take full advantage of this configuration. The Silver
-Searcher should be installed to use the `ag` and `helm-ag` packages.
+installed to take full advantage of this configuration. The [Silver
+Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to use the `ag` and `helm-ag` packages.
 
     (setq my-packages '(ag
                         all-the-icons
@@ -388,14 +388,16 @@ installed:
 **TODO:** This should only be automatic the first time emacs is loaded,
 it should be interactive from there on out.
 
-To tie it all together we bring in the logic. If we have access to the
-internet loop through the list of packages to ensure they are
-installed. If we do not have access to the internet nothing is
-done. Package dependent configuration is handled gracefully so if
-there is no internet there should be no issue.
+To tie it all together we bring in the logic. If this is the first
+launch of Emacs and we have access to the internet, loop through the
+list of packages to ensure they are installed. If we do not have
+access to the internet, or if this is not Emacs first launch then
+nothing is done. Package dependent configuration is handled gracefully
+so if there is no internet there should be no issue.
 
-    (if (internet-up)
-        (auto-package-mgmt))
+    (if (file-directory-p (concat user-emacs-directory "elpa"))
+        (if (internet-up)
+            (auto-package-mgmt)))
 
 ## Auto Complete<a id="sec-3-2" name="sec-3-2"></a>
 
