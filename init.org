@@ -10,7 +10,7 @@
 * About
 
 This configuration is based off of the system shown [[https://github.com/larstvei/dot-emacs][here]]. The idea is
-that the configuration serves as it's own plain english
+that the configuration should serve as it's own plain english
 documentation.
 
 Install with:
