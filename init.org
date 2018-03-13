@@ -18,10 +18,10 @@ Install with:
   git clone git@github.com:seandjones92/Emacs.git ~/.emacs.d
 #+END_SRC
 
-Once the repo is cloned launch Emacs to generate the running
-config. After that is done, execute the following command to prevent
-the dynamic configuration from being tracked in git:
+Once the repo is cloned execute the following commands to prevent the
+dynamic configuration from being tracked in git:
 #+BEGIN_SRC sh :tangle no
+  cd ~/.emacs.d
   git update-index --assume-unchanged init.el
 #+END_SRC
 
