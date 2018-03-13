@@ -112,7 +112,7 @@ and therefore not in this configuration) put it in
 ** Windows
 This section is for defining any behavior needed for the configuration
 to work properly on Windows. Unfortunately I have to use Windows at
-work so these configurations are needed for me.
+work so these configurations are a must for me.
 
 #+BEGIN_SRC emacs-lisp
   (defun my-windows-config ()
@@ -126,8 +126,7 @@ work so these configurations are needed for me.
 #+END_SRC
 
 ** Base defaults
-The settings defined here do not require anything to be
-installed. This is just the base config for emacs.
+Here we define the basic look and feel of Emacs.
 
 Remove scrollbars, menu bars, and toolbars:
 #+BEGIN_SRC emacs-lisp
@@ -136,22 +135,27 @@ Remove scrollbars, menu bars, and toolbars:
   (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 #+END_SRC
 
-A quicker 'yes or no' prompt:
+Instead of typeing "yes" or "no" for interactive functions followed by
+`<enter>`, all you need to do is press "y" or "n". No `<enter>`
+required!
 #+BEGIN_SRC emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-Disable the system bell:
+Disable the system bell. No flashing, no sounds.
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function 'ignore)
 #+END_SRC
 
-Enable column numbers:
+Enable column numbers.
 #+BEGIN_SRC emacs-lisp
   (column-number-mode 1)
 #+END_SRC
 
-Enable better handling of parens, quotes, etc.
+For me this allows for better handling of parenthesis and quotes. As
+you type `(` A matching `)` is also created. The same goes for
+quotes. It also adds some inteligent handling. Further in the
+configuration we use `paredit`, which takes things a step further.
 #+BEGIN_SRC emacs-lisp
   (electric-pair-mode 1)
   (require 'paren)
@@ -159,17 +163,18 @@ Enable better handling of parens, quotes, etc.
   (show-paren-mode 1)
 #+END_SRC
 
-Enable spell checking:
+Enable spell checking.
 #+BEGIN_SRC emacs-lisp
   (setq ispell-dictionary "american")
 #+END_SRC
 
-Disable word wrapping:
+Disable word wrapping by default, I don't like it.
 #+BEGIN_SRC emacs-lisp
   (set-default 'truncate-lines t)
 #+END_SRC
 
-Use =*scratch*= as initial screen:
+Use =*scratch*= as initial screen. Also, modify the message at the top
+of the buffer.
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-screen t)
   (setq initial-scratch-message ";; Scratch page\n\n")

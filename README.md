@@ -135,7 +135,7 @@ and therefore not in this configuration) put it in
 
 This section is for defining any behavior needed for the configuration
 to work properly on Windows. Unfortunately I have to use Windows at
-work so these configurations are needed for me.
+work so these configurations are a must for me.
 
     (defun my-windows-config ()
       (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\"))
@@ -146,8 +146,7 @@ work so these configurations are needed for me.
 
 ## Base defaults<a id="sec-2-3" name="sec-2-3"></a>
 
-The settings defined here do not require anything to be
-installed. This is just the base config for emacs.
+Here we define the basic look and feel of Emacs.
 
 Remove scrollbars, menu bars, and toolbars:
 
@@ -155,34 +154,40 @@ Remove scrollbars, menu bars, and toolbars:
     (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-A quicker 'yes or no' prompt:
+Instead of typeing "yes" or "no" for interactive functions followed by
+\`<enter>\`, all you need to do is press "y" or "n". No \`<enter>\`
+required!
 
     (defalias 'yes-or-no-p 'y-or-n-p)
 
-Disable the system bell:
+Disable the system bell. No flashing, no sounds.
 
     (setq ring-bell-function 'ignore)
 
-Enable column numbers:
+Enable column numbers.
 
     (column-number-mode 1)
 
-Enable better handling of parens, quotes, etc.
+For me this allows for better handling of parenthesis and quotes. As
+you type \`(\` A matching \`)\` is also created. The same goes for
+quotes. It also adds some inteligent handling. Further in the
+configuration we use \`paredit\`, which takes things a step further.
 
     (electric-pair-mode 1)
     (require 'paren)
     (setq show-paren-style 'parenthesis)
     (show-paren-mode 1)
 
-Enable spell checking:
+Enable spell checking.
 
     (setq ispell-dictionary "american")
 
-Disable word wrapping:
+Disable word wrapping by default, I don't like it.
 
     (set-default 'truncate-lines t)
 
-Use `*scratch*` as initial screen:
+Use `*scratch*` as initial screen. Also, modify the message at the top
+of the buffer.
 
     (setq inhibit-startup-screen t)
     (setq initial-scratch-message ";; Scratch page\n\n")
