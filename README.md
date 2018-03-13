@@ -169,7 +169,7 @@ Enable column numbers.
     (column-number-mode 1)
 
 For me this allows for better handling of parenthesis and quotes. As
-you type `(` A matching `)` is also created. The same goes for
+you type `(` a matching `)` is also created. The same goes for
 quotes. It also adds some inteligent handling. Further in the
 configuration we use `paredit`, which takes things a step further.
 
@@ -269,7 +269,8 @@ public key to the clipboard.
 
 Here is my functional configuration of Org Mode.
 
-Enable Babel languages.
+Right now, all I really need to change from the default is to enable
+more babel languages.
 
     (org-babel-do-load-languages
      'org-babel-load-languages
