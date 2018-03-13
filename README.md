@@ -155,7 +155,7 @@ Remove scrollbars, menu bars, and toolbars:
     (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 Instead of typeing "yes" or "no" for interactive functions followed by
-\`<enter>\`, all you need to do is press "y" or "n". No \`<enter>\`
+`<enter>`, all you need to do is press "y" or "n". No `<enter>`
 required!
 
     (defalias 'yes-or-no-p 'y-or-n-p)
@@ -169,9 +169,9 @@ Enable column numbers.
     (column-number-mode 1)
 
 For me this allows for better handling of parenthesis and quotes. As
-you type \`(\` A matching \`)\` is also created. The same goes for
+you type `(` A matching `)` is also created. The same goes for
 quotes. It also adds some inteligent handling. Further in the
-configuration we use \`paredit\`, which takes things a step further.
+configuration we use `paredit`, which takes things a step further.
 
     (electric-pair-mode 1)
     (require 'paren)
@@ -194,7 +194,13 @@ of the buffer.
 
 ## Functions<a id="sec-2-4" name="sec-2-4"></a>
 
-This is where I define custom functions.
+These are my custom functions. I define them all here. If I want them
+assigned to a keybinding I do so later in the config.
+
+This function is to be run in `dired`. It prompts for a regular
+expression and only shows the entries (files or directories) that
+match that regular expression. This is good for working in directories
+with lots of files. Think `ls -al | grep -E <expression>`.
 
     (defun dired-show-only (regexp)
       "Only show files matching the regexp."
@@ -202,26 +208,42 @@ This is where I define custom functions.
       (dired-mark-files-regexp regexp)
       (dired-toggle-marks)
       (dired-do-kill-lines))
-    
+
+This function is used to terminate all TRAMP connections and to kill
+all buffers associated with TRAMP connections. Sometimes I'll have a
+lot going on, machines I'm no longer working on, too many buffers to
+sort through and this helps.
+
     (defun go-local ()
       "Clean up all remote connections."
       (interactive)
       (ignore-errors (tramp-cleanup-all-connections))
       (ignore-errors (tramp-cleanup-all-buffers)))
-    
+
+This, in my opinion, is how Emacs should behave by default when saving
+files. Strip all white space from the end of the file and the ends of
+lines before saving.
+
     (defun save-buffer-clean ()
       "Strip the trailing whitespace from a file and save it."
       (interactive)
       (delete-trailing-whitespace)
       (save-buffer))
-    
+
+Again, another function to get what I would like to be default
+behavior. This one handles killing buffers. If there is more than one
+buffer and I kill one, kill its window too.
+
     (defun smart-buffer-kill ()
       "Kill buffers in a way that makes sense."
       (interactive)
       (if (= (count-windows) 1)
           (kill-buffer)
         (kill-buffer-and-window)))
-    
+
+This is one I don't use very often but can be useful. Copy the SSH
+public key to the clipboard.
+
     (defun ssh-clip ()
       "Copy '~/.ssh/id_rsa.pub' to clipboard.
     This will first empty the kill-ring (clipboard)"
