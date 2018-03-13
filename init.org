@@ -38,7 +38,7 @@ not belong here.
 
 ** Meta
 
-All changes to the config should be made to =init.org=, *not* in
+All changes to the config should be made to =init.org=, *not* to
 =init.el=. The running configuration is generated at first launch and
 whenever =init.org= is saved from within Emacs. Any changes made
 directly to =init.el= will be lost, it is regenerated regularly.
@@ -97,8 +97,9 @@ This section will generate =README.md= after each save.
   (add-hook 'after-save-hook 'generate-init-readme)
 #+END_SRC
 
-If there is anything that should be kept private (not tracked by git)
-put it in =private.el=, it will be loaded if it exists.
+If there is anything that should be kept private (not tracked by git,
+and therefore not in this configuration) put it in
+=~/.emacs.d/private.el=, it will be loaded if it exists.
 #+BEGIN_SRC emacs-lisp
   (add-hook
    'after-init-hook
