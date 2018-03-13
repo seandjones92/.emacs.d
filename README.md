@@ -393,8 +393,9 @@ nothing is done. Package dependent configuration is handled gracefully
 so if there is no internet there should be no issue.
 
     (if (file-directory-p (concat user-emacs-directory "elpa"))
-        (if (internet-up)
-            (auto-package-mgmt)))
+        (message "No package management run on start")
+      (if (internet-up)
+          (auto-package-mgmt)))
 
 ## Auto Complete<a id="sec-3-2" name="sec-3-2"></a>
 
