@@ -269,8 +269,7 @@ public key to the clipboard.
 
 Here is my functional configuration of Org Mode.
 
-Right now, all I really need to change from the default is to enable
-more babel languages.
+Enable more babel languages.
 
     (org-babel-do-load-languages
      'org-babel-load-languages
@@ -285,13 +284,25 @@ more babel languages.
        (scheme . t)
        (sh . t)))
 
+Turn font lock on for Org Mode. This makes sure everything looks nice
+and pretty.
+
+    (add-hook 'org-mode-hook 'turn-on-font-lock)
+
 ## Mode hooks<a id="sec-2-6" name="sec-2-6"></a>
 
 This is where mode hooks are manipulated.
 
+For `text-mode` I do want word wrapping enabled and `auto-fill-mode`
+enabled. For me this makes sense when thinking about regular old
+`*.txt` files.
+
     (add-hook 'text-mode-hook 'auto-fill-mode)
     (add-hook 'text-mode-hook 'toggle-truncate-lines)
-    (add-hook 'org-mode-hook 'turn-on-font-lock)
+
+I don't like `global-linum-mode` so I only turn it on for specific
+modes.
+
     (add-hook 'sh-mode-hook 'linum-mode)
     (add-hook 'python-mode-hook 'linum-mode)
 

@@ -261,8 +261,7 @@ public key to the clipboard.
 
 Here is my functional configuration of Org Mode.
 
-Right now, all I really need to change from the default is to enable
-more babel languages.
+Enable more babel languages.
 #+BEGIN_SRC emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -278,12 +277,27 @@ more babel languages.
      (sh . t)))
 #+END_SRC
 
+Turn font lock on for Org Mode. This makes sure everything looks nice
+and pretty.
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook 'turn-on-font-lock)
+#+END_SRC
+
 ** Mode hooks
+
 This is where mode hooks are manipulated.
+
+For =text-mode= I do want word wrapping enabled and =auto-fill-mode=
+enabled. For me this makes sense when thinking about regular old
+=*.txt= files.
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'auto-fill-mode)
   (add-hook 'text-mode-hook 'toggle-truncate-lines)
-  (add-hook 'org-mode-hook 'turn-on-font-lock)
+#+END_SRC
+
+I don't like =global-linum-mode= so I only turn it on for specific
+modes.
+#+BEGIN_SRC emacs-lisp
   (add-hook 'sh-mode-hook 'linum-mode)
   (add-hook 'python-mode-hook 'linum-mode)
 #+END_SRC
