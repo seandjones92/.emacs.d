@@ -377,6 +377,7 @@ installed:
 #+BEGIN_SRC emacs-lisp
   (defun auto-package-mgmt ()
     "Install my packages"
+    (interactive)
     (package-initialize)
     (package-refresh-contents)
     (dolist (package my-packages)

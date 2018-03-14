@@ -378,6 +378,7 @@ installed:
 
     (defun auto-package-mgmt ()
       "Install my packages"
+      (interactive)
       (package-initialize)
       (package-refresh-contents)
       (dolist (package my-packages)
