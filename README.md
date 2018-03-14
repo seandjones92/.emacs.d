@@ -311,6 +311,7 @@ modes.
 This is where I define my custom keybindings.
 
     (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
+    (global-set-key (kbd "C-c k") 'kill-this-buffer)
     (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
     (require 'dired)
     (define-key dired-mode-map [?%?h] 'dired-show-only)
