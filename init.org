@@ -426,7 +426,8 @@ autopep8=.
 
 #+BEGIN_SRC emacs-lisp
   (defun my-elpy-keybindings ()
-    (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition-other-window))
+    (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition)
+    (define-key elpy-mode-map (kbd "S-<f12>") 'elpy-goto-definition-other-window))
 
   (defun my-elpy-setup ()
     (package-initialize)

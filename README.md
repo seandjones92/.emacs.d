@@ -425,7 +425,8 @@ of this package run `pip install --user jedi flake8 importmagic
 autopep8`.
 
     (defun my-elpy-keybindings ()
-      (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition-other-window))
+      (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition)
+      (define-key elpy-mode-map (kbd "S-<f12>") 'elpy-goto-definition-other-window))
     
     (defun my-elpy-setup ()
       (package-initialize)
