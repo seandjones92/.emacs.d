@@ -421,7 +421,8 @@ needs to be set or the completion framework won't kick in.
 ## Elpy<a id="sec-3-3" name="sec-3-3"></a>
 
 Elpy is used to get IDE like functionality for Python. To get full use
-of this package run `pip install jedi flake8 importmagic autopep8`.
+of this package run `pip install --user jedi flake8 importmagic
+autopep8`.
 
     (defun my-elpy-keybindings ()
       (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition-other-window))
@@ -533,6 +534,9 @@ with Emacs. It's the most robust Git interface out there.
 
 ## Multiple cursors<a id="sec-3-6" name="sec-3-6"></a>
 
+This is pretty self explanitory. Everyone has seen Sublime Texts
+multiple cursors feature, this lets you do it in Emacs.
+
     (defun my-multicursor-setup ()
       (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
       (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -544,7 +548,7 @@ with Emacs. It's the most robust Git interface out there.
 
 ## Paredit<a id="sec-3-7" name="sec-3-7"></a>
 
-This is for better handling of S-expressions in lisp languages
+This is for better handling of S-expressions in lisp languages.
 
     (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
     (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
@@ -559,6 +563,10 @@ This is for better handling of S-expressions in lisp languages
 
 ## Projectile<a id="sec-3-8" name="sec-3-8"></a>
 
+Projectile makes emacs "project aware". This is good if you work on
+multiple code bases and want to navigate between them and within them
+efficiently.
+
     (defun my-projectile-keybindings ()
       (define-key projectile-mode-map (kbd "C-c a") 'helm-projectile-ag))
     
@@ -572,10 +580,17 @@ This is for better handling of S-expressions in lisp languages
 
 ## Highlight line number<a id="sec-3-9" name="sec-3-9"></a>
 
+This package modifies the behavior of `linum-mode`. When the line
+numbers are present on the left hand side, the line that point is
+currently on will be highlighted.
+
     (if (require 'hlinum)
         (hlinum-activate))
 
 ## Neotree<a id="sec-3-10" name="sec-3-10"></a>
+
+Adds a file tree to the left hand side, like in most IDEs. This only
+works if you are in a project.
 
 In order for this to look right the fonts for `all-the-icons` must be
 installed. This is accomplished by `M-x all-the-icons-install-fonts`.
@@ -605,6 +620,13 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 ## Themeing<a id="sec-3-11" name="sec-3-11"></a>
+
+Here we do some themeing of emacs. None of this has any functional
+impact, it just make the editor a little nicer to look at. We can see
+that we have theming for the modeline, org mode bullets, and the
+general theme of Emacs. I try to make this as robust as possible. If
+one of these pieces is missing (for whatever reason) the rest of the
+theme should still be put together.
 
     (defun my-moetheme-setup ()
       (setq moe-theme-highlight-buffer-id t)
