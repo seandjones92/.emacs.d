@@ -98,6 +98,7 @@ The function defined below generates a new `init.el` each time
 
     (defun tangle-init ()
       "If the current buffer is 'init.org' the code-blocks are tangled, and the tangled file is compiled"
+      (interactive)
       (when (equal (buffer-file-name)
                    (expand-file-name (concat user-emacs-directory "init.org")))
         ;; Avoid running hooks when tangling
