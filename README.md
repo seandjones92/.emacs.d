@@ -23,12 +23,11 @@
 <li><a href="#sec-3-5">3.5. Magit</a></li>
 <li><a href="#sec-3-6">3.6. Multiple cursors</a></li>
 <li><a href="#sec-3-7">3.7. Paredit</a></li>
-<li><a href="#sec-3-8">3.8. Pipenv</a></li>
-<li><a href="#sec-3-9">3.9. Projectile</a></li>
-<li><a href="#sec-3-10">3.10. Highlight line number</a></li>
-<li><a href="#sec-3-11">3.11. Neotree</a></li>
-<li><a href="#sec-3-12">3.12. Themeing</a></li>
-<li><a href="#sec-3-13">3.13. Zeal</a></li>
+<li><a href="#sec-3-8">3.8. Projectile</a></li>
+<li><a href="#sec-3-9">3.9. Highlight line number</a></li>
+<li><a href="#sec-3-10">3.10. Neotree</a></li>
+<li><a href="#sec-3-11">3.11. Themeing</a></li>
+<li><a href="#sec-3-12">3.12. Zeal</a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Systemd unit file</a></li>
@@ -371,7 +370,6 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
                         neotree
                         org-bullets
                         paredit
-                        pipenv
                         projectile
                         powerline
                         zeal-at-point))
@@ -566,14 +564,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
-## Pipenv<a id="sec-3-8" name="sec-3-8"></a>
-
-All we need to do for `pipenv` is add the minor mode the the
-`python-mode` hook.
-
-    (add-hook 'python-mode-hook #'pipenv-mode)
-
-## Projectile<a id="sec-3-9" name="sec-3-9"></a>
+## Projectile<a id="sec-3-8" name="sec-3-8"></a>
 
 Projectile makes emacs "project aware". This is good if you work on
 multiple code bases and want to navigate between them and within them
@@ -590,7 +581,7 @@ efficiently.
     (if (require 'projectile)
         (my-projectile-setup))
 
-## Highlight line number<a id="sec-3-10" name="sec-3-10"></a>
+## Highlight line number<a id="sec-3-9" name="sec-3-9"></a>
 
 This package modifies the behavior of `linum-mode`. When the line
 numbers are present on the left hand side, the line that point is
@@ -599,7 +590,7 @@ currently on will be highlighted.
     (if (require 'hlinum)
         (hlinum-activate))
 
-## Neotree<a id="sec-3-11" name="sec-3-11"></a>
+## Neotree<a id="sec-3-10" name="sec-3-10"></a>
 
 Adds a file tree to the left hand side, like in most IDEs. This only
 works if you are in a project.
@@ -631,7 +622,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
     (if (require 'neotree)
         (my-neotree-setup))
 
-## Themeing<a id="sec-3-12" name="sec-3-12"></a>
+## Themeing<a id="sec-3-11" name="sec-3-11"></a>
 
 Here we do some themeing of emacs. None of this has any functional
 impact, it just make the editor a little nicer to look at. We can see
@@ -665,7 +656,7 @@ theme should still be put together.
                   (lambda ()
                     (org-bullets-mode 1))))
 
-## Zeal<a id="sec-3-13" name="sec-3-13"></a>
+## Zeal<a id="sec-3-12" name="sec-3-12"></a>
 
 Offline documentation. Make sure [Zeal](https://zealdocs.org/) is installed first.
 
