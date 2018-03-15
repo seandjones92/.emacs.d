@@ -368,6 +368,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
                       neotree
                       org-bullets
                       paredit
+                      pipenv
                       projectile
                       powerline
                       zeal-at-point))
@@ -569,6 +570,13 @@ This is for better handling of S-expressions in lisp languages.
   (add-hook 'eshell-mode-hook           #'enable-paredit-mode)
   (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
   (add-hook 'cider-repl-mode            #'enable-paredit-mode)
+#+END_SRC
+
+** Pipenv
+All we need to do for =pipenv= is add the minor mode the the
+=python-mode= hook.
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'python-mode-hook #'pipenv-mode)
 #+END_SRC
 
 ** Projectile
