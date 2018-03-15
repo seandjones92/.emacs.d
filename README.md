@@ -426,6 +426,10 @@ Elpy is used to get IDE like functionality for Python. To get full use
 of this package run `pip install --user jedi flake8 importmagic
 autopep8`.
 
+    (defun check-for-user-bin ()
+      (if (file-directory-p "~/.local/bin")
+          (setenv "PATH" (concat (getenv "PATH") ":~/.local/bin"))))
+    
     (defun my-elpy-keybindings ()
       (define-key elpy-mode-map (kbd "<f12>") 'elpy-goto-definition)
       (define-key elpy-mode-map (kbd "S-<f12>") 'elpy-goto-definition-other-window))
@@ -433,6 +437,7 @@ autopep8`.
     (defun my-elpy-setup ()
       (package-initialize)
       (elpy-enable)
+      (check-for-user-bin)
       (add-hook 'elpy-mode-hook 'my-elpy-keybindings))
     
     (if (require 'elpy)
