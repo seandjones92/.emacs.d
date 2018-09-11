@@ -359,7 +359,6 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
                       helm
                       helm-ag
                       helm-projectile
-                      hlinum
                       magit
                       markdown-mode
                       moe-theme
@@ -588,15 +587,6 @@ efficiently.
 
   (if (require 'projectile)
       (my-projectile-setup))
-#+END_SRC
-
-** Highlight line number
-This package modifies the behavior of =linum-mode=. When the line
-numbers are present on the left hand side, the line that point is
-currently on will be highlighted.
-#+BEGIN_SRC emacs-lisp
-  (if (require 'hlinum)
-      (hlinum-activate))
 #+END_SRC
 
 ** Neotree
