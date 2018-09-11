@@ -111,6 +111,11 @@ and therefore not in this configuration) put it in
 #+END_SRC
 
 ** Windows
+
+*TODO:* I don't use Windows at work anymore and will no longer be
+maintaining anything Windows related. There's a good chance I'll
+remove these components.
+
 This section is for defining any behavior needed for the configuration
 to work properly on Windows. Unfortunately I have to use Windows at
 work so these configurations are a must for me.
@@ -266,16 +271,11 @@ Enable more babel languages.
 #+BEGIN_SRC emacs-lisp
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((java . t)
-     (js . t)
+   '((js . t)
      (sql . t)
-     (clojure . t)
-     (lisp . t)
      (perl . t)
      (python . t)
-     (ruby . t)
-     (scheme . t)
-     (sh . t)))
+     (shell . t)))
 #+END_SRC
 
 Turn font lock on for Org Mode. This makes sure everything looks nice
@@ -354,7 +354,6 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
   (setq my-packages '(ag
                       all-the-icons
                       auto-complete
-                      cider
                       elpy
                       gist
                       helm
@@ -368,9 +367,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
                       neotree
                       org-bullets
                       paredit
-                      projectile
-                      powerline
-                      zeal-at-point))
+                      projectile))
 #+END_SRC
 
 The next function defined is to loop through the provided list of
@@ -648,37 +645,13 @@ theme should still be put together.
     (setq moe-theme-resize-org-title '(2.2 1.8 1.6 1.4 1.2 1.0 1.0 1.0 1.0))
     (moe-dark))
 
-  (defun my-moetheme-with-powerline ()
-    (powerline-moe-theme)
-    (setq moe-theme-highlight-buffer-id t)
-    (setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
-    (setq moe-theme-resize-org-title '(2.0 1.7 1.5 1.3 1.0 1.0 1.0 1.0 1.0))
-    (moe-dark)
-    (setq powerline-default-separator 'wave))
-
-  (if (require 'powerline)
-      (if (require 'moe-theme)
-          (my-moetheme-with-powerline))
-    (if (require 'moe-theme)
-        (my-moetheme-setup)))
+  (if (require 'moe-theme)
+	(my-moetheme-setup))
 
   (if (require 'org-bullets)
       (add-hook 'org-mode-hook
-                (lambda ()
-                  (org-bullets-mode 1))))
-#+END_SRC
-
-** Zeal
-
-Offline documentation. Make sure [[https://zealdocs.org/][Zeal]] is installed first.
-#+BEGIN_SRC emacs-lisp
-  (global-set-key "\C-cd" 'zeal-at-point)
-#+END_SRC
-
-If you are on Windows you need to add Zeal to the exec path.
-#+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (add-to-list 'exec-path "C:/Program Files/Zeal"))
+		(lambda ()
+		  (org-bullets-mode 1))))
 #+END_SRC
 
 * Systemd unit file

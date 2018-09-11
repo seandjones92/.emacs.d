@@ -1,43 +1,35 @@
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. About</a></li>
-<li><a href="#sec-2">2. Configurations (Internal)</a>
-<ul>
-<li><a href="#sec-2-1">2.1. Meta</a></li>
-<li><a href="#sec-2-2">2.2. Windows</a></li>
-<li><a href="#sec-2-3">2.3. Base defaults</a></li>
-<li><a href="#sec-2-4">2.4. Functions</a></li>
-<li><a href="#sec-2-5">2.5. Org Mode</a></li>
-<li><a href="#sec-2-6">2.6. Mode hooks</a></li>
-<li><a href="#sec-2-7">2.7. Keybindings</a></li>
-</ul>
-</li>
-<li><a href="#sec-3">3. Configurations (External)</a>
-<ul>
-<li><a href="#sec-3-1">3.1. Packages</a></li>
-<li><a href="#sec-3-2">3.2. Auto Complete</a></li>
-<li><a href="#sec-3-3">3.3. Elpy</a></li>
-<li><a href="#sec-3-4">3.4. Helm</a></li>
-<li><a href="#sec-3-5">3.5. Magit</a></li>
-<li><a href="#sec-3-6">3.6. Multiple cursors</a></li>
-<li><a href="#sec-3-7">3.7. Paredit</a></li>
-<li><a href="#sec-3-8">3.8. Projectile</a></li>
-<li><a href="#sec-3-9">3.9. Highlight line number</a></li>
-<li><a href="#sec-3-10">3.10. Neotree</a></li>
-<li><a href="#sec-3-11">3.11. Themeing</a></li>
-<li><a href="#sec-3-12">3.12. Zeal</a></li>
-</ul>
-</li>
-<li><a href="#sec-4">4. Systemd unit file</a></li>
-<li><a href="#sec-5">5. Licensing</a></li>
-</ul>
-</div>
-</div>
+
+# Table of Contents
+
+1.  [About](#orge1d02d2)
+2.  [Configurations (Internal)](#org0639d77)
+    1.  [Meta](#org54e86e4)
+    2.  [Windows](#orgb21aa91)
+    3.  [Base defaults](#org67c422d)
+    4.  [Functions](#org24f9eed)
+    5.  [Org Mode](#org1ee4b78)
+    6.  [Mode hooks](#org853aae5)
+    7.  [Keybindings](#org447c980)
+3.  [Configurations (External)](#org161c96a)
+    1.  [Packages](#orga04dff9)
+    2.  [Auto Complete](#orge11b033)
+    3.  [Elpy](#org5f4ac99)
+    4.  [Helm](#orgec590fc)
+    5.  [Magit](#org0cf8027)
+    6.  [Multiple cursors](#org0fd6f5a)
+    7.  [Paredit](#org9ea1742)
+    8.  [Projectile](#org9a7181c)
+    9.  [Highlight line number](#org59a61c6)
+    10. [Neotree](#orgd1268c0)
+    11. [Themeing](#org4d08648)
+4.  [Systemd unit file](#orgbd52b6b)
+5.  [Licensing](#org94e8816)
 
 
-# About<a id="sec-1" name="sec-1"></a>
+
+<a id="orge1d02d2"></a>
+
+# About
 
 This configuration is based off of the system shown [here](https://github.com/larstvei/dot-emacs). The idea is
 that the configuration should serve as it's own plain english
@@ -57,14 +49,20 @@ If you want to make changes to the repo-version of init.el start tracking again 
 
     git update-index --no-assume-unchanged init.el
 
-# Configurations (Internal)<a id="sec-2" name="sec-2"></a>
+
+<a id="org0639d77"></a>
+
+# Configurations (Internal)
 
 This section contains all of the configurations that do not rely on
 external packages. If the configuration cannot be accomplished by a
 standalone Emacs installation with no internet connection then it does
 not belong here.
 
-## Meta<a id="sec-2-1" name="sec-2-1"></a>
+
+<a id="org54e86e4"></a>
+
+## Meta
 
 All changes to the config should be made to `init.org`, **not** to
 `init.el`. The running configuration is generated at first launch and
@@ -100,7 +98,7 @@ The function defined below generates a new `init.el` each time
       "If the current buffer is 'init.org' the code-blocks are tangled, and the tangled file is compiled"
       (interactive)
       (when (equal (buffer-file-name)
-                   (expand-file-name (concat user-emacs-directory "init.org")))
+    	       (expand-file-name (concat user-emacs-directory "init.org")))
         ;; Avoid running hooks when tangling
         (let ((prog-mode-hook nil))
           (org-babel-tangle)
@@ -113,7 +111,7 @@ This section will generate `README.md` after each save.
     (defun generate-init-readme ()
       "If the current buffer is 'init.org' then 'README.md' is generated"
       (when (equal (buffer-file-name)
-                   (expand-file-name (concat user-emacs-directory "init.org")))
+    	       (expand-file-name (concat user-emacs-directory "init.org")))
         ;; Avoid running hooks
         (let ((prog-mode-hook nil))
           (org-md-export-to-markdown)
@@ -132,7 +130,14 @@ and therefore not in this configuration) put it in
          (when (file-exists-p private-file)
            (load-file private-file)))))
 
-## Windows<a id="sec-2-2" name="sec-2-2"></a>
+
+<a id="orgb21aa91"></a>
+
+## Windows
+
+**TODO:** I don't use Windows at work anymore and will no longer be
+maintaining anything Windows related. There's a good chance I'll
+remove these components.
 
 This section is for defining any behavior needed for the configuration
 to work properly on Windows. Unfortunately I have to use Windows at
@@ -145,7 +150,10 @@ work so these configurations are a must for me.
     (if (eq system-type 'windows-nt)
         (my-windows-config))
 
-## Base defaults<a id="sec-2-3" name="sec-2-3"></a>
+
+<a id="org67c422d"></a>
+
+## Base defaults
 
 Here we define the basic look and feel of Emacs.
 
@@ -193,7 +201,10 @@ of the buffer.
     (setq inhibit-startup-screen t)
     (setq initial-scratch-message ";; Scratch page\n\n")
 
-## Functions<a id="sec-2-4" name="sec-2-4"></a>
+
+<a id="org24f9eed"></a>
+
+## Functions
 
 These are my custom functions. I define them all here. If I want them
 assigned to a keybinding I do so later in the config.
@@ -251,12 +262,12 @@ public key to the clipboard.
       (interactive)
       (if (= (count-windows) 1)
           (let ((origin (current-buffer)))
-            (setq kill-ring nil)
-            (find-file "~/.ssh/id_rsa.pub")
-            (mark-page)
-            (kill-ring-save (point-min) (point-max))
-            (kill-buffer)
-            (message "Public key copied to clipboard"))
+    	(setq kill-ring nil)
+    	(find-file "~/.ssh/id_rsa.pub")
+    	(mark-page)
+    	(kill-ring-save (point-min) (point-max))
+    	(kill-buffer)
+    	(message "Public key copied to clipboard"))
         (let ((origin (current-buffer)))
           (setq kill-ring nil)
           (find-file-other-window "~/.ssh/id_rsa.pub")
@@ -266,7 +277,10 @@ public key to the clipboard.
           (switch-to-buffer-other-window origin)
           (message "Public key copied to clipboard"))))
 
-## Org Mode<a id="sec-2-5" name="sec-2-5"></a>
+
+<a id="org1ee4b78"></a>
+
+## Org Mode
 
 Here is my functional configuration of Org Mode.
 
@@ -274,23 +288,21 @@ Enable more babel languages.
 
     (org-babel-do-load-languages
      'org-babel-load-languages
-     '((java . t)
-       (js . t)
+     '((js . t)
        (sql . t)
-       (clojure . t)
-       (lisp . t)
        (perl . t)
        (python . t)
-       (ruby . t)
-       (scheme . t)
-       (sh . t)))
+       (shell . t)))
 
 Turn font lock on for Org Mode. This makes sure everything looks nice
 and pretty.
 
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
-## Mode hooks<a id="sec-2-6" name="sec-2-6"></a>
+
+<a id="org853aae5"></a>
+
+## Mode hooks
 
 This is where mode hooks are manipulated.
 
@@ -307,7 +319,10 @@ modes.
     (add-hook 'sh-mode-hook 'linum-mode)
     (add-hook 'python-mode-hook 'linum-mode)
 
-## Keybindings<a id="sec-2-7" name="sec-2-7"></a>
+
+<a id="org447c980"></a>
+
+## Keybindings
 
 This is where I define my custom keybindings.
 
@@ -321,13 +336,19 @@ Enable keybindings that are disabled by default:
 
     (put 'narrow-to-page 'disabled nil)
 
-# Configurations (External)<a id="sec-3" name="sec-3"></a>
+
+<a id="org161c96a"></a>
+
+# Configurations (External)
 
 Configurations after this point rely on external packages. Anything
 added from here on out should be designed to fail gracefully in case
 the package is not available.
 
-## Packages<a id="sec-3-1" name="sec-3-1"></a>
+
+<a id="orga04dff9"></a>
+
+## Packages
 
 This section goes over the configuration of package management. To
 start this off we need to define a few things. First we will configure
@@ -336,8 +357,8 @@ is only needed for the Elpy package.
 
     (require 'package)
     (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                             ("melpa" . "https://melpa.org/packages/")
-                             ("elpy" . "https://jorgenschaefer.github.io/packages/")))
+    			 ("melpa" . "https://melpa.org/packages/")
+    			 ("elpy" . "https://jorgenschaefer.github.io/packages/")))
 
 Next we define a function to determine if we have access to the
 internet. We need to wrap this in a check for Windows since `ping`
@@ -345,7 +366,7 @@ options behave differently.
 
     (if (eq system-type 'windows-nt)
         (defun internet-up ()
-            (call-process "ping" nil nil nil "-n" "1" "www.google.com"))
+    	(call-process "ping" nil nil nil "-n" "1" "www.google.com"))
       (defun internet-up ()
           (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
 
@@ -354,25 +375,22 @@ installed to take full advantage of this configuration. The [Silver
 Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to use the `ag` and `helm-ag` packages.
 
     (setq my-packages '(ag
-                        all-the-icons
-                        auto-complete
-                        cider
-                        elpy
-                        gist
-                        helm
-                        helm-ag
-                        helm-projectile
-                        hlinum
-                        magit
-                        markdown-mode
-                        moe-theme
-                        multiple-cursors
-                        neotree
-                        org-bullets
-                        paredit
-                        projectile
-                        powerline
-                        zeal-at-point))
+    		    all-the-icons
+    		    auto-complete
+    		    elpy
+    		    gist
+    		    helm
+    		    helm-ag
+    		    helm-projectile
+    		    hlinum
+    		    magit
+    		    markdown-mode
+    		    moe-theme
+    		    multiple-cursors
+    		    neotree
+    		    org-bullets
+    		    paredit
+    		    projectile))
 
 The next function defined is to loop through the provided list of
 packages and to check if they are present. If not, the package is
@@ -385,7 +403,7 @@ installed:
       (package-refresh-contents)
       (dolist (package my-packages)
         (if (ignore-errors (require package))
-            (message "%s is already installed..." package)
+    	(message "%s is already installed..." package)
           (package-install package))))
 
 To tie it all together we bring in the logic. If this is the first
@@ -400,7 +418,10 @@ so if there is no internet there should be no issue.
       (if (internet-up)
           (auto-package-mgmt)))
 
-## Auto Complete<a id="sec-3-2" name="sec-3-2"></a>
+
+<a id="orge11b033"></a>
+
+## Auto Complete
 
 Here is where auto complete is configured. The `ac-sources` variable
 needs to be set or the completion framework won't kick in.
@@ -408,19 +429,22 @@ needs to be set or the completion framework won't kick in.
     (defun my-autocomplete-setup ()
       (ac-config-default)
       (setq-default ac-sources '(ac-source-filename
-                                 ac-source-functions
-                                 ac-source-yasnippet
-                                 ac-source-variables
-                                 ac-source-symbols
-                                 ac-source-features
-                                 ac-source-abbrev
-                                 ac-source-words-in-same-mode-buffers
-                                 ac-source-dictionary)))
+    			     ac-source-functions
+    			     ac-source-yasnippet
+    			     ac-source-variables
+    			     ac-source-symbols
+    			     ac-source-features
+    			     ac-source-abbrev
+    			     ac-source-words-in-same-mode-buffers
+    			     ac-source-dictionary)))
     
     (if (require 'auto-complete-config)
         (my-autocomplete-setup))
 
-## Elpy<a id="sec-3-3" name="sec-3-3"></a>
+
+<a id="org5f4ac99"></a>
+
+## Elpy
 
 Elpy is used to get IDE like functionality for Python. To get full use
 of this package run `pip install --user jedi flake8 importmagic
@@ -443,7 +467,10 @@ autopep8`.
     (if (require 'elpy)
         (my-elpy-setup))
 
-## Helm<a id="sec-3-4" name="sec-3-4"></a>
+
+<a id="orgec590fc"></a>
+
+## Helm
 
 [Helm](https://github.com/emacs-helm/helm) is an Emacs framework for incremental completions and narrowing
 selections. It's a much better way to interact with Emacs. I've broken
@@ -456,14 +483,14 @@ instead of spelling everything out.
 
     (defun my-helm-fuzzy-settings ()
       (setq helm-M-x-fuzzy-match t
-            helm-buffers-fuzzy-matching t
-            helm-recentf-fuzzy-match t
-            helm-semantic-fuzzy-match t
-            helm-imenu-fuzzy-match t
-            helm-apropos-fuzzy-match t
-            helm-lisp-fuzzy-completion t
-            helm-mode-fuzzy-match t
-            helm-completion-in-region-fuzzy-match t))
+    	helm-buffers-fuzzy-matching t
+    	helm-recentf-fuzzy-match t
+    	helm-semantic-fuzzy-match t
+    	helm-imenu-fuzzy-match t
+    	helm-apropos-fuzzy-match t
+    	helm-lisp-fuzzy-completion t
+    	helm-mode-fuzzy-match t
+    	helm-completion-in-region-fuzzy-match t))
 
 This part is where keybindings relevant to Helm are defined. The one
 I've found to be most useful is `helm-mini` which is activated with
@@ -494,13 +521,13 @@ these does.
     
       (when (executable-find "ack-grep")
         (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-              helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+    	  helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
     
       (setq helm-split-window-inside-p t
-            helm-move-to-line-cycle-in-source t
-            helm-ff-search-library-in-sexp t
-            helm-scroll-amount 8
-            helm-ff-file-name-history-recentf t))
+    	helm-move-to-line-cycle-in-source t
+    	helm-ff-search-library-in-sexp t
+    	helm-scroll-amount 8
+    	helm-ff-file-name-history-recentf t))
 
 This section tells the Helm interface that it should resize itself
 depending on how much content it has to display, but should take up no
@@ -528,7 +555,10 @@ of these settings.
     (if (require 'helm)
         (my-helm-setup))
 
-## Magit<a id="sec-3-5" name="sec-3-5"></a>
+
+<a id="org0cf8027"></a>
+
+## Magit
 
 Magit is something that, in my opinion, should be shipped by default
 with Emacs. It's the most robust Git interface out there.
@@ -540,7 +570,10 @@ with Emacs. It's the most robust Git interface out there.
     (if (require 'magit)
         (my-magit-setup))
 
-## Multiple cursors<a id="sec-3-6" name="sec-3-6"></a>
+
+<a id="org0fd6f5a"></a>
+
+## Multiple cursors
 
 This is pretty self explanitory. Everyone has seen Sublime Texts
 multiple cursors feature, this lets you do it in Emacs.
@@ -554,7 +587,10 @@ multiple cursors feature, this lets you do it in Emacs.
     (if (require 'multiple-cursors)
         (my-multicursor-setup))
 
-## Paredit<a id="sec-3-7" name="sec-3-7"></a>
+
+<a id="org9ea1742"></a>
+
+## Paredit
 
 This is for better handling of S-expressions in lisp languages.
 
@@ -569,7 +605,10 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
-## Projectile<a id="sec-3-8" name="sec-3-8"></a>
+
+<a id="org9a7181c"></a>
+
+## Projectile
 
 Projectile makes emacs "project aware". This is good if you work on
 multiple code bases and want to navigate between them and within them
@@ -586,7 +625,10 @@ efficiently.
     (if (require 'projectile)
         (my-projectile-setup))
 
-## Highlight line number<a id="sec-3-9" name="sec-3-9"></a>
+
+<a id="org59a61c6"></a>
+
+## Highlight line number
 
 This package modifies the behavior of `linum-mode`. When the line
 numbers are present on the left hand side, the line that point is
@@ -595,7 +637,10 @@ currently on will be highlighted.
     (if (require 'hlinum)
         (hlinum-activate))
 
-## Neotree<a id="sec-3-10" name="sec-3-10"></a>
+
+<a id="orgd1268c0"></a>
+
+## Neotree
 
 Adds a file tree to the left hand side, like in most IDEs. This only
 works if you are in a project.
@@ -607,13 +652,13 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
       "Open NeoTree using the git root."
       (interactive)
       (let ((project-dir (projectile-project-root))
-            (file-name (buffer-file-name)))
+    	(file-name (buffer-file-name)))
         (neotree-toggle)
         (if project-dir
-            (if (neo-global--window-exists-p)
-                (progn
-                  (neotree-dir project-dir)
-                  (neotree-find file-name)))
+    	(if (neo-global--window-exists-p)
+    	    (progn
+    	      (neotree-dir project-dir)
+    	      (neotree-find file-name)))
           (message "Could not find git project root."))))
     
     (defun my-neotree-setup ()
@@ -627,7 +672,10 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
     (if (require 'neotree)
         (my-neotree-setup))
 
-## Themeing<a id="sec-3-11" name="sec-3-11"></a>
+
+<a id="org4d08648"></a>
+
+## Themeing
 
 Here we do some themeing of emacs. None of this has any functional
 impact, it just make the editor a little nicer to look at. We can see
@@ -642,37 +690,18 @@ theme should still be put together.
       (setq moe-theme-resize-org-title '(2.2 1.8 1.6 1.4 1.2 1.0 1.0 1.0 1.0))
       (moe-dark))
     
-    (defun my-moetheme-with-powerline ()
-      (powerline-moe-theme)
-      (setq moe-theme-highlight-buffer-id t)
-      (setq moe-theme-resize-markdown-title '(2.0 1.7 1.5 1.3 1.0 1.0))
-      (setq moe-theme-resize-org-title '(2.0 1.7 1.5 1.3 1.0 1.0 1.0 1.0 1.0))
-      (moe-dark)
-      (setq powerline-default-separator 'wave))
-    
-    (if (require 'powerline)
-        (if (require 'moe-theme)
-            (my-moetheme-with-powerline))
-      (if (require 'moe-theme)
-          (my-moetheme-setup)))
+    (if (require 'moe-theme)
+          (my-moetheme-setup))
     
     (if (require 'org-bullets)
         (add-hook 'org-mode-hook
-                  (lambda ()
-                    (org-bullets-mode 1))))
+    	      (lambda ()
+    		(org-bullets-mode 1))))
 
-## Zeal<a id="sec-3-12" name="sec-3-12"></a>
 
-Offline documentation. Make sure [Zeal](https://zealdocs.org/) is installed first.
+<a id="orgbd52b6b"></a>
 
-    (global-set-key "\C-cd" 'zeal-at-point)
-
-If you are on Windows you need to add Zeal to the exec path.
-
-    (if (eq system-type 'windows-nt)
-        (add-to-list 'exec-path "C:/Program Files/Zeal"))
-
-# Systemd unit file<a id="sec-4" name="sec-4"></a>
+# Systemd unit file
 
 Here is an example of a unit file for the emacs daemon. Place this in
 `~/.config/systemd/user/emacs.service`.
@@ -693,7 +722,10 @@ Here is an example of a unit file for the emacs daemon. Place this in
 Once this is created run `systemctl enable --user emacs.service` to
 enable the daemon, and `systemctl start --user emacs.service`
 
-# Licensing<a id="sec-5" name="sec-5"></a>
+
+<a id="org94e8816"></a>
+
+# Licensing
 
 © Copyright 2016 Sean Jones
 
@@ -709,3 +741,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
