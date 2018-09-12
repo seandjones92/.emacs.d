@@ -1,33 +1,31 @@
 
 # Table of Contents
 
-1.  [About](#orge1d02d2)
-2.  [Configurations (Internal)](#org0639d77)
-    1.  [Meta](#org54e86e4)
-    2.  [Windows](#orgb21aa91)
-    3.  [Base defaults](#org67c422d)
-    4.  [Functions](#org24f9eed)
-    5.  [Org Mode](#org1ee4b78)
-    6.  [Mode hooks](#org853aae5)
-    7.  [Keybindings](#org447c980)
-3.  [Configurations (External)](#org161c96a)
-    1.  [Packages](#orga04dff9)
-    2.  [Auto Complete](#orge11b033)
-    3.  [Elpy](#org5f4ac99)
-    4.  [Helm](#orgec590fc)
-    5.  [Magit](#org0cf8027)
-    6.  [Multiple cursors](#org0fd6f5a)
-    7.  [Paredit](#org9ea1742)
-    8.  [Projectile](#org9a7181c)
-    9.  [Highlight line number](#org59a61c6)
-    10. [Neotree](#orgd1268c0)
-    11. [Themeing](#org4d08648)
-4.  [Systemd unit file](#orgbd52b6b)
-5.  [Licensing](#org94e8816)
+1.  [About](#org3a4f08e)
+2.  [Configurations (Internal)](#orgb107158)
+    1.  [Meta](#org4beed65)
+    2.  [Base defaults](#org137c8d4)
+    3.  [Functions](#org40591ae)
+    4.  [Org Mode](#orgd43b7f2)
+    5.  [Mode hooks](#orgdbd3e2e)
+    6.  [Keybindings](#org62ed213)
+3.  [Configurations (External)](#org71a6fe3)
+    1.  [Packages](#org835a628)
+    2.  [Auto Complete](#orgc49beed)
+    3.  [Elpy](#org2a4103f)
+    4.  [Helm](#org291f166)
+    5.  [Magit](#orgd623dc2)
+    6.  [Multiple cursors](#org1718cb1)
+    7.  [Paredit](#orgafaa2fa)
+    8.  [Projectile](#org9a18e40)
+    9.  [Neotree](#orgdf7397a)
+    10. [Themeing](#orga54e778)
+4.  [Systemd unit file](#org219d396)
+5.  [Licensing](#org12cc6d4)
 
 
 
-<a id="orge1d02d2"></a>
+<a id="org3a4f08e"></a>
 
 # About
 
@@ -50,7 +48,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org0639d77"></a>
+<a id="orgb107158"></a>
 
 # Configurations (Internal)
 
@@ -60,7 +58,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org54e86e4"></a>
+<a id="org4beed65"></a>
 
 ## Meta
 
@@ -131,27 +129,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="orgb21aa91"></a>
-
-## Windows
-
-**TODO:** I don't use Windows at work anymore and will no longer be
-maintaining anything Windows related. There's a good chance I'll
-remove these components.
-
-This section is for defining any behavior needed for the configuration
-to work properly on Windows. Unfortunately I have to use Windows at
-work so these configurations are a must for me.
-
-    (defun my-windows-config ()
-      (setq default-directory (concat "C:\\Users\\" (user-login-name) "\\"))
-      (setq python-shell-interpreter "py.exe"))
-
-    (if (eq system-type 'windows-nt)
-        (my-windows-config))
-
-
-<a id="org67c422d"></a>
+<a id="org137c8d4"></a>
 
 ## Base defaults
 
@@ -202,7 +180,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org24f9eed"></a>
+<a id="org40591ae"></a>
 
 ## Functions
 
@@ -278,7 +256,7 @@ public key to the clipboard.
           (message "Public key copied to clipboard"))))
 
 
-<a id="org1ee4b78"></a>
+<a id="orgd43b7f2"></a>
 
 ## Org Mode
 
@@ -300,7 +278,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org853aae5"></a>
+<a id="orgdbd3e2e"></a>
 
 ## Mode hooks
 
@@ -320,7 +298,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org447c980"></a>
+<a id="org62ed213"></a>
 
 ## Keybindings
 
@@ -337,7 +315,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="org161c96a"></a>
+<a id="org71a6fe3"></a>
 
 # Configurations (External)
 
@@ -346,7 +324,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="orga04dff9"></a>
+<a id="org835a628"></a>
 
 ## Packages
 
@@ -357,18 +335,15 @@ is only needed for the Elpy package.
 
     (require 'package)
     (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-    			 ("melpa" . "https://melpa.org/packages/")
+    			 ("melpa" . "https://stable.melpa.org/packages/")
     			 ("elpy" . "https://jorgenschaefer.github.io/packages/")))
 
 Next we define a function to determine if we have access to the
 internet. We need to wrap this in a check for Windows since `ping`
 options behave differently.
 
-    (if (eq system-type 'windows-nt)
-        (defun internet-up ()
-    	(call-process "ping" nil nil nil "-n" "1" "www.google.com"))
-      (defun internet-up ()
-          (call-process "ping" nil nil nil "-c" "1" "www.google.com")))
+    (defun internet-up ()
+      (call-process "ping" nil nil nil "-c" "1" "www.google.com"))
 
 Next we define a list containing all of the packages that should be
 installed to take full advantage of this configuration. The [Silver
@@ -382,7 +357,6 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
     		    helm
     		    helm-ag
     		    helm-projectile
-    		    hlinum
     		    magit
     		    markdown-mode
     		    moe-theme
@@ -419,7 +393,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orge11b033"></a>
+<a id="orgc49beed"></a>
 
 ## Auto Complete
 
@@ -442,7 +416,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org5f4ac99"></a>
+<a id="org2a4103f"></a>
 
 ## Elpy
 
@@ -468,7 +442,7 @@ autopep8`.
         (my-elpy-setup))
 
 
-<a id="orgec590fc"></a>
+<a id="org291f166"></a>
 
 ## Helm
 
@@ -556,7 +530,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org0cf8027"></a>
+<a id="orgd623dc2"></a>
 
 ## Magit
 
@@ -571,7 +545,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org0fd6f5a"></a>
+<a id="org1718cb1"></a>
 
 ## Multiple cursors
 
@@ -588,7 +562,7 @@ multiple cursors feature, this lets you do it in Emacs.
         (my-multicursor-setup))
 
 
-<a id="org9ea1742"></a>
+<a id="orgafaa2fa"></a>
 
 ## Paredit
 
@@ -606,7 +580,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org9a7181c"></a>
+<a id="org9a18e40"></a>
 
 ## Projectile
 
@@ -626,19 +600,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org59a61c6"></a>
-
-## Highlight line number
-
-This package modifies the behavior of `linum-mode`. When the line
-numbers are present on the left hand side, the line that point is
-currently on will be highlighted.
-
-    (if (require 'hlinum)
-        (hlinum-activate))
-
-
-<a id="orgd1268c0"></a>
+<a id="orgdf7397a"></a>
 
 ## Neotree
 
@@ -673,7 +635,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="org4d08648"></a>
+<a id="orga54e778"></a>
 
 ## Themeing
 
@@ -699,7 +661,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="orgbd52b6b"></a>
+<a id="org219d396"></a>
 
 # Systemd unit file
 
@@ -723,7 +685,7 @@ Once this is created run `systemctl enable --user emacs.service` to
 enable the daemon, and `systemctl start --user emacs.service`
 
 
-<a id="org94e8816"></a>
+<a id="org12cc6d4"></a>
 
 # Licensing
 
