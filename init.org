@@ -175,7 +175,8 @@ match that regular expression. This is good for working in directories
 with lots of files. Think =ls -al | grep -E <expression>=.
 #+BEGIN_SRC emacs-lisp
   (defun dired-show-only (regexp)
-    "Only show files matching the regexp."
+    "Display files in the current directory that match the given
+  regular expression."
     (interactive "sFiles to show (regexp): ")
     (dired-mark-files-regexp regexp)
     (dired-toggle-marks)
@@ -188,7 +189,9 @@ lot going on, machines I'm no longer working on, too many buffers to
 sort through and this helps.
 #+BEGIN_SRC emacs-lisp
   (defun go-local ()
-    "Clean up all remote connections."
+    "Destroy all TRAMP connections and kill all associated
+  buffers. Be aware that this will destroy local sudo/root TRAMP
+  sessions."
     (interactive)
     (ignore-errors (tramp-cleanup-all-connections))
     (ignore-errors (tramp-cleanup-all-buffers)))
@@ -199,7 +202,8 @@ files. Strip all white space from the end of the file and the ends of
 lines before saving.
 #+BEGIN_SRC emacs-lisp
   (defun save-buffer-clean ()
-    "Strip the trailing whitespace from a file and save it."
+    "Strip the trailing whitespace from lines and the end of the
+  file and save it."
     (interactive)
     (delete-trailing-whitespace)
     (save-buffer))
@@ -210,36 +214,53 @@ behavior. This one handles killing buffers. If there is more than one
 buffer and I kill one, kill its window too.
 #+BEGIN_SRC emacs-lisp
   (defun smart-buffer-kill ()
-    "Kill buffers in a way that makes sense."
+    "If there is more than one buffer visible in the frame, kill the buffer and
+  its associated window."
     (interactive)
     (if (= (count-windows) 1)
-        (kill-buffer)
+	(kill-buffer)
       (kill-buffer-and-window)))
+#+END_SRC
+
+This function allows you to quickly elevate your privileges to
+=root=. If called without a prefix you will be placed in dired at =/=,
+if you call it with a prefix the current file will be reloaded and
+accessed as =root=.
+#+BEGIN_SRC emacs-lisp
+  (defun become-root (&optional prefix)
+    "Elevate persmissions to root using TRAMP. If run without a
+  prefix, place the user at the root of the file system in
+  dired. If run with a prefix open the current file with elevated
+  permissions."
+    (interactive "P")
+    (if prefix
+	(find-file (concat "/sudo:root@localhost:" buffer-file-name))
+      (dired "/sudo:root@localhost:/")))
 #+END_SRC
 
 This is one I don't use very often but can be useful. Copy the SSH
 public key to the clipboard.
 #+BEGIN_SRC emacs-lisp
   (defun ssh-clip ()
-    "Copy '~/.ssh/id_rsa.pub' to clipboard.
-  This will first empty the kill-ring (clipboard)"
+    "Copy '~/.ssh/id_rsa.pub' to clipboard. This will first empty
+  the kill-ring (clipboard)"
     (interactive)
     (if (= (count-windows) 1)
-        (let ((origin (current-buffer)))
-          (setq kill-ring nil)
-          (find-file "~/.ssh/id_rsa.pub")
-          (mark-page)
-          (kill-ring-save (point-min) (point-max))
-          (kill-buffer)
-          (message "Public key copied to clipboard"))
+	(let ((origin (current-buffer)))
+	  (setq kill-ring nil)
+	  (find-file "~/.ssh/id_rsa.pub")
+	  (mark-page)
+	  (kill-ring-save (point-min) (point-max))
+	  (kill-buffer)
+	  (message "Public key copied to clipboard"))
       (let ((origin (current-buffer)))
-        (setq kill-ring nil)
-        (find-file-other-window "~/.ssh/id_rsa.pub")
-        (mark-page)
-        (kill-ring-save (point-min) (point-max))
-        (kill-buffer)
-        (switch-to-buffer-other-window origin)
-        (message "Public key copied to clipboard"))))
+	(setq kill-ring nil)
+	(find-file-other-window "~/.ssh/id_rsa.pub")
+	(mark-page)
+	(kill-ring-save (point-min) (point-max))
+	(kill-buffer)
+	(switch-to-buffer-other-window origin)
+	(message "Public key copied to clipboard"))))
 #+END_SRC
 
 ** Org Mode
@@ -289,6 +310,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
   (global-set-key (kbd "C-c k") 'kill-this-buffer)
   (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
+  (global-set-key (kbd "C-!") 'become-root)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)
 #+END_SRC
@@ -338,7 +360,6 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
                       magit
                       markdown-mode
                       moe-theme
-                      multiple-cursors
                       neotree
                       org-bullets
                       paredit
@@ -517,20 +538,6 @@ with Emacs. It's the most robust Git interface out there.
 
   (if (require 'magit)
       (my-magit-setup))
-#+END_SRC
-
-** Multiple cursors
-This is pretty self explanitory. Everyone has seen Sublime Texts
-multiple cursors feature, this lets you do it in Emacs.
-#+BEGIN_SRC emacs-lisp
-  (defun my-multicursor-setup ()
-    (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-    (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
-
-  (if (require 'multiple-cursors)
-      (my-multicursor-setup))
 #+END_SRC
 
 ** Paredit

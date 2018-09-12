@@ -1,31 +1,30 @@
 
 # Table of Contents
 
-1.  [About](#org3a4f08e)
-2.  [Configurations (Internal)](#orgb107158)
-    1.  [Meta](#org4beed65)
-    2.  [Base defaults](#org137c8d4)
-    3.  [Functions](#org40591ae)
-    4.  [Org Mode](#orgd43b7f2)
-    5.  [Mode hooks](#orgdbd3e2e)
-    6.  [Keybindings](#org62ed213)
-3.  [Configurations (External)](#org71a6fe3)
-    1.  [Packages](#org835a628)
-    2.  [Auto Complete](#orgc49beed)
-    3.  [Elpy](#org2a4103f)
-    4.  [Helm](#org291f166)
-    5.  [Magit](#orgd623dc2)
-    6.  [Multiple cursors](#org1718cb1)
-    7.  [Paredit](#orgafaa2fa)
-    8.  [Projectile](#org9a18e40)
-    9.  [Neotree](#orgdf7397a)
-    10. [Themeing](#orga54e778)
-4.  [Systemd unit file](#org219d396)
-5.  [Licensing](#org12cc6d4)
+1.  [About](#orgc89bf98)
+2.  [Configurations (Internal)](#orgc2a52b9)
+    1.  [Meta](#org7d98abb)
+    2.  [Base defaults](#org0e2aeaa)
+    3.  [Functions](#org0433298)
+    4.  [Org Mode](#org69fb8d2)
+    5.  [Mode hooks](#org5fbdce8)
+    6.  [Keybindings](#orgcf177b4)
+3.  [Configurations (External)](#org1b93b4f)
+    1.  [Packages](#org449f1cd)
+    2.  [Auto Complete](#org8f18ee2)
+    3.  [Elpy](#orgf518137)
+    4.  [Helm](#orgc963a73)
+    5.  [Magit](#org869c46a)
+    6.  [Paredit](#orge28fc1c)
+    7.  [Projectile](#org570d705)
+    8.  [Neotree](#orgf039cd0)
+    9.  [Themeing](#org62a116f)
+4.  [Systemd unit file](#org6822aa8)
+5.  [Licensing](#org1261a82)
 
 
 
-<a id="org3a4f08e"></a>
+<a id="orgc89bf98"></a>
 
 # About
 
@@ -48,7 +47,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgb107158"></a>
+<a id="orgc2a52b9"></a>
 
 # Configurations (Internal)
 
@@ -58,7 +57,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org4beed65"></a>
+<a id="org7d98abb"></a>
 
 ## Meta
 
@@ -129,7 +128,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org137c8d4"></a>
+<a id="org0e2aeaa"></a>
 
 ## Base defaults
 
@@ -180,7 +179,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org40591ae"></a>
+<a id="org0433298"></a>
 
 ## Functions
 
@@ -193,7 +192,8 @@ match that regular expression. This is good for working in directories
 with lots of files. Think `ls -al | grep -E <expression>`.
 
     (defun dired-show-only (regexp)
-      "Only show files matching the regexp."
+      "Display files in the current directory that match the given
+    regular expression."
       (interactive "sFiles to show (regexp): ")
       (dired-mark-files-regexp regexp)
       (dired-toggle-marks)
@@ -205,7 +205,9 @@ lot going on, machines I'm no longer working on, too many buffers to
 sort through and this helps.
 
     (defun go-local ()
-      "Clean up all remote connections."
+      "Destroy all TRAMP connections and kill all associated
+    buffers. Be aware that this will destroy local sudo/root TRAMP
+    sessions."
       (interactive)
       (ignore-errors (tramp-cleanup-all-connections))
       (ignore-errors (tramp-cleanup-all-buffers)))
@@ -215,7 +217,8 @@ files. Strip all white space from the end of the file and the ends of
 lines before saving.
 
     (defun save-buffer-clean ()
-      "Strip the trailing whitespace from a file and save it."
+      "Strip the trailing whitespace from lines and the end of the
+    file and save it."
       (interactive)
       (delete-trailing-whitespace)
       (save-buffer))
@@ -225,18 +228,34 @@ behavior. This one handles killing buffers. If there is more than one
 buffer and I kill one, kill its window too.
 
     (defun smart-buffer-kill ()
-      "Kill buffers in a way that makes sense."
+      "If there is more than one buffer visible in the frame, kill the buffer and
+    its associated window."
       (interactive)
       (if (= (count-windows) 1)
           (kill-buffer)
         (kill-buffer-and-window)))
 
+This function allows you to quickly elevate your privileges to
+`root`. If called without a prefix you will be placed in dired at `/`,
+if you call it with a prefix the current file will be reloaded and
+accessed as `root`.
+
+    (defun become-root (&optional prefix)
+      "Elevate persmissions to root using TRAMP. If run without a
+    prefix, place the user at the root of the file system in
+    dired. If run with a prefix open the current file with elevated
+    permissions."
+      (interactive "P")
+      (if prefix
+          (find-file (concat "/sudo:root@localhost:" buffer-file-name))
+        (dired "/sudo:root@localhost:/")))
+
 This is one I don't use very often but can be useful. Copy the SSH
 public key to the clipboard.
 
     (defun ssh-clip ()
-      "Copy '~/.ssh/id_rsa.pub' to clipboard.
-    This will first empty the kill-ring (clipboard)"
+      "Copy '~/.ssh/id_rsa.pub' to clipboard. This will first empty
+    the kill-ring (clipboard)"
       (interactive)
       (if (= (count-windows) 1)
           (let ((origin (current-buffer)))
@@ -256,7 +275,7 @@ public key to the clipboard.
           (message "Public key copied to clipboard"))))
 
 
-<a id="orgd43b7f2"></a>
+<a id="org69fb8d2"></a>
 
 ## Org Mode
 
@@ -278,7 +297,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgdbd3e2e"></a>
+<a id="org5fbdce8"></a>
 
 ## Mode hooks
 
@@ -298,7 +317,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org62ed213"></a>
+<a id="orgcf177b4"></a>
 
 ## Keybindings
 
@@ -307,6 +326,7 @@ This is where I define my custom keybindings.
     (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
     (global-set-key (kbd "C-c k") 'kill-this-buffer)
     (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
+    (global-set-key (kbd "C-!") 'become-root)
     (require 'dired)
     (define-key dired-mode-map [?%?h] 'dired-show-only)
 
@@ -315,7 +335,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="org71a6fe3"></a>
+<a id="org1b93b4f"></a>
 
 # Configurations (External)
 
@@ -324,7 +344,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org835a628"></a>
+<a id="org449f1cd"></a>
 
 ## Packages
 
@@ -360,7 +380,6 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
     		    magit
     		    markdown-mode
     		    moe-theme
-    		    multiple-cursors
     		    neotree
     		    org-bullets
     		    paredit
@@ -393,7 +412,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orgc49beed"></a>
+<a id="org8f18ee2"></a>
 
 ## Auto Complete
 
@@ -416,7 +435,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org2a4103f"></a>
+<a id="orgf518137"></a>
 
 ## Elpy
 
@@ -442,7 +461,7 @@ autopep8`.
         (my-elpy-setup))
 
 
-<a id="org291f166"></a>
+<a id="orgc963a73"></a>
 
 ## Helm
 
@@ -530,7 +549,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="orgd623dc2"></a>
+<a id="org869c46a"></a>
 
 ## Magit
 
@@ -545,24 +564,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org1718cb1"></a>
-
-## Multiple cursors
-
-This is pretty self explanitory. Everyone has seen Sublime Texts
-multiple cursors feature, this lets you do it in Emacs.
-
-    (defun my-multicursor-setup ()
-      (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-      (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-      (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-      (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this))
-    
-    (if (require 'multiple-cursors)
-        (my-multicursor-setup))
-
-
-<a id="orgafaa2fa"></a>
+<a id="orge28fc1c"></a>
 
 ## Paredit
 
@@ -580,7 +582,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org9a18e40"></a>
+<a id="org570d705"></a>
 
 ## Projectile
 
@@ -600,7 +602,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="orgdf7397a"></a>
+<a id="orgf039cd0"></a>
 
 ## Neotree
 
@@ -635,7 +637,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orga54e778"></a>
+<a id="org62a116f"></a>
 
 ## Themeing
 
@@ -661,7 +663,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="org219d396"></a>
+<a id="org6822aa8"></a>
 
 # Systemd unit file
 
@@ -685,7 +687,7 @@ Once this is created run `systemctl enable --user emacs.service` to
 enable the daemon, and `systemctl start --user emacs.service`
 
 
-<a id="org12cc6d4"></a>
+<a id="org1261a82"></a>
 
 # Licensing
 
