@@ -533,6 +533,14 @@ of these settings.
       (my-helm-setup))
 #+END_SRC
 
+** Helm Tramp
+Helm TRAMP is used to quickly connect to machines in =~/.ssh/config=
+and Docker containers.
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c h h") 'helm-tramp)
+#+END_SRC
+
 ** Magit
 Magit is something that, in my opinion, should be shipped by default
 with Emacs. It's the most robust Git interface out there.
