@@ -350,20 +350,24 @@ installed to take full advantage of this configuration. The [[https://github.com
 Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 #+BEGIN_SRC emacs-lisp
   (setq my-packages '(ag
-                      all-the-icons
-                      auto-complete
-                      elpy
-                      gist
-                      helm
-                      helm-ag
-                      helm-projectile
-                      magit
-                      markdown-mode
-                      moe-theme
-                      neotree
-                      org-bullets
-                      paredit
-                      projectile))
+		      all-the-icons
+		      auto-complete
+		      docker
+		      docker-compose-mode
+		      docker-tramp
+		      dockerfile-mode
+		      elpy
+		      gist
+		      helm
+		      helm-ag
+		      helm-projectile
+		      magit
+		      markdown-mode
+		      moe-theme
+		      neotree
+		      org-bullets
+		      paredit
+		      projectile))
 #+END_SRC
 
 The next function defined is to loop through the provided list of
