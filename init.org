@@ -667,6 +667,11 @@ Here is an example of a unit file for the emacs daemon. Place this in
 Once this is created run =systemctl enable --user emacs.service= to
 enable the daemon, and =systemctl start --user emacs.service=
 
+To launch a client map a keyboard shortcut to:
+#+BEGIN_SRC sh :tangle no
+  /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
+#+END_SRC
+
 * Licensing
 © Copyright 2016 Sean Jones
 
