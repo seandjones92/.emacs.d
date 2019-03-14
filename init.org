@@ -419,6 +419,13 @@ needs to be set or the completion framework won't kick in.
       (my-autocomplete-setup))
 #+END_SRC
 
+** Docker
+The default configuration for docker is fine for me. I just want to
+map the high level menu for easy access.
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c d") 'docker)
+#+END_SRC
+
 ** Elpy
 Elpy is used to get IDE like functionality for Python. To get full use
 of this package run =pip install --user jedi flake8 importmagic
