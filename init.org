@@ -332,9 +332,15 @@ the repositories we wish to use. The =jorgenschaefer.github.io= repo
 is only needed for the Elpy package.
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                           ("melpa" . "https://stable.melpa.org/packages/")
-                           ("elpy" . "https://jorgenschaefer.github.io/packages/")))
+  (setq package-archives
+	'(("gnu" . "https://elpa.gnu.org/packages/")
+	  ("melpa stable" . "https://stable.melpa.org/packages/")
+	  ("melpa" . "https://melpa.org/packages/")
+	  ("elpy" . "https://jorgenschaefer.github.io/packages/"))
+	package-archive-priorities
+	'(("melpa stable" . 10)
+	  ("elpy"         . 5)
+	  ("melpa"        . 0)))
 #+END_SRC
 
 Next we define a function to determine if we have access to the
@@ -368,6 +374,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      neotree
 		      org-bullets
 		      paredit
+		      pipenv
 		      projectile))
 #+END_SRC
 
