@@ -379,7 +379,6 @@ installed to take full advantage of this configuration. The [[https://github.com
 Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 #+BEGIN_SRC emacs-lisp
   (setq my-packages '(ag
-		      all-the-icons
 		      auto-complete
 		      docker
 		      docker-compose-mode
@@ -635,20 +634,18 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
     "Open NeoTree using the git root."
     (interactive)
     (let ((project-dir (projectile-project-root))
-          (file-name (buffer-file-name)))
+	  (file-name (buffer-file-name)))
       (neotree-toggle)
       (if project-dir
-          (if (neo-global--window-exists-p)
-              (progn
-                (neotree-dir project-dir)
-                (neotree-find file-name)))
-        (message "Could not find git project root."))))
+	  (if (neo-global--window-exists-p)
+	      (progn
+		(neotree-dir project-dir)
+		(neotree-find file-name)))
+	(message "Could not find git project root."))))
 
   (defun my-neotree-setup ()
     (global-set-key (kbd "C-c n") 'neotree-project-dir)
-    (if (eq system-type 'windows-nt)
-        (setq neo-theme 'arrow)
-      (setq neo-theme 'icons))
+    (setq neo-theme 'arrow)
     (setq projectile-switch-project-action 'neotree-projectile-action)
     (setq neo-window-width 30))
 
