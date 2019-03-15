@@ -368,7 +368,6 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      helm-ag
 		      helm-projectile
 		      helm-tramp
-		      log4j-mode
 		      magit
 		      markdown-mode
 		      moe-theme
