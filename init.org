@@ -368,6 +368,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      helm-ag
 		      helm-projectile
 		      helm-tramp
+		      log4j-mode
 		      magit
 		      markdown-mode
 		      moe-theme
@@ -375,7 +376,8 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      org-bullets
 		      paredit
 		      pipenv
-		      projectile))
+		      projectile
+		      vlf))
 #+END_SRC
 
 The next function defined is to loop through the provided list of

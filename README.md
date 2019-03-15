@@ -1,32 +1,32 @@
 
 # Table of Contents
 
-1.  [About](#orge9dd8c2)
-2.  [Configurations (Internal)](#orgb337754)
-    1.  [Meta](#org180ac68)
-    2.  [Base defaults](#org603bcc0)
-    3.  [Functions](#org3c4725c)
-    4.  [Org Mode](#org115c4d7)
-    5.  [Mode hooks](#org058208a)
-    6.  [Keybindings](#org4f88c5d)
-3.  [Configurations (External)](#orge209fcc)
-    1.  [Packages](#org8765f6f)
-    2.  [Auto Complete](#org61afd6d)
-    3.  [Docker](#org08a4220)
-    4.  [Elpy](#org5e43ed7)
-    5.  [Helm](#org1cb9e12)
-    6.  [Helm Tramp](#orgbd661d8)
-    7.  [Magit](#org0c9086c)
-    8.  [Paredit](#orgc8cdd76)
-    9.  [Projectile](#orgb9e8085)
-    10. [Neotree](#org44d67f2)
-    11. [Themeing](#orgea378d4)
-4.  [Systemd unit file](#org62b89c3)
-5.  [Licensing](#org9289676)
+1.  [About](#org461c937)
+2.  [Configurations (Internal)](#org85eca9f)
+    1.  [Meta](#orgb2cb3ce)
+    2.  [Base defaults](#org3b1de34)
+    3.  [Functions](#org60aa4c9)
+    4.  [Org Mode](#orga28571a)
+    5.  [Mode hooks](#orgdeb50a5)
+    6.  [Keybindings](#org53b9819)
+3.  [Configurations (External)](#org0112154)
+    1.  [Packages](#orga9d5b88)
+    2.  [Auto Complete](#org226f839)
+    3.  [Docker](#org9ed398c)
+    4.  [Elpy](#org99621dc)
+    5.  [Helm](#org0f03404)
+    6.  [Helm Tramp](#orgd2bc8fa)
+    7.  [Magit](#orgb4e0d03)
+    8.  [Paredit](#orgaa0d648)
+    9.  [Projectile](#org23e4bd6)
+    10. [Neotree](#org0d91a2a)
+    11. [Themeing](#orge165545)
+4.  [Systemd unit file](#org9ddafb9)
+5.  [Licensing](#org0e34c27)
 
 
 
-<a id="orge9dd8c2"></a>
+<a id="org461c937"></a>
 
 # About
 
@@ -49,7 +49,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgb337754"></a>
+<a id="org85eca9f"></a>
 
 # Configurations (Internal)
 
@@ -59,7 +59,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org180ac68"></a>
+<a id="orgb2cb3ce"></a>
 
 ## Meta
 
@@ -130,7 +130,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org603bcc0"></a>
+<a id="org3b1de34"></a>
 
 ## Base defaults
 
@@ -181,7 +181,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org3c4725c"></a>
+<a id="org60aa4c9"></a>
 
 ## Functions
 
@@ -277,7 +277,7 @@ public key to the clipboard.
           (message "Public key copied to clipboard"))))
 
 
-<a id="org115c4d7"></a>
+<a id="orga28571a"></a>
 
 ## Org Mode
 
@@ -299,7 +299,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org058208a"></a>
+<a id="orgdeb50a5"></a>
 
 ## Mode hooks
 
@@ -319,7 +319,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org4f88c5d"></a>
+<a id="org53b9819"></a>
 
 ## Keybindings
 
@@ -337,7 +337,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="orge209fcc"></a>
+<a id="org0112154"></a>
 
 # Configurations (External)
 
@@ -346,7 +346,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org8765f6f"></a>
+<a id="orga9d5b88"></a>
 
 ## Packages
 
@@ -390,6 +390,7 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
     		    helm-ag
     		    helm-projectile
     		    helm-tramp
+    		    log4j-mode
     		    magit
     		    markdown-mode
     		    moe-theme
@@ -397,7 +398,8 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
     		    org-bullets
     		    paredit
     		    pipenv
-    		    projectile))
+    		    projectile
+    		    vlf))
 
 The next function defined is to loop through the provided list of
 packages and to check if they are present. If not, the package is
@@ -426,7 +428,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="org61afd6d"></a>
+<a id="org226f839"></a>
 
 ## Auto Complete
 
@@ -449,7 +451,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org08a4220"></a>
+<a id="org9ed398c"></a>
 
 ## Docker
 
@@ -459,7 +461,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="org5e43ed7"></a>
+<a id="org99621dc"></a>
 
 ## Elpy
 
@@ -485,7 +487,7 @@ autopep8`.
         (my-elpy-setup))
 
 
-<a id="org1cb9e12"></a>
+<a id="org0f03404"></a>
 
 ## Helm
 
@@ -573,7 +575,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="orgbd661d8"></a>
+<a id="orgd2bc8fa"></a>
 
 ## Helm Tramp
 
@@ -583,7 +585,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="org0c9086c"></a>
+<a id="orgb4e0d03"></a>
 
 ## Magit
 
@@ -598,7 +600,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="orgc8cdd76"></a>
+<a id="orgaa0d648"></a>
 
 ## Paredit
 
@@ -616,7 +618,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="orgb9e8085"></a>
+<a id="org23e4bd6"></a>
 
 ## Projectile
 
@@ -636,7 +638,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org44d67f2"></a>
+<a id="org0d91a2a"></a>
 
 ## Neotree
 
@@ -671,7 +673,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orgea378d4"></a>
+<a id="orge165545"></a>
 
 ## Themeing
 
@@ -695,7 +697,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="org62b89c3"></a>
+<a id="org9ddafb9"></a>
 
 # Systemd unit file
 
@@ -723,7 +725,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org9289676"></a>
+<a id="org0e34c27"></a>
 
 # Licensing
 
