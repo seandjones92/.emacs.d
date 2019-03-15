@@ -333,6 +333,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-c k") 'kill-this-buffer)
   (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
   (global-set-key (kbd "C-!") 'become-root)
+  (global-set-key (kbd "C-`") 'eshell-here)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)
 #+END_SRC
