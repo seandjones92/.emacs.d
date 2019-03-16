@@ -314,7 +314,6 @@ For =text-mode= I do want word wrapping enabled and =auto-fill-mode=
 enabled. For me this makes sense when thinking about regular old
 =*.txt= files.
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'auto-fill-mode)
   (add-hook 'text-mode-hook 'toggle-truncate-lines)
 #+END_SRC
 
