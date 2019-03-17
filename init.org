@@ -333,7 +333,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-`") 'shell)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)
-  (define-key dired-mode-map [?%?g] 'find-grep-dired)
+  (define-key dired-mode-map [?%?G] 'find-grep-dired)
 #+END_SRC
 
 Enable keybindings that are disabled by default:
