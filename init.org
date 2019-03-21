@@ -158,6 +158,11 @@ Disable word wrapping by default, I don't like it.
   (set-default 'truncate-lines t)
 #+END_SRC
 
+This change makes =dired= list files with "human readable" size instead of just bytes.
+#+BEGIN_SRC emacs-lisp
+  (setq dired-listing-switches "-alh")
+#+END_SRC
+
 Use =*scratch*= as initial screen. Also, modify the message at the top
 of the buffer.
 #+BEGIN_SRC emacs-lisp
