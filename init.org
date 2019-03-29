@@ -339,6 +339,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-!") 'become-root)
   (global-set-key (kbd "C-~") 'eshell-here)
   (global-set-key (kbd "C-`") 'shell)
+  (global-set-key [f12] 'toggle-scroll-bar)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)
   (define-key dired-mode-map [?%?G] 'find-grep-dired)
