@@ -287,6 +287,26 @@ directory
       (rename-buffer (concat "*eshell: " name "*"))))
 #+END_SRC
 
+This function will toggle both the vertical and horizontal scroll
+bars. Sometimes it's useful when reviewing large log files and using a
+mouse to scroll.
+#+BEGIN_SRC emacs-lisp
+  (defun toggle-bars (arg)
+    "Toggle both horizontal and vertical scroll bars."
+    (interactive "P")
+    (if (null arg)
+	(setq arg
+	      (if (frame-parameter nil 'vertical-scroll-bars) -1 1))
+      (setq arg (prefix-numeric-value arg)))
+    (modify-frame-parameters
+     (selected-frame)
+     (list (cons 'vertical-scroll-bars
+		 (if (> arg 0)
+		     (or scroll-bar-mode default-frame-scroll-bars)))
+	   (cons 'horizontal-scroll-bars
+		 (when (> arg 0) 'bottom)))))
+#+END_SRC
+
 ** Org Mode
 
 Here is my functional configuration of Org Mode.
@@ -339,7 +359,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-!") 'become-root)
   (global-set-key (kbd "C-~") 'eshell-here)
   (global-set-key (kbd "C-`") 'shell)
-  (global-set-key [f12] 'toggle-scroll-bar)
+  (global-set-key [f12] 'toggle-bars)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)
   (define-key dired-mode-map [?%?G] 'find-grep-dired)
