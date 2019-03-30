@@ -293,6 +293,14 @@ directory
         (eshell "new")
         (rename-buffer (concat "*eshell: " name "*"))))
 
+This function will open `shell` using the full frame.
+
+    (defun full-frame-shell ()
+      "Opens `shell' in a full frame."
+      (interactive)
+      (shell)
+      (delete-other-windows))
+
 This function will toggle both the vertical and horizontal scroll
 bars. Sometimes it's useful when reviewing large log files and using a
 mouse to scroll.
@@ -369,7 +377,7 @@ This is where I define my custom keybindings.
     (global-set-key (kbd "C-+") 'calc)
     (global-set-key (kbd "C-c S") 'toggle-truncate-lines)
     (global-set-key (kbd "C-!") 'become-root)
-    (global-set-key (kbd "C-~") 'eshell-here)
+    (global-set-key (kbd "C-~") 'full-frame-shell)
     (global-set-key (kbd "C-`") 'shell)
     (global-set-key [f12] 'toggle-bars)
     (require 'dired)
