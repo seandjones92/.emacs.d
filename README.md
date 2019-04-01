@@ -1,41 +1,34 @@
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#sec-1">1. About</a></li>
-<li><a href="#sec-2">2. Configurations (Internal)</a>
-<ul>
-<li><a href="#sec-2-1">2.1. Meta</a></li>
-<li><a href="#sec-2-2">2.2. Base defaults</a></li>
-<li><a href="#sec-2-3">2.3. Functions</a></li>
-<li><a href="#sec-2-4">2.4. Org Mode</a></li>
-<li><a href="#sec-2-5">2.5. Mode hooks</a></li>
-<li><a href="#sec-2-6">2.6. Keybindings</a></li>
-</ul>
-</li>
-<li><a href="#sec-3">3. Configurations (External)</a>
-<ul>
-<li><a href="#sec-3-1">3.1. Packages</a></li>
-<li><a href="#sec-3-2">3.2. Auto Complete</a></li>
-<li><a href="#sec-3-3">3.3. Docker</a></li>
-<li><a href="#sec-3-4">3.4. Elpy</a></li>
-<li><a href="#sec-3-5">3.5. Helm</a></li>
-<li><a href="#sec-3-6">3.6. Helm Tramp</a></li>
-<li><a href="#sec-3-7">3.7. Magit</a></li>
-<li><a href="#sec-3-8">3.8. Paredit</a></li>
-<li><a href="#sec-3-9">3.9. Projectile</a></li>
-<li><a href="#sec-3-10">3.10. Neotree</a></li>
-<li><a href="#sec-3-11">3.11. Themeing</a></li>
-</ul>
-</li>
-<li><a href="#sec-4">4. Systemd unit file</a></li>
-<li><a href="#sec-5">5. Licensing</a></li>
-</ul>
-</div>
-</div>
+
+# Table of Contents
+
+1.  [About](#org0ee9ca7)
+2.  [Configurations (Internal)](#org13269d7)
+    1.  [Meta](#org19a33e5)
+    2.  [Base defaults](#org9d4b52f)
+    3.  [Functions](#org4c6a4c4)
+    4.  [Org Mode](#orgd2a3d42)
+    5.  [Mode hooks](#org8940fbe)
+    6.  [Keybindings](#org695efcd)
+3.  [Configurations (External)](#org9ffd236)
+    1.  [Packages](#org04d31cf)
+    2.  [Auto Complete](#org91f9d06)
+    3.  [Docker](#org456517f)
+    4.  [Elpy](#org24d5304)
+    5.  [Helm](#orgd135247)
+    6.  [Helm Tramp](#org898a98e)
+    7.  [Magit](#org56cc93c)
+    8.  [Paredit](#org18f3cc8)
+    9.  [Projectile](#org7331543)
+    10. [Neotree](#org43005e0)
+    11. [Themeing](#orgda43dcc)
+4.  [Systemd unit file](#orgfb37ff6)
+5.  [Licensing](#orga262d8f)
 
 
-# About<a id="sec-1" name="sec-1"></a>
+
+<a id="org0ee9ca7"></a>
+
+# About
 
 This configuration is based off of the system shown [here](https://github.com/larstvei/dot-emacs). The idea is
 that the configuration should serve as it's own plain english
@@ -55,14 +48,20 @@ If you want to make changes to the repo-version of init.el start tracking again 
 
     git update-index --no-assume-unchanged init.el
 
-# Configurations (Internal)<a id="sec-2" name="sec-2"></a>
+
+<a id="org13269d7"></a>
+
+# Configurations (Internal)
 
 This section contains all of the configurations that do not rely on
 external packages. If the configuration cannot be accomplished by a
 standalone Emacs installation with no internet connection then it does
 not belong here.
 
-## Meta<a id="sec-2-1" name="sec-2-1"></a>
+
+<a id="org19a33e5"></a>
+
+## Meta
 
 All changes to the config should be made to `init.org`, **not** to
 `init.el`. The running configuration is generated at first launch and
@@ -98,7 +97,7 @@ The function defined below generates a new `init.el` each time
       "If the current buffer is 'init.org' the code-blocks are tangled, and the tangled file is compiled"
       (interactive)
       (when (equal (buffer-file-name)
-                   (expand-file-name (concat user-emacs-directory "init.org")))
+    	       (expand-file-name (concat user-emacs-directory "init.org")))
         ;; Avoid running hooks when tangling
         (let ((prog-mode-hook nil))
           (org-babel-tangle)
@@ -111,7 +110,7 @@ This section will generate `README.md` after each save.
     (defun generate-init-readme ()
       "If the current buffer is 'init.org' then 'README.md' is generated"
       (when (equal (buffer-file-name)
-                   (expand-file-name (concat user-emacs-directory "init.org")))
+    	       (expand-file-name (concat user-emacs-directory "init.org")))
         ;; Avoid running hooks
         (let ((prog-mode-hook nil))
           (org-md-export-to-markdown)
@@ -130,7 +129,10 @@ and therefore not in this configuration) put it in
          (when (file-exists-p private-file)
            (load-file private-file)))))
 
-## Base defaults<a id="sec-2-2" name="sec-2-2"></a>
+
+<a id="org9d4b52f"></a>
+
+## Base defaults
 
 Here we define the basic look and feel of Emacs.
 
@@ -182,7 +184,10 @@ of the buffer.
     (setq inhibit-startup-screen t)
     (setq initial-scratch-message ";; Scratch page\n\n")
 
-## Functions<a id="sec-2-3" name="sec-2-3"></a>
+
+<a id="org4c6a4c4"></a>
+
+## Functions
 
 These are my custom functions. I define them all here. If I want them
 assigned to a keybinding I do so later in the config.
@@ -260,12 +265,12 @@ public key to the clipboard.
       (interactive)
       (if (= (count-windows) 1)
           (let ((origin (current-buffer)))
-            (setq kill-ring nil)
-            (find-file "~/.ssh/id_rsa.pub")
-            (mark-page)
-            (kill-ring-save (point-min) (point-max))
-            (kill-buffer)
-            (message "Public key copied to clipboard"))
+    	(setq kill-ring nil)
+    	(find-file "~/.ssh/id_rsa.pub")
+    	(mark-page)
+    	(kill-ring-save (point-min) (point-max))
+    	(kill-buffer)
+    	(message "Public key copied to clipboard"))
         (let ((origin (current-buffer)))
           (setq kill-ring nil)
           (find-file-other-window "~/.ssh/id_rsa.pub")
@@ -284,10 +289,10 @@ directory
     directory to make multiple eshell windows easier."
       (interactive)
       (let* ((parent (if (buffer-file-name)
-                         (file-name-directory (buffer-file-name))
-                       default-directory))
-             (height (/ (window-total-height) 3))
-             (name   (car (last (split-string parent "/" t)))))
+    		     (file-name-directory (buffer-file-name))
+    		   default-directory))
+    	 (height (/ (window-total-height) 3))
+    	 (name   (car (last (split-string parent "/" t)))))
         (split-window-vertically (- height))
         (other-window 1)
         (eshell "new")
@@ -310,15 +315,15 @@ mouse to scroll.
       (interactive "P")
       (if (null arg)
           (setq arg
-                (if (frame-parameter nil 'vertical-scroll-bars) -1 1))
+    	    (if (frame-parameter nil 'vertical-scroll-bars) -1 1))
         (setq arg (prefix-numeric-value arg)))
       (modify-frame-parameters
        (selected-frame)
        (list (cons 'vertical-scroll-bars
-                   (if (> arg 0)
-                       (or scroll-bar-mode default-frame-scroll-bars)))
-             (cons 'horizontal-scroll-bars
-                   (when (> arg 0) 'bottom)))))
+    	       (if (> arg 0)
+    		   (or scroll-bar-mode default-frame-scroll-bars)))
+    	 (cons 'horizontal-scroll-bars
+    	       (when (> arg 0) 'bottom)))))
 
 This function will update the config from my github repository.
 
@@ -331,7 +336,10 @@ This function will update the config from my github repository.
       (load-file (concat user-emacs-directory "init.el"))
       (byte-compile-file (concat user-emacs-directory "init.el")))
 
-## Org Mode<a id="sec-2-4" name="sec-2-4"></a>
+
+<a id="orgd2a3d42"></a>
+
+## Org Mode
 
 Here is my functional configuration of Org Mode.
 
@@ -343,14 +351,17 @@ Enable more babel languages.
        (sql . t)
        (perl . t)
        (python . t)
-       (sh . t)))
+       (shell . t)))
 
 Turn font lock on for Org Mode. This makes sure everything looks nice
 and pretty.
 
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
-## Mode hooks<a id="sec-2-5" name="sec-2-5"></a>
+
+<a id="org8940fbe"></a>
+
+## Mode hooks
 
 This is where mode hooks are manipulated.
 
@@ -366,7 +377,10 @@ modes.
     (add-hook 'sh-mode-hook 'linum-mode)
     (add-hook 'python-mode-hook 'linum-mode)
 
-## Keybindings<a id="sec-2-6" name="sec-2-6"></a>
+
+<a id="org695efcd"></a>
+
+## Keybindings
 
 This is where I define my custom keybindings.
 
@@ -389,13 +403,19 @@ Enable keybindings that are disabled by default:
 
     (put 'narrow-to-page 'disabled nil)
 
-# Configurations (External)<a id="sec-3" name="sec-3"></a>
+
+<a id="org9ffd236"></a>
+
+# Configurations (External)
 
 Configurations after this point rely on external packages. Anything
 added from here on out should be designed to fail gracefully in case
 the package is not available.
 
-## Packages<a id="sec-3-1" name="sec-3-1"></a>
+
+<a id="org04d31cf"></a>
+
+## Packages
 
 This section goes over the configuration of package management. To
 start this off we need to define a few things. First we will configure
@@ -405,13 +425,13 @@ is only needed for the Elpy package.
     (require 'package)
     (setq package-archives
           '(("gnu" . "https://elpa.gnu.org/packages/")
-            ("melpa stable" . "https://stable.melpa.org/packages/")
-            ("melpa" . "https://melpa.org/packages/")
-            ("elpy" . "https://jorgenschaefer.github.io/packages/"))
+    	("melpa stable" . "https://stable.melpa.org/packages/")
+    	("melpa" . "https://melpa.org/packages/")
+    	("elpy" . "https://jorgenschaefer.github.io/packages/"))
           package-archive-priorities
           '(("melpa stable" . 10)
-            ("elpy"         . 5)
-            ("melpa"        . 0)))
+    	("elpy"         . 5)
+    	("melpa"        . 0)))
 
 Next we define a function to determine if we have access to the
 internet. We need to wrap this in a check for Windows since `ping`
@@ -425,27 +445,27 @@ installed to take full advantage of this configuration. The [Silver
 Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to use the `ag` and `helm-ag` packages.
 
     (setq my-packages '(ag
-                        auto-complete
-                        docker
-                        docker-compose-mode
-                        docker-tramp
-                        dockerfile-mode
-                        elpy
-                        gist
-                        helm
-                        helm-ag
-                        helm-projectile
-                        helm-tramp
-                        logview
-                        magit
-                        markdown-mode
-                        moe-theme
-                        neotree
-                        org-bullets
-                        paredit
-                        pipenv
-                        projectile
-                        vlf))
+    		    auto-complete
+    		    docker
+    		    docker-compose-mode
+    		    docker-tramp
+    		    dockerfile-mode
+    		    elpy
+    		    gist
+    		    helm
+    		    helm-ag
+    		    helm-projectile
+    		    helm-tramp
+    		    logview
+    		    magit
+    		    markdown-mode
+    		    moe-theme
+    		    neotree
+    		    org-bullets
+    		    paredit
+    		    pipenv
+    		    projectile
+    		    vlf))
 
 The next function defined is to loop through the provided list of
 packages and to check if they are present. If not, the package is
@@ -458,7 +478,7 @@ installed:
       (package-refresh-contents)
       (dolist (package my-packages)
         (if (ignore-errors (require package))
-            (message "%s is already installed..." package)
+    	(message "%s is already installed..." package)
           (package-install package))))
 
 To tie it all together we bring in the logic. If this is the first
@@ -473,7 +493,10 @@ so if there is no internet there should be no issue.
       (if (internet-up)
           (auto-package-mgmt)))
 
-## Auto Complete<a id="sec-3-2" name="sec-3-2"></a>
+
+<a id="org91f9d06"></a>
+
+## Auto Complete
 
 Here is where auto complete is configured. The `ac-sources` variable
 needs to be set or the completion framework won't kick in.
@@ -481,26 +504,32 @@ needs to be set or the completion framework won't kick in.
     (defun my-autocomplete-setup ()
       (ac-config-default)
       (setq-default ac-sources '(ac-source-filename
-                                 ac-source-functions
-                                 ac-source-yasnippet
-                                 ac-source-variables
-                                 ac-source-symbols
-                                 ac-source-features
-                                 ac-source-abbrev
-                                 ac-source-words-in-same-mode-buffers
-                                 ac-source-dictionary)))
+    			     ac-source-functions
+    			     ac-source-yasnippet
+    			     ac-source-variables
+    			     ac-source-symbols
+    			     ac-source-features
+    			     ac-source-abbrev
+    			     ac-source-words-in-same-mode-buffers
+    			     ac-source-dictionary)))
     
     (if (require 'auto-complete-config)
         (my-autocomplete-setup))
 
-## Docker<a id="sec-3-3" name="sec-3-3"></a>
+
+<a id="org456517f"></a>
+
+## Docker
 
 The default configuration for docker is fine for me. I just want to
 map the high level menu for easy access.
 
     (global-set-key (kbd "C-c d") 'docker)
 
-## Elpy<a id="sec-3-4" name="sec-3-4"></a>
+
+<a id="org24d5304"></a>
+
+## Elpy
 
 Elpy is used to get IDE like functionality for Python. To get full use
 of this package run `pip install --user jedi flake8 importmagic
@@ -523,7 +552,10 @@ autopep8`.
     (if (require 'elpy)
         (my-elpy-setup))
 
-## Helm<a id="sec-3-5" name="sec-3-5"></a>
+
+<a id="orgd135247"></a>
+
+## Helm
 
 [Helm](https://github.com/emacs-helm/helm) is an Emacs framework for incremental completions and narrowing
 selections. It's a much better way to interact with Emacs. I've broken
@@ -536,14 +568,14 @@ instead of spelling everything out.
 
     (defun my-helm-fuzzy-settings ()
       (setq helm-M-x-fuzzy-match t
-            helm-buffers-fuzzy-matching t
-            helm-recentf-fuzzy-match t
-            helm-semantic-fuzzy-match t
-            helm-imenu-fuzzy-match t
-            helm-apropos-fuzzy-match t
-            helm-lisp-fuzzy-completion t
-            helm-mode-fuzzy-match t
-            helm-completion-in-region-fuzzy-match t))
+    	helm-buffers-fuzzy-matching t
+    	helm-recentf-fuzzy-match t
+    	helm-semantic-fuzzy-match t
+    	helm-imenu-fuzzy-match t
+    	helm-apropos-fuzzy-match t
+    	helm-lisp-fuzzy-completion t
+    	helm-mode-fuzzy-match t
+    	helm-completion-in-region-fuzzy-match t))
 
 This part is where keybindings relevant to Helm are defined. The one
 I've found to be most useful is `helm-mini` which is activated with
@@ -574,13 +606,13 @@ these does.
     
       (when (executable-find "ack-grep")
         (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-              helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
+    	  helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
     
       (setq helm-split-window-inside-p t
-            helm-move-to-line-cycle-in-source t
-            helm-ff-search-library-in-sexp t
-            helm-scroll-amount 8
-            helm-ff-file-name-history-recentf t))
+    	helm-move-to-line-cycle-in-source t
+    	helm-ff-search-library-in-sexp t
+    	helm-scroll-amount 8
+    	helm-ff-file-name-history-recentf t))
 
 This section tells the Helm interface that it should resize itself
 depending on how much content it has to display, but should take up no
@@ -608,14 +640,20 @@ of these settings.
     (if (require 'helm)
         (my-helm-setup))
 
-## Helm Tramp<a id="sec-3-6" name="sec-3-6"></a>
+
+<a id="org898a98e"></a>
+
+## Helm Tramp
 
 Helm TRAMP is used to quickly connect to machines in `~/.ssh/config`
 and Docker containers.
 
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
-## Magit<a id="sec-3-7" name="sec-3-7"></a>
+
+<a id="org56cc93c"></a>
+
+## Magit
 
 Magit is something that, in my opinion, should be shipped by default
 with Emacs. It's the most robust Git interface out there.
@@ -627,7 +665,10 @@ with Emacs. It's the most robust Git interface out there.
     (if (require 'magit)
         (my-magit-setup))
 
-## Paredit<a id="sec-3-8" name="sec-3-8"></a>
+
+<a id="org18f3cc8"></a>
+
+## Paredit
 
 This is for better handling of S-expressions in lisp languages.
 
@@ -642,7 +683,10 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
-## Projectile<a id="sec-3-9" name="sec-3-9"></a>
+
+<a id="org7331543"></a>
+
+## Projectile
 
 Projectile makes emacs "project aware". This is good if you work on
 multiple code bases and want to navigate between them and within them
@@ -659,7 +703,10 @@ efficiently.
     (if (require 'projectile)
         (my-projectile-setup))
 
-## Neotree<a id="sec-3-10" name="sec-3-10"></a>
+
+<a id="org43005e0"></a>
+
+## Neotree
 
 Adds a file tree to the left hand side, like in most IDEs. This only
 works if you are in a project.
@@ -671,13 +718,13 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
       "Open NeoTree using the git root."
       (interactive)
       (let ((project-dir (projectile-project-root))
-            (file-name (buffer-file-name)))
+    	(file-name (buffer-file-name)))
         (neotree-toggle)
         (if project-dir
-            (if (neo-global--window-exists-p)
-                (progn
-                  (neotree-dir project-dir)
-                  (neotree-find file-name)))
+    	(if (neo-global--window-exists-p)
+    	    (progn
+    	      (neotree-dir project-dir)
+    	      (neotree-find file-name)))
           (message "Could not find git project root."))))
     
     (defun my-neotree-setup ()
@@ -689,7 +736,10 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
     (if (require 'neotree)
         (my-neotree-setup))
 
-## Themeing<a id="sec-3-11" name="sec-3-11"></a>
+
+<a id="orgda43dcc"></a>
+
+## Themeing
 
 Here we do some themeing of emacs. None of this has any functional
 impact, it just make the editor a little nicer to look at. We can see
@@ -707,10 +757,13 @@ theme should still be put together.
     
     (if (require 'org-bullets)
         (add-hook 'org-mode-hook
-                  (lambda ()
-                    (org-bullets-mode 1))))
+    	      (lambda ()
+    		(org-bullets-mode 1))))
 
-# Systemd unit file<a id="sec-4" name="sec-4"></a>
+
+<a id="orgfb37ff6"></a>
+
+# Systemd unit file
 
 Here is an example of a unit file for the emacs daemon. Place this in
 `~/.config/systemd/user/emacs.service`.
@@ -735,7 +788,10 @@ To launch a client map a keyboard shortcut to:
 
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
-# Licensing<a id="sec-5" name="sec-5"></a>
+
+<a id="orga262d8f"></a>
+
+# Licensing
 
 © Copyright 2016 Sean Jones
 
@@ -751,3 +807,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+

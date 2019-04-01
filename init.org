@@ -340,7 +340,7 @@ Enable more babel languages.
      (sql . t)
      (perl . t)
      (python . t)
-     (sh . t)))
+     (shell . t)))
 #+END_SRC
 
 Turn font lock on for Org Mode. This makes sure everything looks nice
