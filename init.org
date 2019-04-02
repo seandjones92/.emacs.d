@@ -409,6 +409,7 @@ This is where I define my custom keybindings.
   (define-key dired-mode-map [?%?h] 'dired-show-only)
   (define-key dired-mode-map [?%?G] 'find-grep-dired)
   (define-key dired-mode-map [?%?f] 'find-name-dired)
+  (define-key org-mode-map (kbd "C-}") 'my-org-screenshot)
 #+END_SRC
 
 Enable keybindings that are disabled by default:
