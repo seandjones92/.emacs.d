@@ -328,6 +328,30 @@ This function will update the config from my github repository.
     (byte-compile-file (concat user-emacs-directory "init.el")))
 #+END_SRC
 
+This function will use the gnome-screenshot tool to grab an area
+screenshot, create a directory named after the current buffer, save
+the screenshot inside that directory, and link to it in the current
+buffer.
+#+BEGIN_SRC emacs-lisp
+  (defun my-org-screenshot ()
+    "Take a screenshot into a time stamped unique-named file in a
+  directory named after the org-buffer and insert a link to this
+  file."
+    (interactive)
+    (if (file-directory-p (concat buffer-file-name ".d"))
+	(message "Directory already exists")
+      (make-directory (concat buffer-file-name ".d")))
+    (setq filename
+	  (concat
+	   (make-temp-name
+	    (concat (buffer-file-name)
+		    ".d/"
+		    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+    (call-process "gnome-screenshot" nil nil nil "--area" "-f" filename)
+    (insert (concat "[[" filename "]]"))
+    (org-display-inline-images))
+#+END_SRC
+
 ** Org Mode
 
 Here is my functional configuration of Org Mode.

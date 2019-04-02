@@ -1,32 +1,32 @@
 
 # Table of Contents
 
-1.  [About](#org0d1a625)
-2.  [Configurations (Internal)](#orgaa7ec43)
-    1.  [Meta](#orge610e6f)
-    2.  [Base defaults](#org9ffc007)
-    3.  [Functions](#orgc02209c)
-    4.  [Org Mode](#org458aa01)
-    5.  [Mode hooks](#org3c6e7c1)
-    6.  [Keybindings](#org1989c07)
-3.  [Configurations (External)](#org9725fc0)
-    1.  [Packages](#org40589fb)
-    2.  [Auto Complete](#org7082efa)
-    3.  [Docker](#orge4f5f14)
-    4.  [Elpy](#org66bb5ff)
-    5.  [Helm](#org9dad4da)
-    6.  [Helm Tramp](#org9b6cfc9)
-    7.  [Magit](#org6d09602)
-    8.  [Paredit](#org7ef6a51)
-    9.  [Projectile](#org26029d5)
-    10. [Neotree](#orgefc6a00)
-    11. [Themeing](#orga437a50)
-4.  [Systemd unit file](#org301d6aa)
-5.  [Licensing](#org38d8269)
+1.  [About](#orged3164e)
+2.  [Configurations (Internal)](#org6f45acd)
+    1.  [Meta](#orga46f7fd)
+    2.  [Base defaults](#org20f537d)
+    3.  [Functions](#org9dab4e6)
+    4.  [Org Mode](#org7af9aec)
+    5.  [Mode hooks](#org9c7639c)
+    6.  [Keybindings](#org2162de4)
+3.  [Configurations (External)](#org8316a92)
+    1.  [Packages](#org62f8bae)
+    2.  [Auto Complete](#org8484613)
+    3.  [Docker](#org9515da5)
+    4.  [Elpy](#org6259400)
+    5.  [Helm](#org76e7393)
+    6.  [Helm Tramp](#org98295dc)
+    7.  [Magit](#org06f47a4)
+    8.  [Paredit](#orgd5c109f)
+    9.  [Projectile](#org7f98f76)
+    10. [Neotree](#org9ea3a5d)
+    11. [Themeing](#org93a3077)
+4.  [Systemd unit file](#org8192951)
+5.  [Licensing](#orgf8c00b0)
 
 
 
-<a id="org0d1a625"></a>
+<a id="orged3164e"></a>
 
 # About
 
@@ -49,7 +49,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgaa7ec43"></a>
+<a id="org6f45acd"></a>
 
 # Configurations (Internal)
 
@@ -59,7 +59,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="orge610e6f"></a>
+<a id="orga46f7fd"></a>
 
 ## Meta
 
@@ -130,7 +130,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org9ffc007"></a>
+<a id="org20f537d"></a>
 
 ## Base defaults
 
@@ -185,7 +185,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgc02209c"></a>
+<a id="org9dab4e6"></a>
 
 ## Functions
 
@@ -336,8 +336,31 @@ This function will update the config from my github repository.
       (load-file (concat user-emacs-directory "init.el"))
       (byte-compile-file (concat user-emacs-directory "init.el")))
 
+This function will use the gnome-screenshot tool to grab an area
+screenshot, create a directory named after the current buffer, save
+the screenshot inside that directory, and link to it in the current
+buffer.
 
-<a id="org458aa01"></a>
+    (defun my-org-screenshot ()
+      "Take a screenshot into a time stamped unique-named file in a
+    directory named after the org-buffer and insert a link to this
+    file."
+      (interactive)
+      (if (file-directory-p (concat buffer-file-name ".d"))
+          (message "Directory already exists")
+        (make-directory (concat buffer-file-name ".d")))
+      (setq filename
+    	(concat
+    	 (make-temp-name
+    	  (concat (buffer-file-name)
+    		  ".d/"
+    		  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+      (call-process "gnome-screenshot" nil nil nil "--area" "-f" filename)
+      (insert (concat "[[" filename "]]"))
+      (org-display-inline-images))
+
+
+<a id="org7af9aec"></a>
 
 ## Org Mode
 
@@ -359,7 +382,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org3c6e7c1"></a>
+<a id="org9c7639c"></a>
 
 ## Mode hooks
 
@@ -378,7 +401,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org1989c07"></a>
+<a id="org2162de4"></a>
 
 ## Keybindings
 
@@ -404,7 +427,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="org9725fc0"></a>
+<a id="org8316a92"></a>
 
 # Configurations (External)
 
@@ -413,7 +436,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org40589fb"></a>
+<a id="org62f8bae"></a>
 
 ## Packages
 
@@ -494,7 +517,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="org7082efa"></a>
+<a id="org8484613"></a>
 
 ## Auto Complete
 
@@ -517,7 +540,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="orge4f5f14"></a>
+<a id="org9515da5"></a>
 
 ## Docker
 
@@ -527,7 +550,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="org66bb5ff"></a>
+<a id="org6259400"></a>
 
 ## Elpy
 
@@ -553,7 +576,7 @@ autopep8`.
         (my-elpy-setup))
 
 
-<a id="org9dad4da"></a>
+<a id="org76e7393"></a>
 
 ## Helm
 
@@ -641,7 +664,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org9b6cfc9"></a>
+<a id="org98295dc"></a>
 
 ## Helm Tramp
 
@@ -651,7 +674,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="org6d09602"></a>
+<a id="org06f47a4"></a>
 
 ## Magit
 
@@ -666,7 +689,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org7ef6a51"></a>
+<a id="orgd5c109f"></a>
 
 ## Paredit
 
@@ -684,7 +707,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org26029d5"></a>
+<a id="org7f98f76"></a>
 
 ## Projectile
 
@@ -704,7 +727,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="orgefc6a00"></a>
+<a id="org9ea3a5d"></a>
 
 ## Neotree
 
@@ -737,7 +760,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orga437a50"></a>
+<a id="org93a3077"></a>
 
 ## Themeing
 
@@ -761,7 +784,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="org301d6aa"></a>
+<a id="org8192951"></a>
 
 # Systemd unit file
 
@@ -789,7 +812,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org38d8269"></a>
+<a id="orgf8c00b0"></a>
 
 # Licensing
 
