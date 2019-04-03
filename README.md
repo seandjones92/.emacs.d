@@ -1,33 +1,33 @@
 
 # Table of Contents
 
-1.  [About](#orgf8b6fcb)
-2.  [Configurations (Internal)](#orgd05108c)
-    1.  [Meta](#org5b0c8a7)
-    2.  [Base defaults](#org7559d0c)
-    3.  [Functions](#orgdb73cde)
-    4.  [Org Mode](#orge8b4d87)
-    5.  [Mode hooks](#org9aff640)
-    6.  [Keybindings](#orgfa23047)
-3.  [Configurations (External)](#orgef129e1)
-    1.  [Packages](#orgdb14535)
-    2.  [Auto Complete](#org6c74ed8)
-    3.  [Docker](#org2923edb)
-    4.  [Elpy](#org8b4e561)
-    5.  [Helm](#org84d877e)
-    6.  [Helm Tramp](#org9fcfa0d)
-    7.  [Magit](#orgb0a2385)
-    8.  [Paredit](#orga1bddf5)
-    9.  [Projectile](#org299f5db)
-    10. [Neotree](#orgfb6f825)
-    11. [Themeing](#orgc5fc9d9)
-4.  [Systemd unit file](#orgdcdb2a6)
-5.  [Nautilus Scripts](#org7f45a7c)
-6.  [Licensing](#org7158c88)
+1.  [About](#org75e70d8)
+2.  [Configurations (Internal)](#org93b331d)
+    1.  [Meta](#orged8cc2c)
+    2.  [Base defaults](#orgc4ed91c)
+    3.  [Functions](#org3b6fb59)
+    4.  [Org Mode](#orge1bcd74)
+    5.  [Mode hooks](#org49114ab)
+    6.  [Keybindings](#orgd26c6f0)
+3.  [Configurations (External)](#org6285119)
+    1.  [Packages](#orgf9dd930)
+    2.  [Auto Complete](#orgbc4845d)
+    3.  [Docker](#orge8a32a2)
+    4.  [Elpy](#org9a20096)
+    5.  [Helm](#org4095008)
+    6.  [Helm Tramp](#org16f8f70)
+    7.  [Magit](#org627c764)
+    8.  [Paredit](#org0ab9fee)
+    9.  [Projectile](#org4b5f339)
+    10. [Neotree](#org94ed513)
+    11. [Themeing](#org37d6bd4)
+4.  [Systemd unit file](#orgf977610)
+5.  [Nautilus Scripts](#org2701f9a)
+6.  [Licensing](#org73e1972)
 
 
 
-<a id="orgf8b6fcb"></a>
+<a id="org75e70d8"></a>
 
 # About
 
@@ -50,7 +50,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgd05108c"></a>
+<a id="org93b331d"></a>
 
 # Configurations (Internal)
 
@@ -60,7 +60,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org5b0c8a7"></a>
+<a id="orged8cc2c"></a>
 
 ## Meta
 
@@ -131,7 +131,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org7559d0c"></a>
+<a id="orgc4ed91c"></a>
 
 ## Base defaults
 
@@ -186,7 +186,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgdb73cde"></a>
+<a id="org3b6fb59"></a>
 
 ## Functions
 
@@ -365,7 +365,7 @@ buffer.
       (org-display-inline-images))
 
 
-<a id="orge8b4d87"></a>
+<a id="orge1bcd74"></a>
 
 ## Org Mode
 
@@ -387,7 +387,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org9aff640"></a>
+<a id="org49114ab"></a>
 
 ## Mode hooks
 
@@ -406,7 +406,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="orgfa23047"></a>
+<a id="orgd26c6f0"></a>
 
 ## Keybindings
 
@@ -433,7 +433,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="orgef129e1"></a>
+<a id="org6285119"></a>
 
 # Configurations (External)
 
@@ -442,7 +442,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="orgdb14535"></a>
+<a id="orgf9dd930"></a>
 
 ## Packages
 
@@ -523,7 +523,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="org6c74ed8"></a>
+<a id="orgbc4845d"></a>
 
 ## Auto Complete
 
@@ -546,7 +546,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org2923edb"></a>
+<a id="orge8a32a2"></a>
 
 ## Docker
 
@@ -556,7 +556,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="org8b4e561"></a>
+<a id="org9a20096"></a>
 
 ## Elpy
 
@@ -582,7 +582,7 @@ autopep8`.
         (my-elpy-setup))
 
 
-<a id="org84d877e"></a>
+<a id="org4095008"></a>
 
 ## Helm
 
@@ -670,7 +670,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org9fcfa0d"></a>
+<a id="org16f8f70"></a>
 
 ## Helm Tramp
 
@@ -680,7 +680,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="orgb0a2385"></a>
+<a id="org627c764"></a>
 
 ## Magit
 
@@ -695,7 +695,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="orga1bddf5"></a>
+<a id="org0ab9fee"></a>
 
 ## Paredit
 
@@ -713,7 +713,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org299f5db"></a>
+<a id="org4b5f339"></a>
 
 ## Projectile
 
@@ -733,7 +733,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="orgfb6f825"></a>
+<a id="org94ed513"></a>
 
 ## Neotree
 
@@ -766,7 +766,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orgc5fc9d9"></a>
+<a id="org37d6bd4"></a>
 
 ## Themeing
 
@@ -790,7 +790,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="orgdcdb2a6"></a>
+<a id="orgf977610"></a>
 
 # Systemd unit file
 
@@ -818,7 +818,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org7f45a7c"></a>
+<a id="org2701f9a"></a>
 
 # Nautilus Scripts
 
@@ -829,10 +829,10 @@ executable.
 
     #!/bin/bash
     
-    emacsclient -c $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+    emacsclient -c "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"
 
 
-<a id="org7158c88"></a>
+<a id="org73e1972"></a>
 
 # Licensing
 

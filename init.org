@@ -788,7 +788,7 @@ executable.
 #+BEGIN_SRC sh :tangle no
   #!/bin/bash
 
-  emacsclient -c $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+  emacsclient -c "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"
 #+END_SRC
 
 * Licensing
