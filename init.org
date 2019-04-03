@@ -341,14 +341,18 @@ buffer.
     (if (file-directory-p (concat buffer-file-name ".d"))
 	(message "Directory already exists")
       (make-directory (concat buffer-file-name ".d")))
-    (setq filename
+    (setq filename ;; do this first, if exit code is non 0 then do not proceed
 	  (concat
 	   (make-temp-name
 	    (concat (buffer-file-name)
 		    ".d/"
 		    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+    (setq relative-filename
+	  (concat "./" (mapconcat 'identity
+				  (nthcdr (- (length (split-string filename "/")) 2)
+					  (split-string filename "/")) "/")))
     (call-process "gnome-screenshot" nil nil nil "--area" "-f" filename)
-    (insert (concat "[[" filename "]]"))
+    (insert (concat "[[" relative-filename "]]"))
     (org-display-inline-images))
 #+END_SRC
 
