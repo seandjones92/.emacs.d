@@ -779,6 +779,18 @@ To launch a client map a keyboard shortcut to:
   /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 #+END_SRC
 
+* Nautilus Scripts
+Nautilus allows users to create scripts that are included in the
+right-click menu in the file browser. Place these in individual files
+located in =$HOME/.local/share/nautilus/scripts/= and mark the as
+executable.
+
+#+BEGIN_SRC sh :tangle no
+  #!/bin/bash
+
+  emacsclient -c $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS
+#+END_SRC
+
 * Licensing
 © Copyright 2016 Sean Jones
 
