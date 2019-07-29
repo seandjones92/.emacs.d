@@ -160,7 +160,7 @@ Disable word wrapping by default, I don't like it.
 
 This change makes =dired= list files with "human readable" size instead of just bytes.
 #+BEGIN_SRC emacs-lisp
-  (setq dired-listing-switches "-alh")
+  (setq dired-listing-switches "-lh")
 #+END_SRC
 
 Use =*scratch*= as initial screen. Also, modify the message at the top
