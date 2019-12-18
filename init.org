@@ -458,8 +458,7 @@ is only needed for the Elpy package.
 #+END_SRC
 
 Next we define a function to determine if we have access to the
-internet. We need to wrap this in a check for Windows since =ping=
-options behave differently.
+internet.
 #+BEGIN_SRC emacs-lisp
   (defun internet-up ()
     (call-process "ping" nil nil nil "-c" "1" "www.google.com"))
