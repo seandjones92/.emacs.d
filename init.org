@@ -471,6 +471,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      docker-compose-mode
 		      docker-tramp
 		      dockerfile-mode
+		      elpy
 		      gist
 		      helm
 		      helm-ag
@@ -541,6 +542,15 @@ The default configuration for docker is fine for me. I just want to
 map the high level menu for easy access.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c d") 'docker)
+#+END_SRC
+
+** Elpy
+[[https://github.com/jorgenschaefer/elpy][Elpy]] provides some python IDE features.
+
+The section below ensures that it uses Python3 by default.
+#+BEGIN_SRC emacs-lisp
+  (setq elpy-rpc-python-command "python3")
+  (setq python-shell-interpreter "python3")
 #+END_SRC
 
 ** Helm
