@@ -553,6 +553,13 @@ The section below ensures that it uses Python3 by default.
   (setq python-shell-interpreter "python3")
 #+END_SRC
 
+These things need to be enabled for elpy to work properly
+#+BEGIN_SRC emacs-lisp
+  (elpy-enable)
+  (global-company-mode)
+  (yas-global-mode)
+#+END_SRC
+
 ** Helm
 [[https://github.com/emacs-helm/helm][Helm]] is an Emacs framework for incremental completions and narrowing
 selections. It's a much better way to interact with Emacs. I've broken
