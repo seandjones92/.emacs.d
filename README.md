@@ -1,33 +1,33 @@
 
 # Table of Contents
 
-1.  [About](#org0907b8c)
-2.  [Configurations (Internal)](#orgbd2f172)
-    1.  [Meta](#orgb148073)
-    2.  [Base defaults](#org28c6895)
-    3.  [Functions](#org8cd306b)
-    4.  [Org Mode](#orgd2f2aa3)
-    5.  [Mode hooks](#org2e37537)
-    6.  [Keybindings](#org5edbd7e)
-3.  [Configurations (External)](#org29ae8c8)
-    1.  [Packages](#orgbb98501)
-    2.  [Auto Complete](#orge476069)
-    3.  [Docker](#org2845d43)
-    4.  [Elpy](#orgc82a399)
-    5.  [Helm](#org9f31f34)
-    6.  [Helm Tramp](#org73cb68a)
-    7.  [Magit](#org748c0fb)
-    8.  [Paredit](#org00de776)
-    9.  [Projectile](#org55247f5)
-    10. [Neotree](#org753e9b2)
-    11. [Themeing](#org6adc837)
-4.  [Systemd unit file](#orgb183729)
-5.  [Nautilus Scripts](#org5990e48)
-6.  [Licensing](#org67a9dd9)
+1.  [About](#org239f98b)
+2.  [Configurations (Internal)](#org22e0de3)
+    1.  [Meta](#org8f7b4fa)
+    2.  [Base defaults](#org503c0fb)
+    3.  [Functions](#orgc835c3a)
+    4.  [Org Mode](#orgbfff651)
+    5.  [Mode hooks](#orgaaa7ca2)
+    6.  [Keybindings](#org5a3d822)
+3.  [Configurations (External)](#orgf3b6602)
+    1.  [Packages](#org4ea8d06)
+    2.  [Auto Complete](#orgb287fa1)
+    3.  [Docker](#org98a3f50)
+    4.  [Elpy](#orgac45f0d)
+    5.  [Helm](#org23e53e8)
+    6.  [Helm Tramp](#org5d6d823)
+    7.  [Magit](#org6e54244)
+    8.  [Paredit](#orgeb7f99b)
+    9.  [Projectile](#orgb3cb47d)
+    10. [Neotree](#org59909d8)
+    11. [Themeing](#orgcc57cba)
+4.  [Systemd unit file](#org99e9b29)
+5.  [Nautilus Scripts](#org1c8c546)
+6.  [Licensing](#orgad14e97)
 
 
 
-<a id="org0907b8c"></a>
+<a id="org239f98b"></a>
 
 # About
 
@@ -50,7 +50,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgbd2f172"></a>
+<a id="org22e0de3"></a>
 
 # Configurations (Internal)
 
@@ -60,7 +60,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="orgb148073"></a>
+<a id="org8f7b4fa"></a>
 
 ## Meta
 
@@ -131,7 +131,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org28c6895"></a>
+<a id="org503c0fb"></a>
 
 ## Base defaults
 
@@ -186,7 +186,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org8cd306b"></a>
+<a id="orgc835c3a"></a>
 
 ## Functions
 
@@ -378,8 +378,35 @@ This function changes the options passed to `ls` that are used to generate the `
     		(list (car list-of-dired-switches))))
       (dired-sort-other (car list-of-dired-switches)))
 
+This configuration is to help handle progress bars in `eshell`. Shamelessly stolen from [here](https://oremacs.com/2019/03/24/shell-apt/).
 
-<a id="orgd2f2aa3"></a>
+    (advice-add
+     'ansi-color-apply-on-region
+     :before 'ora-ansi-color-apply-on-region)
+    
+    (defun ora-ansi-color-apply-on-region (begin end)
+      "Fix progress bars for e.g. apt(8).
+    Display progress in the mode line instead."
+      (let ((end-marker (copy-marker end))
+    	mb)
+        (save-excursion
+          (goto-char (copy-marker begin))
+          (while (re-search-forward "\0337" end-marker t)
+    	(setq mb (match-beginning 0))
+    	(when (re-search-forward "\0338" end-marker t)
+    	  (ora-apt-progress-message
+    	   (substring-no-properties
+    	    (delete-and-extract-region mb (point))
+    	    2 -2)))))))
+    
+    (defun ora-apt-progress-message (progress)
+      (message
+       (replace-regexp-in-string
+        "%" "%%"
+        (ansi-color-apply progress))))
+
+
+<a id="orgbfff651"></a>
 
 ## Org Mode
 
@@ -401,7 +428,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org2e37537"></a>
+<a id="orgaaa7ca2"></a>
 
 ## Mode hooks
 
@@ -420,7 +447,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org5edbd7e"></a>
+<a id="org5a3d822"></a>
 
 ## Keybindings
 
@@ -448,7 +475,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="org29ae8c8"></a>
+<a id="orgf3b6602"></a>
 
 # Configurations (External)
 
@@ -457,7 +484,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="orgbb98501"></a>
+<a id="org4ea8d06"></a>
 
 ## Packages
 
@@ -535,7 +562,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orge476069"></a>
+<a id="orgb287fa1"></a>
 
 ## Auto Complete
 
@@ -558,7 +585,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org2845d43"></a>
+<a id="org98a3f50"></a>
 
 ## Docker
 
@@ -568,7 +595,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="orgc82a399"></a>
+<a id="orgac45f0d"></a>
 
 ## Elpy
 
@@ -586,7 +613,7 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode)
 
 
-<a id="org9f31f34"></a>
+<a id="org23e53e8"></a>
 
 ## Helm
 
@@ -674,7 +701,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org73cb68a"></a>
+<a id="org5d6d823"></a>
 
 ## Helm Tramp
 
@@ -684,7 +711,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="org748c0fb"></a>
+<a id="org6e54244"></a>
 
 ## Magit
 
@@ -699,7 +726,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org00de776"></a>
+<a id="orgeb7f99b"></a>
 
 ## Paredit
 
@@ -717,7 +744,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org55247f5"></a>
+<a id="orgb3cb47d"></a>
 
 ## Projectile
 
@@ -737,7 +764,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org753e9b2"></a>
+<a id="org59909d8"></a>
 
 ## Neotree
 
@@ -770,7 +797,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="org6adc837"></a>
+<a id="orgcc57cba"></a>
 
 ## Themeing
 
@@ -794,7 +821,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="orgb183729"></a>
+<a id="org99e9b29"></a>
 
 # Systemd unit file
 
@@ -822,7 +849,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org5990e48"></a>
+<a id="org1c8c546"></a>
 
 # Nautilus Scripts
 
@@ -836,7 +863,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org67a9dd9"></a>
+<a id="orgad14e97"></a>
 
 # Licensing
 
