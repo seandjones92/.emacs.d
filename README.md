@@ -1,33 +1,33 @@
 
 # Table of Contents
 
-1.  [About](#org4c3348f)
-2.  [Configurations (Internal)](#org2bb5e8c)
-    1.  [Meta](#org3649241)
-    2.  [Base defaults](#org9df8dfb)
-    3.  [Functions](#orgf9e4c23)
-    4.  [Org Mode](#org2a7df40)
-    5.  [Mode hooks](#org09c3320)
-    6.  [Keybindings](#org10a9722)
-3.  [Configurations (External)](#org048e028)
-    1.  [Packages](#org160ef0d)
-    2.  [Auto Complete](#org1e0234a)
-    3.  [Docker](#orge1698bc)
-    4.  [Elpy](#org16f0d63)
-    5.  [Helm](#org2047fe1)
-    6.  [Helm Tramp](#org4c03dbb)
-    7.  [Magit](#orgd3887e7)
-    8.  [Paredit](#orgef4862f)
-    9.  [Projectile](#orgdf25997)
-    10. [Neotree](#org9d3c8e8)
-    11. [Themeing](#orge577ef7)
-4.  [Systemd unit file](#orgebe83e8)
-5.  [Nautilus Scripts](#orgcae4850)
-6.  [Licensing](#org6e7c08c)
+1.  [About](#org924694b)
+2.  [Configurations (Internal)](#org5c4180c)
+    1.  [Meta](#org75a4e11)
+    2.  [Base defaults](#orgfe5d1d2)
+    3.  [Functions](#orgec9c998)
+    4.  [Org Mode](#org726a713)
+    5.  [Mode hooks](#org96d8e93)
+    6.  [Keybindings](#org785b2b6)
+3.  [Configurations (External)](#orgf473fdb)
+    1.  [Packages](#org34d50a6)
+    2.  [Auto Complete](#org36f9603)
+    3.  [Docker](#orgfdddeee)
+    4.  [Elpy](#org3953ae6)
+    5.  [Helm](#orgf65b43a)
+    6.  [Helm Tramp](#org0095c35)
+    7.  [Magit](#org2e79afe)
+    8.  [Paredit](#orgd9517e8)
+    9.  [Projectile](#org6798dcd)
+    10. [Neotree](#org7201487)
+    11. [Themeing](#org84837ed)
+4.  [Systemd unit file](#orgcce099e)
+5.  [Nautilus Scripts](#org0b4b38b)
+6.  [Licensing](#orgce40566)
 
 
 
-<a id="org4c3348f"></a>
+<a id="org924694b"></a>
 
 # About
 
@@ -50,7 +50,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org2bb5e8c"></a>
+<a id="org5c4180c"></a>
 
 # Configurations (Internal)
 
@@ -60,7 +60,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org3649241"></a>
+<a id="org75a4e11"></a>
 
 ## Meta
 
@@ -131,7 +131,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org9df8dfb"></a>
+<a id="orgfe5d1d2"></a>
 
 ## Base defaults
 
@@ -179,10 +179,6 @@ This change makes `dired` list files with "human readable" size instead of just 
 
     (setq dired-listing-switches "-lh")
 
-Programs added to this list are able to run better in `eshell`. Things in this list by default include `vi`, `less`, and `top`.
-
-    (add-to-list 'eshell-visual-commands "htop")
-
 Use `*scratch*` as initial screen. Also, modify the message at the top
 of the buffer.
 
@@ -190,7 +186,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgf9e4c23"></a>
+<a id="orgec9c998"></a>
 
 ## Functions
 
@@ -417,7 +413,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org2a7df40"></a>
+<a id="org726a713"></a>
 
 ## Org Mode
 
@@ -439,7 +435,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org09c3320"></a>
+<a id="org96d8e93"></a>
 
 ## Mode hooks
 
@@ -458,7 +454,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org10a9722"></a>
+<a id="org785b2b6"></a>
 
 ## Keybindings
 
@@ -487,7 +483,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="org048e028"></a>
+<a id="orgf473fdb"></a>
 
 # Configurations (External)
 
@@ -496,7 +492,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org160ef0d"></a>
+<a id="org34d50a6"></a>
 
 ## Packages
 
@@ -525,6 +521,7 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
 
     (setq my-packages '(ag
     		    auto-complete
+    		    decide
     		    docker
     		    docker-compose-mode
     		    docker-tramp
@@ -574,7 +571,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="org1e0234a"></a>
+<a id="org36f9603"></a>
 
 ## Auto Complete
 
@@ -597,7 +594,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="orge1698bc"></a>
+<a id="orgfdddeee"></a>
 
 ## Docker
 
@@ -607,7 +604,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="org16f0d63"></a>
+<a id="org3953ae6"></a>
 
 ## Elpy
 
@@ -625,7 +622,7 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode)
 
 
-<a id="org2047fe1"></a>
+<a id="orgf65b43a"></a>
 
 ## Helm
 
@@ -713,7 +710,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org4c03dbb"></a>
+<a id="org0095c35"></a>
 
 ## Helm Tramp
 
@@ -723,7 +720,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="orgd3887e7"></a>
+<a id="org2e79afe"></a>
 
 ## Magit
 
@@ -738,7 +735,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="orgef4862f"></a>
+<a id="orgd9517e8"></a>
 
 ## Paredit
 
@@ -756,7 +753,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="orgdf25997"></a>
+<a id="org6798dcd"></a>
 
 ## Projectile
 
@@ -776,7 +773,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org9d3c8e8"></a>
+<a id="org7201487"></a>
 
 ## Neotree
 
@@ -809,7 +806,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orge577ef7"></a>
+<a id="org84837ed"></a>
 
 ## Themeing
 
@@ -833,7 +830,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="orgebe83e8"></a>
+<a id="orgcce099e"></a>
 
 # Systemd unit file
 
@@ -861,7 +858,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="orgcae4850"></a>
+<a id="org0b4b38b"></a>
 
 # Nautilus Scripts
 
@@ -875,7 +872,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org6e7c08c"></a>
+<a id="orgce40566"></a>
 
 # Licensing
 
