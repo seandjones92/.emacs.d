@@ -1,34 +1,34 @@
 
 # Table of Contents
 
-1.  [About](#org264091a)
-2.  [Configurations (Internal)](#orgfb91c31)
-    1.  [Meta](#orge224592)
-    2.  [Base defaults](#orgea94381)
-    3.  [Functions](#org6f2c673)
-    4.  [Org Mode](#org5b7e8be)
-    5.  [Mode hooks](#orgc048031)
-    6.  [Keybindings](#orgc2bbbbc)
-3.  [Configurations (External)](#org17b6f82)
-    1.  [Packages](#org55aab05)
-    2.  [All the icons](#orgcdbdd95)
-    3.  [Auto Complete](#org64efb2c)
-    4.  [Docker](#org298dd1d)
-    5.  [Elpy](#org766afe1)
-    6.  [Helm](#org5de90f5)
-    7.  [Helm Tramp](#org6f68a8d)
-    8.  [Magit](#org3ecf67a)
-    9.  [Paredit](#org9573861)
-    10. [Projectile](#org0fd8dc4)
-    11. [Neotree](#org6000c0e)
-    12. [Themeing](#org0adeaf2)
-4.  [Systemd unit file](#orgb479038)
-5.  [Nautilus Scripts](#orgc6f035b)
-6.  [Licensing](#orgee07d14)
+1.  [About](#org77ca818)
+2.  [Configurations (Internal)](#orgb50c72b)
+    1.  [Meta](#org345656c)
+    2.  [Base defaults](#org3ca0f09)
+    3.  [Functions](#orgdbb2847)
+    4.  [Org Mode](#org303b974)
+    5.  [Mode hooks](#orgc535278)
+    6.  [Keybindings](#org96eff7c)
+3.  [Configurations (External)](#orgd734382)
+    1.  [Packages](#org262f337)
+    2.  [All the icons](#orgec8e61f)
+    3.  [Auto Complete](#org55827cd)
+    4.  [Docker](#org4036849)
+    5.  [Elpy](#org4bc5d5e)
+    6.  [Helm](#orgccdda0e)
+    7.  [Helm Tramp](#org564b836)
+    8.  [Magit](#orgf95263f)
+    9.  [Paredit](#org40767a3)
+    10. [Projectile](#org79d96aa)
+    11. [Neotree](#orga5a4e65)
+    12. [Themeing](#org21462d9)
+4.  [Systemd unit file](#org2aa408a)
+5.  [Nautilus Scripts](#org2b06022)
+6.  [Licensing](#orgdac02ec)
 
 
 
-<a id="org264091a"></a>
+<a id="org77ca818"></a>
 
 # About
 
@@ -51,7 +51,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgfb91c31"></a>
+<a id="orgb50c72b"></a>
 
 # Configurations (Internal)
 
@@ -61,7 +61,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="orge224592"></a>
+<a id="org345656c"></a>
 
 ## Meta
 
@@ -132,7 +132,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="orgea94381"></a>
+<a id="org3ca0f09"></a>
 
 ## Base defaults
 
@@ -187,7 +187,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org6f2c673"></a>
+<a id="orgdbb2847"></a>
 
 ## Functions
 
@@ -414,7 +414,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org5b7e8be"></a>
+<a id="org303b974"></a>
 
 ## Org Mode
 
@@ -436,7 +436,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgc048031"></a>
+<a id="orgc535278"></a>
 
 ## Mode hooks
 
@@ -455,7 +455,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="orgc2bbbbc"></a>
+<a id="org96eff7c"></a>
 
 ## Keybindings
 
@@ -486,7 +486,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="org17b6f82"></a>
+<a id="orgd734382"></a>
 
 # Configurations (External)
 
@@ -495,7 +495,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org55aab05"></a>
+<a id="org262f337"></a>
 
 ## Packages
 
@@ -575,7 +575,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orgcdbdd95"></a>
+<a id="orgec8e61f"></a>
 
 ## All the icons
 
@@ -584,7 +584,7 @@ This package provides icons for neo-tree
     (require 'all-the-icons)
 
 
-<a id="org64efb2c"></a>
+<a id="org55827cd"></a>
 
 ## Auto Complete
 
@@ -607,7 +607,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org298dd1d"></a>
+<a id="org4036849"></a>
 
 ## Docker
 
@@ -617,7 +617,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="org766afe1"></a>
+<a id="org4bc5d5e"></a>
 
 ## Elpy
 
@@ -635,7 +635,7 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode)
 
 
-<a id="org5de90f5"></a>
+<a id="orgccdda0e"></a>
 
 ## Helm
 
@@ -723,7 +723,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org6f68a8d"></a>
+<a id="org564b836"></a>
 
 ## Helm Tramp
 
@@ -733,7 +733,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="org3ecf67a"></a>
+<a id="orgf95263f"></a>
 
 ## Magit
 
@@ -748,7 +748,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org9573861"></a>
+<a id="org40767a3"></a>
 
 ## Paredit
 
@@ -766,7 +766,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org0fd8dc4"></a>
+<a id="org79d96aa"></a>
 
 ## Projectile
 
@@ -786,7 +786,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org6000c0e"></a>
+<a id="orga5a4e65"></a>
 
 ## Neotree
 
@@ -811,7 +811,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
     
     (defun my-neotree-setup ()
       (global-set-key [f8] 'neotree-project-dir)
-      (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+      (setq neo-theme 'icons)
       (setq projectile-switch-project-action 'neotree-projectile-action)
       (setq neo-window-width 30))
     
@@ -819,7 +819,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="org0adeaf2"></a>
+<a id="org21462d9"></a>
 
 ## Themeing
 
@@ -843,7 +843,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="orgb479038"></a>
+<a id="org2aa408a"></a>
 
 # Systemd unit file
 
@@ -871,7 +871,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="orgc6f035b"></a>
+<a id="org2b06022"></a>
 
 # Nautilus Scripts
 
@@ -885,7 +885,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="orgee07d14"></a>
+<a id="orgdac02ec"></a>
 
 # Licensing
 

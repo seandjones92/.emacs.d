@@ -772,7 +772,7 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 
   (defun my-neotree-setup ()
     (global-set-key [f8] 'neotree-project-dir)
-    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+    (setq neo-theme 'icons)
     (setq projectile-switch-project-action 'neotree-projectile-action)
     (setq neo-window-width 30))
 
