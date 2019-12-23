@@ -458,6 +458,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-`") 'eshell-here)
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key [f12] 'toggle-bars)
+  (global-set-key [f5] 'update-config)1
   (global-set-key [f1] 'go-to-scratch)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)
