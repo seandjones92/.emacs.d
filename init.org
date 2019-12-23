@@ -505,6 +505,7 @@ installed to take full advantage of this configuration. The [[https://github.com
 Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 #+BEGIN_SRC emacs-lisp
   (setq my-packages '(ag
+		      all-the-icons
 		      auto-complete
 		      decide
 		      docker
@@ -556,6 +557,12 @@ so if there is no internet there should be no issue.
       (package-initialize)
     (if (internet-up)
         (auto-package-mgmt)))
+#+END_SRC
+
+** All the icons
+This package provides icons for neo-tree
+#+BEGIN_SRC emacs-lisp
+  (require 'all-the-icons)
 #+END_SRC
 
 ** Auto Complete
@@ -764,8 +771,8 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 	(message "Could not find git project root."))))
 
   (defun my-neotree-setup ()
-    (global-set-key (kbd "C-c n") 'neotree-project-dir)
-    (setq neo-theme 'arrow)
+    (global-set-key [f8] 'neotree-project-dir)
+    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
     (setq projectile-switch-project-action 'neotree-projectile-action)
     (setq neo-window-width 30))
 
