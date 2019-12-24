@@ -526,7 +526,6 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      neotree
 		      org-bullets
 		      paredit
-		      pdf-tools
 		      pipenv
 		      projectile
 		      vlf))
