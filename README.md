@@ -1,34 +1,34 @@
 
 # Table of Contents
 
-1.  [About](#org77ca818)
-2.  [Configurations (Internal)](#orgb50c72b)
-    1.  [Meta](#org345656c)
-    2.  [Base defaults](#org3ca0f09)
-    3.  [Functions](#orgdbb2847)
-    4.  [Org Mode](#org303b974)
-    5.  [Mode hooks](#orgc535278)
-    6.  [Keybindings](#org96eff7c)
-3.  [Configurations (External)](#orgd734382)
-    1.  [Packages](#org262f337)
-    2.  [All the icons](#orgec8e61f)
-    3.  [Auto Complete](#org55827cd)
-    4.  [Docker](#org4036849)
-    5.  [Elpy](#org4bc5d5e)
-    6.  [Helm](#orgccdda0e)
-    7.  [Helm Tramp](#org564b836)
-    8.  [Magit](#orgf95263f)
-    9.  [Paredit](#org40767a3)
-    10. [Projectile](#org79d96aa)
-    11. [Neotree](#orga5a4e65)
-    12. [Themeing](#org21462d9)
-4.  [Systemd unit file](#org2aa408a)
-5.  [Nautilus Scripts](#org2b06022)
-6.  [Licensing](#orgdac02ec)
+1.  [About](#orgfe1d9ea)
+2.  [Configurations (Internal)](#orgb2b1afd)
+    1.  [Meta](#org4dba563)
+    2.  [Base defaults](#orgb34dfa3)
+    3.  [Functions](#org50d8440)
+    4.  [Org Mode](#org8ff508b)
+    5.  [Mode hooks](#org7fdd015)
+    6.  [Keybindings](#orgcb8ea32)
+3.  [Configurations (External)](#orgced770c)
+    1.  [Packages](#orgcf61542)
+    2.  [All the icons](#org88762f3)
+    3.  [Auto Complete](#org640bae6)
+    4.  [Docker](#org60a1642)
+    5.  [Elpy](#orgf85ab0e)
+    6.  [Helm](#org59381d2)
+    7.  [Helm Tramp](#orge124695)
+    8.  [Magit](#org8ab1f2f)
+    9.  [Paredit](#org76296e2)
+    10. [Projectile](#orgfafbcfb)
+    11. [Neotree](#org3fc9015)
+    12. [Themeing](#org611b56d)
+4.  [Systemd unit file](#org0275fce)
+5.  [Nautilus Scripts](#org7ca0d14)
+6.  [Licensing](#orgbf16df8)
 
 
 
-<a id="org77ca818"></a>
+<a id="orgfe1d9ea"></a>
 
 # About
 
@@ -51,7 +51,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgb50c72b"></a>
+<a id="orgb2b1afd"></a>
 
 # Configurations (Internal)
 
@@ -61,7 +61,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org345656c"></a>
+<a id="org4dba563"></a>
 
 ## Meta
 
@@ -132,7 +132,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org3ca0f09"></a>
+<a id="orgb34dfa3"></a>
 
 ## Base defaults
 
@@ -187,7 +187,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgdbb2847"></a>
+<a id="org50d8440"></a>
 
 ## Functions
 
@@ -414,7 +414,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org303b974"></a>
+<a id="org8ff508b"></a>
 
 ## Org Mode
 
@@ -436,7 +436,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgc535278"></a>
+<a id="org7fdd015"></a>
 
 ## Mode hooks
 
@@ -455,7 +455,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org96eff7c"></a>
+<a id="orgcb8ea32"></a>
 
 ## Keybindings
 
@@ -486,7 +486,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-page 'disabled nil)
 
 
-<a id="orgd734382"></a>
+<a id="orgced770c"></a>
 
 # Configurations (External)
 
@@ -495,7 +495,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org262f337"></a>
+<a id="orgcf61542"></a>
 
 ## Packages
 
@@ -544,6 +544,7 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
     		    neotree
     		    org-bullets
     		    paredit
+    		    pdf-tools
     		    pipenv
     		    projectile
     		    vlf))
@@ -575,7 +576,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orgec8e61f"></a>
+<a id="org88762f3"></a>
 
 ## All the icons
 
@@ -584,7 +585,7 @@ This package provides icons for neo-tree
     (require 'all-the-icons)
 
 
-<a id="org55827cd"></a>
+<a id="org640bae6"></a>
 
 ## Auto Complete
 
@@ -607,7 +608,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org4036849"></a>
+<a id="org60a1642"></a>
 
 ## Docker
 
@@ -617,7 +618,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="org4bc5d5e"></a>
+<a id="orgf85ab0e"></a>
 
 ## Elpy
 
@@ -635,7 +636,7 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode)
 
 
-<a id="orgccdda0e"></a>
+<a id="org59381d2"></a>
 
 ## Helm
 
@@ -723,7 +724,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org564b836"></a>
+<a id="orge124695"></a>
 
 ## Helm Tramp
 
@@ -733,7 +734,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="orgf95263f"></a>
+<a id="org8ab1f2f"></a>
 
 ## Magit
 
@@ -748,7 +749,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org40767a3"></a>
+<a id="org76296e2"></a>
 
 ## Paredit
 
@@ -766,7 +767,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org79d96aa"></a>
+<a id="orgfafbcfb"></a>
 
 ## Projectile
 
@@ -786,7 +787,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="orga5a4e65"></a>
+<a id="org3fc9015"></a>
 
 ## Neotree
 
@@ -819,7 +820,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="org21462d9"></a>
+<a id="org611b56d"></a>
 
 ## Themeing
 
@@ -843,7 +844,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="org2aa408a"></a>
+<a id="org0275fce"></a>
 
 # Systemd unit file
 
@@ -871,7 +872,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org2b06022"></a>
+<a id="org7ca0d14"></a>
 
 # Nautilus Scripts
 
@@ -885,7 +886,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="orgdac02ec"></a>
+<a id="orgbf16df8"></a>
 
 # Licensing
 
