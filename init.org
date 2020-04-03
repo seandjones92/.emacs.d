@@ -728,7 +728,14 @@ Helm TRAMP is used to quickly connect to machines in =~/.ssh/config=
 and Docker containers.
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-c h h") 'helm-tramp)
+  (defun my-helm-tramp-setup ()
+    (global-set-key (kbd "C-c h h") 'helm-tramp))
+#+END_SRC
+
+Enable the helm tramp config if it is installed
+#+BEGIN_SRC emacs-lisp
+  (if (require 'helm-tramp)
+      (my-helm-tramp-setup))
 #+END_SRC
 
 ** Magit
