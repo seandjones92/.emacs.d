@@ -471,6 +471,8 @@ This is where I define my custom keybindings.
 Enable keybindings that are disabled by default:
 #+BEGIN_SRC emacs-lisp
   (put 'narrow-to-page 'disabled nil)
+  (put 'narrow-to-region 'disabled nil)
+  (put 'narrow-to-defun 'disabled nil)
 #+END_SRC
 
 * Configurations (External)
