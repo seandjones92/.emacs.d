@@ -609,15 +609,28 @@ map the high level menu for easy access.
 
 The section below ensures that it uses Python3 by default.
 #+BEGIN_SRC emacs-lisp
-  (setq elpy-rpc-python-command "python3")
-  (setq python-shell-interpreter "python3")
+  (defun my-elpy-variables ()
+    (setq elpy-rpc-python-command "python3")
+    (setq python-shell-interpreter "python3"))
 #+END_SRC
 
 These things need to be enabled for elpy to work properly
 #+BEGIN_SRC emacs-lisp
-  (elpy-enable)
-  (global-company-mode)
-  (yas-global-mode)
+  (defun my-elpy-prereqs ()
+    (elpy-enable)
+    (global-company-mode)
+    (yas-global-mode))
+#+END_SRC
+
+Tie the two functions above together and enable the elpy config if the
+package is installed
+#+BEGIN_SRC emacs-lisp
+  (defun my-elpy-setup ()
+    (my-elpy-variables)
+    (my-elpy-prereqs))
+
+  (if (require 'elpy)
+      (my-elpy-setup))
 #+END_SRC
 
 ** Helm
