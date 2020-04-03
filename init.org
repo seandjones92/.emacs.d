@@ -597,7 +597,11 @@ needs to be set or the completion framework won't kick in.
 The default configuration for docker is fine for me. I just want to
 map the high level menu for easy access.
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-c d") 'docker)
+  (defun my-docker-setup ()
+    (global-set-key (kbd "C-c d") 'docker))
+
+  (if (require 'docker)
+      (my-docker-setup))
 #+END_SRC
 
 ** Elpy
