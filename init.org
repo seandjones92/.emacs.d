@@ -448,7 +448,7 @@ modes.
   (add-hook 'python-mode-hook 'linum-mode)
 #+END_SRC
 
-** Keybindings
+** COMMENT Keybindings
 
 This is where I define my custom keybindings.
 #+BEGIN_SRC emacs-lisp
@@ -463,7 +463,7 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-`") 'eshell-here)
   (global-set-key (kbd "C-c l") 'org-store-link)
   (global-set-key [f12] 'toggle-bars)
-  (global-set-key [f5] 'update-config)1
+  (global-set-key [f5] 'update-config)
   (global-set-key [f1] 'go-to-scratch)
   (require 'dired)
   (define-key dired-mode-map [?%?h] 'dired-show-only)

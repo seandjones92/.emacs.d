@@ -1,34 +1,33 @@
 
 # Table of Contents
 
-1.  [About](#orga2cd392)
-2.  [Configurations (Internal)](#org7cf6a28)
-    1.  [Meta](#org4394e84)
-    2.  [Base defaults](#org5947a05)
-    3.  [Functions](#org6be83a7)
-    4.  [Org Mode](#org1e98e80)
-    5.  [Mode hooks](#orge54086b)
-    6.  [Keybindings](#org148e1a2)
-3.  [Configurations (External)](#org6a8ecfa)
-    1.  [Packages](#org0538950)
-    2.  [All the icons](#orge883404)
-    3.  [Auto Complete](#org840a688)
-    4.  [Docker](#org0b9b6b8)
-    5.  [Elpy](#orgd3d109d)
-    6.  [Helm](#orgdc9b0ca)
-    7.  [Helm Tramp](#org99065bb)
-    8.  [Magit](#org212bde8)
-    9.  [Paredit](#orgdaf199a)
-    10. [Projectile](#org93dbe06)
-    11. [Neotree](#org15f0674)
-    12. [Themeing](#org4be1b72)
-4.  [Systemd unit file](#org4b2d4fd)
-5.  [Nautilus Scripts](#org25ffe2a)
-6.  [Licensing](#org35eb3fc)
+1.  [About](#orgf8b93cc)
+2.  [Configurations (Internal)](#org6f7edba)
+    1.  [Meta](#orgd44bdd4)
+    2.  [Base defaults](#org6bb7e61)
+    3.  [Functions](#org3fc8025)
+    4.  [Org Mode](#org377ab97)
+    5.  [Mode hooks](#org3d3d16a)
+3.  [Configurations (External)](#org738efa4)
+    1.  [Packages](#org9bd7d8d)
+    2.  [All the icons](#org622d92f)
+    3.  [Auto Complete](#org10a3169)
+    4.  [Docker](#orgd11c2aa)
+    5.  [Elpy](#org69b0b28)
+    6.  [Helm](#org0b8e7f1)
+    7.  [Helm Tramp](#orgeb88be9)
+    8.  [Magit](#org46e706f)
+    9.  [Paredit](#orgb8ba56b)
+    10. [Projectile](#org3975cad)
+    11. [Neotree](#org5aed776)
+    12. [Themeing](#org0042697)
+4.  [Systemd unit file](#org5306c2a)
+5.  [Nautilus Scripts](#org649097c)
+6.  [Licensing](#org742607e)
 
 
 
-<a id="orga2cd392"></a>
+<a id="orgf8b93cc"></a>
 
 # About
 
@@ -51,7 +50,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org7cf6a28"></a>
+<a id="org6f7edba"></a>
 
 # Configurations (Internal)
 
@@ -61,7 +60,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org4394e84"></a>
+<a id="orgd44bdd4"></a>
 
 ## Meta
 
@@ -132,7 +131,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org5947a05"></a>
+<a id="org6bb7e61"></a>
 
 ## Base defaults
 
@@ -191,7 +190,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org6be83a7"></a>
+<a id="org3fc8025"></a>
 
 ## Functions
 
@@ -418,7 +417,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org1e98e80"></a>
+<a id="org377ab97"></a>
 
 ## Org Mode
 
@@ -440,7 +439,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orge54086b"></a>
+<a id="org3d3d16a"></a>
 
 ## Mode hooks
 
@@ -459,40 +458,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org148e1a2"></a>
-
-## Keybindings
-
-This is where I define my custom keybindings.
-
-    (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
-    (global-set-key (kbd "C-c k") 'kill-this-buffer)
-    (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
-    (global-set-key (kbd "C-c p") 'helm-projectile)
-    (global-set-key (kbd "C-+") 'calc)
-    (global-set-key (kbd "C-c S") 'toggle-truncate-lines)
-    (global-set-key (kbd "C-!") 'become-root)
-    (global-set-key (kbd "C-~") 'eshell)
-    (global-set-key (kbd "C-`") 'eshell-here)
-    (global-set-key (kbd "C-c l") 'org-store-link)
-    (global-set-key [f12] 'toggle-bars)
-    (global-set-key [f5] 'update-config)1
-    (global-set-key [f1] 'go-to-scratch)
-    (require 'dired)
-    (define-key dired-mode-map [?%?h] 'dired-show-only)
-    (define-key dired-mode-map [?%?G] 'find-grep-dired)
-    (define-key dired-mode-map [?%?f] 'find-name-dired)
-    (define-key dired-mode-map ")" 'cycle-dired-switches)
-    (define-key org-mode-map (kbd "C-}") 'my-org-screenshot)
-
-Enable keybindings that are disabled by default:
-
-    (put 'narrow-to-page 'disabled nil)
-    (put 'narrow-to-region 'disabled nil)
-    (put 'narrow-to-defun 'disabled nil)
-
-
-<a id="org6a8ecfa"></a>
+<a id="org738efa4"></a>
 
 # Configurations (External)
 
@@ -501,7 +467,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org0538950"></a>
+<a id="org9bd7d8d"></a>
 
 ## Packages
 
@@ -582,7 +548,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orge883404"></a>
+<a id="org622d92f"></a>
 
 ## All the icons
 
@@ -591,7 +557,7 @@ This package provides icons for neo-tree
     (require 'all-the-icons)
 
 
-<a id="org840a688"></a>
+<a id="org10a3169"></a>
 
 ## Auto Complete
 
@@ -614,7 +580,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org0b9b6b8"></a>
+<a id="orgd11c2aa"></a>
 
 ## Docker
 
@@ -624,7 +590,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="orgd3d109d"></a>
+<a id="org69b0b28"></a>
 
 ## Elpy
 
@@ -642,7 +608,7 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode)
 
 
-<a id="orgdc9b0ca"></a>
+<a id="org0b8e7f1"></a>
 
 ## Helm
 
@@ -730,7 +696,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org99065bb"></a>
+<a id="orgeb88be9"></a>
 
 ## Helm Tramp
 
@@ -740,7 +706,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="org212bde8"></a>
+<a id="org46e706f"></a>
 
 ## Magit
 
@@ -755,7 +721,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="orgdaf199a"></a>
+<a id="orgb8ba56b"></a>
 
 ## Paredit
 
@@ -773,7 +739,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="org93dbe06"></a>
+<a id="org3975cad"></a>
 
 ## Projectile
 
@@ -793,7 +759,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org15f0674"></a>
+<a id="org5aed776"></a>
 
 ## Neotree
 
@@ -826,7 +792,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="org4be1b72"></a>
+<a id="org0042697"></a>
 
 ## Themeing
 
@@ -850,7 +816,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="org4b2d4fd"></a>
+<a id="org5306c2a"></a>
 
 # Systemd unit file
 
@@ -878,7 +844,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org25ffe2a"></a>
+<a id="org649097c"></a>
 
 # Nautilus Scripts
 
@@ -892,7 +858,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org35eb3fc"></a>
+<a id="org742607e"></a>
 
 # Licensing
 
