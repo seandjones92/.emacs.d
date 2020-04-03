@@ -1,34 +1,34 @@
 
 # Table of Contents
 
-1.  [About](#org8eb6dfe)
-2.  [Configurations (Internal)](#org433677c)
-    1.  [Meta](#org61ba715)
-    2.  [Base defaults](#org9c2a48c)
-    3.  [Functions](#orgd83f409)
-    4.  [Org Mode](#orgd9f49ed)
-    5.  [Mode hooks](#org431013e)
-    6.  [Keybindings](#orgdd2b873)
-3.  [Configurations (External)](#org2012d36)
-    1.  [Packages](#orgb985016)
-    2.  [All the icons](#orgd1e4856)
-    3.  [Auto Complete](#org7545e86)
-    4.  [Docker](#orgb0e92f7)
-    5.  [Elpy](#orgd0e9a07)
-    6.  [Helm](#org5b9f8c1)
-    7.  [Helm Tramp](#org87c492e)
-    8.  [Magit](#org37616e6)
-    9.  [Paredit](#orgf0b5974)
-    10. [Projectile](#orgff7b611)
-    11. [Neotree](#org51ec179)
-    12. [Themeing](#org03dd61e)
-4.  [Systemd unit file](#org1d93a73)
-5.  [Nautilus Scripts](#orgbfb098a)
-6.  [Licensing](#org233629c)
+1.  [About](#orga2cd392)
+2.  [Configurations (Internal)](#org7cf6a28)
+    1.  [Meta](#org4394e84)
+    2.  [Base defaults](#org5947a05)
+    3.  [Functions](#org6be83a7)
+    4.  [Org Mode](#org1e98e80)
+    5.  [Mode hooks](#orge54086b)
+    6.  [Keybindings](#org148e1a2)
+3.  [Configurations (External)](#org6a8ecfa)
+    1.  [Packages](#org0538950)
+    2.  [All the icons](#orge883404)
+    3.  [Auto Complete](#org840a688)
+    4.  [Docker](#org0b9b6b8)
+    5.  [Elpy](#orgd3d109d)
+    6.  [Helm](#orgdc9b0ca)
+    7.  [Helm Tramp](#org99065bb)
+    8.  [Magit](#org212bde8)
+    9.  [Paredit](#orgdaf199a)
+    10. [Projectile](#org93dbe06)
+    11. [Neotree](#org15f0674)
+    12. [Themeing](#org4be1b72)
+4.  [Systemd unit file](#org4b2d4fd)
+5.  [Nautilus Scripts](#org25ffe2a)
+6.  [Licensing](#org35eb3fc)
 
 
 
-<a id="org8eb6dfe"></a>
+<a id="orga2cd392"></a>
 
 # About
 
@@ -51,7 +51,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org433677c"></a>
+<a id="org7cf6a28"></a>
 
 # Configurations (Internal)
 
@@ -61,7 +61,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org61ba715"></a>
+<a id="org4394e84"></a>
 
 ## Meta
 
@@ -132,7 +132,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org9c2a48c"></a>
+<a id="org5947a05"></a>
 
 ## Base defaults
 
@@ -157,6 +157,10 @@ Disable the system bell. No flashing, no sounds.
 Enable column numbers.
 
     (column-number-mode 1)
+
+Enable battery mode. This is good for when you set emacs to full screen so your laptop doesn't die.
+
+    (display-battery-mode 1)
 
 For me this allows for better handling of parenthesis and quotes. As
 you type `(` a matching `)` is also created. The same goes for
@@ -187,7 +191,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgd83f409"></a>
+<a id="org6be83a7"></a>
 
 ## Functions
 
@@ -414,7 +418,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="orgd9f49ed"></a>
+<a id="org1e98e80"></a>
 
 ## Org Mode
 
@@ -436,7 +440,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="org431013e"></a>
+<a id="orge54086b"></a>
 
 ## Mode hooks
 
@@ -455,7 +459,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="orgdd2b873"></a>
+<a id="org148e1a2"></a>
 
 ## Keybindings
 
@@ -488,7 +492,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-defun 'disabled nil)
 
 
-<a id="org2012d36"></a>
+<a id="org6a8ecfa"></a>
 
 # Configurations (External)
 
@@ -497,7 +501,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="orgb985016"></a>
+<a id="org0538950"></a>
 
 ## Packages
 
@@ -578,7 +582,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orgd1e4856"></a>
+<a id="orge883404"></a>
 
 ## All the icons
 
@@ -587,7 +591,7 @@ This package provides icons for neo-tree
     (require 'all-the-icons)
 
 
-<a id="org7545e86"></a>
+<a id="org840a688"></a>
 
 ## Auto Complete
 
@@ -610,7 +614,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="orgb0e92f7"></a>
+<a id="org0b9b6b8"></a>
 
 ## Docker
 
@@ -620,7 +624,7 @@ map the high level menu for easy access.
     (global-set-key (kbd "C-c d") 'docker)
 
 
-<a id="orgd0e9a07"></a>
+<a id="orgd3d109d"></a>
 
 ## Elpy
 
@@ -638,7 +642,7 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode)
 
 
-<a id="org5b9f8c1"></a>
+<a id="orgdc9b0ca"></a>
 
 ## Helm
 
@@ -726,7 +730,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org87c492e"></a>
+<a id="org99065bb"></a>
 
 ## Helm Tramp
 
@@ -736,7 +740,7 @@ and Docker containers.
     (global-set-key (kbd "C-c h h") 'helm-tramp)
 
 
-<a id="org37616e6"></a>
+<a id="org212bde8"></a>
 
 ## Magit
 
@@ -751,7 +755,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="orgf0b5974"></a>
+<a id="orgdaf199a"></a>
 
 ## Paredit
 
@@ -769,7 +773,7 @@ This is for better handling of S-expressions in lisp languages.
     (add-hook 'cider-repl-mode            #'enable-paredit-mode)
 
 
-<a id="orgff7b611"></a>
+<a id="org93dbe06"></a>
 
 ## Projectile
 
@@ -789,7 +793,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org51ec179"></a>
+<a id="org15f0674"></a>
 
 ## Neotree
 
@@ -822,7 +826,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="org03dd61e"></a>
+<a id="org4be1b72"></a>
 
 ## Themeing
 
@@ -846,7 +850,7 @@ theme should still be put together.
     		(org-bullets-mode 1))))
 
 
-<a id="org1d93a73"></a>
+<a id="org4b2d4fd"></a>
 
 # Systemd unit file
 
@@ -874,7 +878,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="orgbfb098a"></a>
+<a id="org25ffe2a"></a>
 
 # Nautilus Scripts
 
@@ -888,7 +892,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org233629c"></a>
+<a id="org35eb3fc"></a>
 
 # Licensing
 

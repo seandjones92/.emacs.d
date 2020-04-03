@@ -134,6 +134,11 @@ Enable column numbers.
   (column-number-mode 1)
 #+END_SRC
 
+Enable battery mode. This is good for when you set emacs to full screen so your laptop doesn't die.
+#+BEGIN_SRC emacs-lisp
+  (display-battery-mode 1)
+#+END_SRC
+
 For me this allows for better handling of parenthesis and quotes. As
 you type =(= a matching =)= is also created. The same goes for
 quotes. It also adds some inteligent handling. Further in the
