@@ -448,7 +448,7 @@ modes.
   (add-hook 'python-mode-hook 'linum-mode)
 #+END_SRC
 
-** COMMENT Keybindings
+** Keybindings
 
 This is where I define my custom keybindings.
 #+BEGIN_SRC emacs-lisp
