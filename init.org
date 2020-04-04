@@ -10,7 +10,7 @@ This configuration is based off of the system shown [[https://github.com/larstve
 that the configuration should serve as it's own plain english
 documentation.
 
-Install with:
+Clone the repo to =~/.emacs.d=:
 #+BEGIN_SRC sh :tangle no
   git clone git@github.com:seandjones92/Emacs.git ~/.emacs.d
 #+END_SRC
@@ -35,7 +35,7 @@ not belong here.
 
 ** Meta
 
-All changes to the config should be made to =init.org=, *not* to
+All changes to the config should be made to =init.org= *not* to
 =init.el=. The running configuration is generated at first launch and
 whenever =init.org= is saved from within Emacs. Any changes made
 directly to =init.el= will be lost, it is regenerated regularly.
@@ -182,8 +182,8 @@ These are my custom functions. I define them all here. If I want them
 assigned to a keybinding I do so later in the config.
 
 This function is to be run in =dired=. It prompts for a regular
-expression and only shows the entries (files or directories) that
-match that regular expression. This is good for working in directories
+expression and only shows the files or directories that match the
+provided regular expression. This is good for working in directories
 with lots of files. Think =ls -al | grep -E <expression>=.
 #+BEGIN_SRC emacs-lisp
   (defun dired-show-only (regexp)
