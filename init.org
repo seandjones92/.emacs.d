@@ -110,6 +110,11 @@ and therefore not in this configuration) put it in
 ** Base defaults
 Here we define the basic look and feel of Emacs.
 
+Make sure that Emacs always starts in the users home directory.
+#+BEGIN_SRC emacs-lisp
+  (setq default-directory (concat (getenv "HOME") "/"))
+#+END_SRC
+
 Remove scrollbars, menu bars, and toolbars:
 #+BEGIN_SRC emacs-lisp
   (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
