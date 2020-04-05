@@ -879,7 +879,6 @@ impact, it just make the editor a little nicer to look at.
 		    (org-bullets-mode 1))))
 #+END_SRC
 
-
 *** COMMENT Moe Theme
 Here we do some themeing of emacs. None of this has any functional
 impact, it just make the editor a little nicer to look at. We can see
