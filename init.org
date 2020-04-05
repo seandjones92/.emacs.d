@@ -862,7 +862,7 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 
 ** Themeing
 
-*** Nord Theme
+*** [[https://www.nordtheme.com/][Nord]] Theme
 Here we do some themeing of emacs. None of this has any functional
 impact, it just make the editor a little nicer to look at.
 #+BEGIN_SRC emacs-lisp
