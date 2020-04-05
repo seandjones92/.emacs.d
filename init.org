@@ -550,6 +550,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      markdown-mode
 		      moe-theme
 		      neotree
+		      nord-theme
 		      org-bullets
 		      paredit
 		      pipenv
@@ -860,6 +861,26 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 #+END_SRC
 
 ** Themeing
+
+*** Nord Theme
+Here we do some themeing of emacs. None of this has any functional
+impact, it just make the editor a little nicer to look at.
+#+BEGIN_SRC emacs-lisp
+  (defun my-nord-theme-setup ()
+    (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
+    (load-theme 'nord t))
+
+  (if (require 'nord-theme)
+      (my-nord-theme-setup))
+
+  (if (require 'org-bullets)
+	(add-hook 'org-mode-hook
+		  (lambda ()
+		    (org-bullets-mode 1))))
+#+END_SRC
+
+
+*** COMMENT Moe Theme
 Here we do some themeing of emacs. None of this has any functional
 impact, it just make the editor a little nicer to look at. We can see
 that we have theming for the modeline, org mode bullets, and the
@@ -872,12 +893,12 @@ theme should still be put together.
     (moe-dark))
 
   (if (require 'moe-theme)
-	(my-moetheme-setup))
+	  (my-moetheme-setup))
 
   (if (require 'org-bullets)
-      (add-hook 'org-mode-hook
-		(lambda ()
-		  (org-bullets-mode 1))))
+	(add-hook 'org-mode-hook
+		  (lambda ()
+		    (org-bullets-mode 1))))
 #+END_SRC
 
 * Systemd unit file
