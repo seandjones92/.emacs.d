@@ -115,6 +115,19 @@ Make sure that Emacs always starts in the users home directory.
   (setq default-directory (concat (getenv "HOME") "/"))
 #+END_SRC
 
+Set the =PATH= variable.
+#+BEGIN_SRC emacs-lisp
+  (setenv "PATH"
+	  (concat
+	   (concat (getenv "HOME") "/.local/bin" ":")
+	   (getenv "PATH")))
+#+END_SRC
+
+Set the =exec-path= variable.
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'exec-path (concat (getenv "HOME") "/.local/bin"))
+#+END_SRC
+
 Remove scrollbars, menu bars, and toolbars:
 #+BEGIN_SRC emacs-lisp
   (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -612,6 +625,12 @@ map the high level menu for easy access.
 ** Elpy
 [[https://github.com/jorgenschaefer/elpy][Elpy]] provides some python IDE features.
 
+This ensures that Elpy can find virtual environments created by =pipenv=.
+#+BEGIN_SRC emacs-lisp
+  (setenv "WORKON_HOME"
+	  (concat (getenv "HOME") "/.local/share/virtualenvs"))
+#+END_SRC
+
 The section below ensures that it uses Python3 by default.
 #+BEGIN_SRC emacs-lisp
   (defun my-elpy-variables ()
@@ -627,6 +646,12 @@ These things need to be enabled for elpy to work properly
     (yas-global-mode))
 #+END_SRC
 
+Set custom elpy keybindings
+#+BEGIN_SRC emacs-lisp
+  (defun my-elpy-keybindings ()
+    (define-key-after elpy-mode-map (kbd "C-.") 'elpy-goto-definition-other-window))
+#+END_SRC
+
 Tie the two functions above together and enable the elpy config if the
 package is installed
 #+BEGIN_SRC emacs-lisp
@@ -636,6 +661,16 @@ package is installed
 
   (if (require 'elpy)
       (my-elpy-setup))
+#+END_SRC
+
+TODO: Find a better way to do this
+create pipenv environment in the current directory from emacs
+#+BEGIN_SRC emacs-lisp
+  (defun pyvenv-create ()
+    "Use pipenv to create a new virtual environment at the current
+    directory"
+    (interactive)
+    (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
 #+END_SRC
 
 ** Helm
