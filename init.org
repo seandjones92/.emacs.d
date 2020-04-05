@@ -657,7 +657,8 @@ package is installed
 #+BEGIN_SRC emacs-lisp
   (defun my-elpy-setup ()
     (my-elpy-variables)
-    (my-elpy-prereqs))
+    (my-elpy-prereqs)
+    (my-elpy-keybindings))
 
   (if (require 'elpy)
       (my-elpy-setup))
