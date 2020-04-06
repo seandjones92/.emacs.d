@@ -828,7 +828,8 @@ efficiently.
     (add-hook 'projectile-mode-hook 'my-projectile-keybindings))
 
   (if (require 'projectile)
-      (my-projectile-setup))
+      (my-projectile-setup)
+      (my-projectile-keybindings))
 #+END_SRC
 
 ** COMMENT Neotree
