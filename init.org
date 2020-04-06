@@ -10,6 +10,8 @@ This configuration is based off of the system shown [[https://github.com/larstve
 that the configuration should serve as it's own plain english
 documentation.
 
+* Installation
+
 Clone the repo to =~/.emacs.d=:
 #+BEGIN_SRC sh :tangle no
   git clone git@github.com:seandjones92/Emacs.git ~/.emacs.d
@@ -545,12 +547,10 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      helm-projectile
 		      helm-tramp
 		      htmlize
-		      kubernetes
-		      logview
 		      magit
 		      markdown-mode
-		      moe-theme
-		      neotree
+		      ;; moe-theme
+		      ;; neotree
 		      nord-theme
 		      org-bullets
 		      paredit
@@ -587,7 +587,7 @@ so if there is no internet there should be no issue.
         (auto-package-mgmt)))
 #+END_SRC
 
-** All the icons
+** COMMENT All the icons
 This package provides icons for neo-tree
 #+BEGIN_SRC emacs-lisp
   (require 'all-the-icons)

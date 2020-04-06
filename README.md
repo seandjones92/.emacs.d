@@ -1,39 +1,44 @@
 
 # Table of Contents
 
-1.  [About](#org7ba5f61)
-2.  [Configurations (Internal)](#orgf184a17)
-    1.  [Meta](#org07dbc5d)
-    2.  [Base defaults](#orgd5ebaea)
-    3.  [Functions](#orge9d2366)
-    4.  [Org Mode](#org799b7f4)
-    5.  [Mode hooks](#orgdfaf112)
-    6.  [Keybindings](#org40b4031)
-3.  [Configurations (External)](#org7a22627)
-    1.  [Packages](#orgec09ecf)
-    2.  [All the icons](#orgc5e7ce0)
-    3.  [Auto Complete](#org1c11161)
-    4.  [Docker](#orge1797f9)
-    5.  [Elpy](#orgd56f752)
-    6.  [Helm](#org6b117bc)
-    7.  [Helm Tramp](#org08d7084)
-    8.  [Magit](#orgd141f83)
-    9.  [Paredit](#org4b6cc24)
-    10. [Projectile](#orgb7bbc32)
-    11. [Themeing](#org472eb7a)
-4.  [Systemd unit file](#org163166f)
-5.  [Nautilus Scripts](#org1d95f6b)
-6.  [Licensing](#org920a28b)
+1.  [About](#org6774b4f)
+2.  [Installation](#org1465b02)
+3.  [Configurations (Internal)](#org2ba1628)
+    1.  [Meta](#orgde2e90c)
+    2.  [Base defaults](#orgf023f22)
+    3.  [Functions](#org9648601)
+    4.  [Org Mode](#orgbe002f6)
+    5.  [Mode hooks](#orgce1b977)
+    6.  [Keybindings](#org2cc76df)
+4.  [Configurations (External)](#org3d82842)
+    1.  [Packages](#org1358172)
+    2.  [Auto Complete](#orgf997c8e)
+    3.  [Docker](#org1cd3c99)
+    4.  [Elpy](#orgd1b6e10)
+    5.  [Helm](#org22debe7)
+    6.  [Helm Tramp](#org17fd945)
+    7.  [Magit](#org8327fc2)
+    8.  [Paredit](#orgedfaed6)
+    9.  [Projectile](#org303edf5)
+    10. [Themeing](#org768163e)
+5.  [Systemd unit file](#orgb242cfe)
+6.  [Nautilus Scripts](#orge56e56f)
+7.  [Licensing](#org7547de0)
 
 
 
-<a id="org7ba5f61"></a>
+<a id="org6774b4f"></a>
 
 # About
 
 This configuration is based off of the system shown [here](https://github.com/larstvei/dot-emacs). The idea is
 that the configuration should serve as it's own plain english
 documentation.
+
+
+<a id="org1465b02"></a>
+
+# Installation
 
 Clone the repo to `~/.emacs.d`:
 
@@ -50,7 +55,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="orgf184a17"></a>
+<a id="org2ba1628"></a>
 
 # Configurations (Internal)
 
@@ -60,7 +65,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org07dbc5d"></a>
+<a id="orgde2e90c"></a>
 
 ## Meta
 
@@ -131,7 +136,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="orgd5ebaea"></a>
+<a id="orgf023f22"></a>
 
 ## Base defaults
 
@@ -205,7 +210,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orge9d2366"></a>
+<a id="org9648601"></a>
 
 ## Functions
 
@@ -433,7 +438,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org799b7f4"></a>
+<a id="orgbe002f6"></a>
 
 ## Org Mode
 
@@ -455,7 +460,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgdfaf112"></a>
+<a id="orgce1b977"></a>
 
 ## Mode hooks
 
@@ -474,7 +479,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org40b4031"></a>
+<a id="org2cc76df"></a>
 
 ## Keybindings
 
@@ -507,7 +512,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-defun 'disabled nil)
 
 
-<a id="org7a22627"></a>
+<a id="org3d82842"></a>
 
 # Configurations (External)
 
@@ -516,7 +521,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="orgec09ecf"></a>
+<a id="org1358172"></a>
 
 ## Packages
 
@@ -558,12 +563,10 @@ Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to 
     		    helm-projectile
     		    helm-tramp
     		    htmlize
-    		    kubernetes
-    		    logview
     		    magit
     		    markdown-mode
-    		    moe-theme
-    		    neotree
+    		    ;; moe-theme
+    		    ;; neotree
     		    nord-theme
     		    org-bullets
     		    paredit
@@ -598,16 +601,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="orgc5e7ce0"></a>
-
-## All the icons
-
-This package provides icons for neo-tree
-
-    (require 'all-the-icons)
-
-
-<a id="org1c11161"></a>
+<a id="orgf997c8e"></a>
 
 ## Auto Complete
 
@@ -630,7 +624,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="orge1797f9"></a>
+<a id="org1cd3c99"></a>
 
 ## Docker
 
@@ -644,7 +638,7 @@ map the high level menu for easy access.
         (my-docker-setup))
 
 
-<a id="orgd56f752"></a>
+<a id="orgd1b6e10"></a>
 
 ## Elpy
 
@@ -694,7 +688,7 @@ create pipenv environment in the current directory from emacs
       (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
 
 
-<a id="org6b117bc"></a>
+<a id="org22debe7"></a>
 
 ## Helm
 
@@ -782,7 +776,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org08d7084"></a>
+<a id="org17fd945"></a>
 
 ## Helm Tramp
 
@@ -798,7 +792,7 @@ Enable the helm tramp config if it is installed
         (my-helm-tramp-setup))
 
 
-<a id="orgd141f83"></a>
+<a id="org8327fc2"></a>
 
 ## Magit
 
@@ -813,7 +807,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org4b6cc24"></a>
+<a id="orgedfaed6"></a>
 
 ## Paredit
 
@@ -837,7 +831,7 @@ If paredit is installed enable the config defined above
         (my-paredit-setup))
 
 
-<a id="orgb7bbc32"></a>
+<a id="org303edf5"></a>
 
 ## Projectile
 
@@ -857,7 +851,7 @@ efficiently.
         (my-projectile-setup))
 
 
-<a id="org472eb7a"></a>
+<a id="org768163e"></a>
 
 ## Themeing
 
@@ -880,7 +874,7 @@ impact, it just make the editor a little nicer to look at.
     		  (org-bullets-mode 1))))
 
 
-<a id="org163166f"></a>
+<a id="orgb242cfe"></a>
 
 # Systemd unit file
 
@@ -908,7 +902,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org1d95f6b"></a>
+<a id="orge56e56f"></a>
 
 # Nautilus Scripts
 
@@ -922,7 +916,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org920a28b"></a>
+<a id="org7547de0"></a>
 
 # Licensing
 
