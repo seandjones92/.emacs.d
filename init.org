@@ -230,6 +230,7 @@ lines before saving.
     "Strip the trailing whitespace from lines and the end of the
   file and save it."
     (interactive)
+    (widen)
     (delete-trailing-whitespace)
     (save-buffer))
 #+END_SRC
