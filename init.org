@@ -830,7 +830,7 @@ efficiently.
       (my-projectile-setup))
 #+END_SRC
 
-** Neotree
+** COMMENT Neotree
 Adds a file tree to the left hand side, like in most IDEs. This only
 works if you are in a project.
 
