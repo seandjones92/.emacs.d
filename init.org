@@ -677,6 +677,15 @@ create pipenv environment in the current directory from emacs
     (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
 #+END_SRC
 
+** Flymake
+Here is where I can configure extra addons for flymake.
+
+This enables integration with [[https://www.shellcheck.net/][shellcheck]].
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'sh-mode-hook 'flymake-mode)
+  (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+#+END_SRC
+
 ** Helm
 [[https://github.com/emacs-helm/helm][Helm]] is an Emacs framework for incremental completions and narrowing
 selections. It's a much better way to interact with Emacs. I've broken

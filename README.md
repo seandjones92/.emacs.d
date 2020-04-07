@@ -1,35 +1,36 @@
 
 # Table of Contents
 
-1.  [About](#org1b93828)
-2.  [Installation](#org3f488ef)
-3.  [Configurations (Internal)](#org9839d2c)
-    1.  [Meta](#org6141f96)
-    2.  [Base defaults](#orge8d2cd4)
-    3.  [Functions](#orgcce6caa)
-    4.  [Org Mode](#org6b6c175)
-    5.  [Mode hooks](#orgdb84e8a)
-    6.  [Keybindings](#org471f98d)
-4.  [Configurations (External)](#orgfc3933f)
-    1.  [Packages](#org265a4e8)
-    2.  [All the icons](#org147f943)
-    3.  [Auto Complete](#org233a351)
-    4.  [Docker](#orgd6f7374)
-    5.  [Elpy](#org6c65561)
-    6.  [Helm](#org35c47c5)
-    7.  [Helm Tramp](#org18243b6)
-    8.  [Magit](#org1ba8e14)
-    9.  [Paredit](#org46b2713)
-    10. [Projectile](#org90e1b7c)
-    11. [Neotree](#org429dda5)
-    12. [Themeing](#orgca12d66)
-5.  [Systemd unit file](#orge17fd91)
-6.  [Nautilus Scripts](#org828bfdb)
-7.  [Licensing](#org1de6bc2)
+1.  [About](#org860c130)
+2.  [Installation](#orgc4fb8c1)
+3.  [Configurations (Internal)](#org3f4d281)
+    1.  [Meta](#org58e0a9e)
+    2.  [Base defaults](#org6cf1692)
+    3.  [Functions](#org691bee2)
+    4.  [Org Mode](#org69eda9c)
+    5.  [Mode hooks](#orgc30f61f)
+    6.  [Keybindings](#org9d97b6d)
+4.  [Configurations (External)](#org10361f8)
+    1.  [Packages](#org18f70b2)
+    2.  [All the icons](#org914f12b)
+    3.  [Auto Complete](#orgc5e0051)
+    4.  [Docker](#org79c114b)
+    5.  [Elpy](#org0954fef)
+    6.  [Flymake](#org147a32e)
+    7.  [Helm](#orgb09d0c4)
+    8.  [Helm Tramp](#org7d462d7)
+    9.  [Magit](#org69e19ae)
+    10. [Paredit](#org37a606d)
+    11. [Projectile](#org300432e)
+    12. [Neotree](#orgd922965)
+    13. [Themeing](#orgd78a859)
+5.  [Systemd unit file](#org0b16a52)
+6.  [Nautilus Scripts](#org9b9863e)
+7.  [Licensing](#orgca81e8c)
 
 
 
-<a id="org1b93828"></a>
+<a id="org860c130"></a>
 
 # About
 
@@ -38,7 +39,7 @@ that the configuration should serve as it's own plain english
 documentation.
 
 
-<a id="org3f488ef"></a>
+<a id="orgc4fb8c1"></a>
 
 # Installation
 
@@ -57,7 +58,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org9839d2c"></a>
+<a id="org3f4d281"></a>
 
 # Configurations (Internal)
 
@@ -67,7 +68,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org6141f96"></a>
+<a id="org58e0a9e"></a>
 
 ## Meta
 
@@ -138,7 +139,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="orge8d2cd4"></a>
+<a id="org6cf1692"></a>
 
 ## Base defaults
 
@@ -212,7 +213,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgcce6caa"></a>
+<a id="org691bee2"></a>
 
 ## Functions
 
@@ -440,7 +441,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org6b6c175"></a>
+<a id="org69eda9c"></a>
 
 ## Org Mode
 
@@ -462,7 +463,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgdb84e8a"></a>
+<a id="orgc30f61f"></a>
 
 ## Mode hooks
 
@@ -481,7 +482,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org471f98d"></a>
+<a id="org9d97b6d"></a>
 
 ## Keybindings
 
@@ -514,7 +515,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-defun 'disabled nil)
 
 
-<a id="orgfc3933f"></a>
+<a id="org10361f8"></a>
 
 # Configurations (External)
 
@@ -523,7 +524,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org265a4e8"></a>
+<a id="org18f70b2"></a>
 
 ## Packages
 
@@ -604,7 +605,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="org147f943"></a>
+<a id="org914f12b"></a>
 
 ## All the icons
 
@@ -613,7 +614,7 @@ This package provides icons for neo-tree
     (require 'all-the-icons)
 
 
-<a id="org233a351"></a>
+<a id="orgc5e0051"></a>
 
 ## Auto Complete
 
@@ -636,7 +637,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="orgd6f7374"></a>
+<a id="org79c114b"></a>
 
 ## Docker
 
@@ -650,7 +651,7 @@ map the high level menu for easy access.
         (my-docker-setup))
 
 
-<a id="org6c65561"></a>
+<a id="org0954fef"></a>
 
 ## Elpy
 
@@ -700,7 +701,19 @@ create pipenv environment in the current directory from emacs
       (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
 
 
-<a id="org35c47c5"></a>
+<a id="org147a32e"></a>
+
+## Flymake
+
+Here is where I can configure extra addons for flymake.
+
+This enables integration with [shellcheck](https://www.shellcheck.net/).
+
+    (add-hook 'sh-mode-hook 'flymake-mode)
+    (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+
+
+<a id="orgb09d0c4"></a>
 
 ## Helm
 
@@ -788,7 +801,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org18243b6"></a>
+<a id="org7d462d7"></a>
 
 ## Helm Tramp
 
@@ -804,7 +817,7 @@ Enable the helm tramp config if it is installed
         (my-helm-tramp-setup))
 
 
-<a id="org1ba8e14"></a>
+<a id="org69e19ae"></a>
 
 ## Magit
 
@@ -819,7 +832,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org46b2713"></a>
+<a id="org37a606d"></a>
 
 ## Paredit
 
@@ -843,7 +856,7 @@ If paredit is installed enable the config defined above
         (my-paredit-setup))
 
 
-<a id="org90e1b7c"></a>
+<a id="org300432e"></a>
 
 ## Projectile
 
@@ -864,7 +877,7 @@ efficiently.
         (my-projectile-keybindings))
 
 
-<a id="org429dda5"></a>
+<a id="orgd922965"></a>
 
 ## Neotree
 
@@ -897,7 +910,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orgca12d66"></a>
+<a id="orgd78a859"></a>
 
 ## Themeing
 
@@ -920,7 +933,7 @@ impact, it just make the editor a little nicer to look at.
     		  (org-bullets-mode 1))))
 
 
-<a id="orge17fd91"></a>
+<a id="org0b16a52"></a>
 
 # Systemd unit file
 
@@ -948,7 +961,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org828bfdb"></a>
+<a id="org9b9863e"></a>
 
 # Nautilus Scripts
 
@@ -962,7 +975,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org1de6bc2"></a>
+<a id="orgca81e8c"></a>
 
 # Licensing
 
