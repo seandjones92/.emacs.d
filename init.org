@@ -492,6 +492,8 @@ This is where I define my custom keybindings.
   (define-key dired-mode-map [?%?f] 'find-name-dired)
   (define-key dired-mode-map ")" 'cycle-dired-switches)
   (define-key org-mode-map (kbd "C-}") 'my-org-screenshot)
+  (require 'flymake)
+  (define-key flymake-mode-map [f6] 'flymake-show-diagnostics-buffer)
 #+END_SRC
 
 Enable keybindings that are disabled by default:
@@ -677,13 +679,15 @@ create pipenv environment in the current directory from emacs
     (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
 #+END_SRC
 
-** Flymake
-Here is where I can configure extra addons for flymake.
-
+** Flymake Shellcheck
 This enables integration with [[https://www.shellcheck.net/][shellcheck]].
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'sh-mode-hook 'flymake-mode)
-  (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+  (defun my-flymake-shellcheck-setup ()
+    (add-hook 'sh-mode-hook 'flymake-mode)
+    (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+
+  (if (require 'flymake-shellcheck)
+      (my-flymake-shellcheck-setup))
 #+END_SRC
 
 ** Helm

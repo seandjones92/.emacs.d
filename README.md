@@ -1,36 +1,36 @@
 
 # Table of Contents
 
-1.  [About](#org860c130)
-2.  [Installation](#orgc4fb8c1)
-3.  [Configurations (Internal)](#org3f4d281)
-    1.  [Meta](#org58e0a9e)
-    2.  [Base defaults](#org6cf1692)
-    3.  [Functions](#org691bee2)
-    4.  [Org Mode](#org69eda9c)
-    5.  [Mode hooks](#orgc30f61f)
-    6.  [Keybindings](#org9d97b6d)
-4.  [Configurations (External)](#org10361f8)
-    1.  [Packages](#org18f70b2)
-    2.  [All the icons](#org914f12b)
-    3.  [Auto Complete](#orgc5e0051)
-    4.  [Docker](#org79c114b)
-    5.  [Elpy](#org0954fef)
-    6.  [Flymake](#org147a32e)
-    7.  [Helm](#orgb09d0c4)
-    8.  [Helm Tramp](#org7d462d7)
-    9.  [Magit](#org69e19ae)
-    10. [Paredit](#org37a606d)
-    11. [Projectile](#org300432e)
-    12. [Neotree](#orgd922965)
-    13. [Themeing](#orgd78a859)
-5.  [Systemd unit file](#org0b16a52)
-6.  [Nautilus Scripts](#org9b9863e)
-7.  [Licensing](#orgca81e8c)
+1.  [About](#org31e54b0)
+2.  [Installation](#org8ae9843)
+3.  [Configurations (Internal)](#org82ee744)
+    1.  [Meta](#org68a42dc)
+    2.  [Base defaults](#org5932422)
+    3.  [Functions](#org42f9610)
+    4.  [Org Mode](#org9791ed3)
+    5.  [Mode hooks](#org792415b)
+    6.  [Keybindings](#org1bb3a2b)
+4.  [Configurations (External)](#org27efec7)
+    1.  [Packages](#org093fc56)
+    2.  [All the icons](#org7efbc51)
+    3.  [Auto Complete](#org70a42aa)
+    4.  [Docker](#orgd1e3062)
+    5.  [Elpy](#org0f765e2)
+    6.  [Flymake Shellcheck](#org7878046)
+    7.  [Helm](#org50422ea)
+    8.  [Helm Tramp](#orgb19d218)
+    9.  [Magit](#org0609611)
+    10. [Paredit](#orgfbc1745)
+    11. [Projectile](#org7ed6f7c)
+    12. [Neotree](#orgcc89a6f)
+    13. [Themeing](#orgfe413f6)
+5.  [Systemd unit file](#org4be08a1)
+6.  [Nautilus Scripts](#org21ead45)
+7.  [Licensing](#org8501a42)
 
 
 
-<a id="org860c130"></a>
+<a id="org31e54b0"></a>
 
 # About
 
@@ -39,7 +39,7 @@ that the configuration should serve as it's own plain english
 documentation.
 
 
-<a id="orgc4fb8c1"></a>
+<a id="org8ae9843"></a>
 
 # Installation
 
@@ -58,7 +58,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org3f4d281"></a>
+<a id="org82ee744"></a>
 
 # Configurations (Internal)
 
@@ -68,7 +68,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org58e0a9e"></a>
+<a id="org68a42dc"></a>
 
 ## Meta
 
@@ -139,7 +139,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org6cf1692"></a>
+<a id="org5932422"></a>
 
 ## Base defaults
 
@@ -213,7 +213,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="org691bee2"></a>
+<a id="org42f9610"></a>
 
 ## Functions
 
@@ -441,7 +441,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org69eda9c"></a>
+<a id="org9791ed3"></a>
 
 ## Org Mode
 
@@ -463,7 +463,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgc30f61f"></a>
+<a id="org792415b"></a>
 
 ## Mode hooks
 
@@ -482,7 +482,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="org9d97b6d"></a>
+<a id="org1bb3a2b"></a>
 
 ## Keybindings
 
@@ -507,6 +507,8 @@ This is where I define my custom keybindings.
     (define-key dired-mode-map [?%?f] 'find-name-dired)
     (define-key dired-mode-map ")" 'cycle-dired-switches)
     (define-key org-mode-map (kbd "C-}") 'my-org-screenshot)
+    (require 'flymake)
+    (define-key flymake-mode-map [f6] 'flymake-show-diagnostics-buffer)
 
 Enable keybindings that are disabled by default:
 
@@ -515,7 +517,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-defun 'disabled nil)
 
 
-<a id="org10361f8"></a>
+<a id="org27efec7"></a>
 
 # Configurations (External)
 
@@ -524,7 +526,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org18f70b2"></a>
+<a id="org093fc56"></a>
 
 ## Packages
 
@@ -605,7 +607,7 @@ so if there is no internet there should be no issue.
           (auto-package-mgmt)))
 
 
-<a id="org914f12b"></a>
+<a id="org7efbc51"></a>
 
 ## All the icons
 
@@ -614,7 +616,7 @@ This package provides icons for neo-tree
     (require 'all-the-icons)
 
 
-<a id="orgc5e0051"></a>
+<a id="org70a42aa"></a>
 
 ## Auto Complete
 
@@ -637,7 +639,7 @@ needs to be set or the completion framework won't kick in.
         (my-autocomplete-setup))
 
 
-<a id="org79c114b"></a>
+<a id="orgd1e3062"></a>
 
 ## Docker
 
@@ -651,7 +653,7 @@ map the high level menu for easy access.
         (my-docker-setup))
 
 
-<a id="org0954fef"></a>
+<a id="org0f765e2"></a>
 
 ## Elpy
 
@@ -701,19 +703,21 @@ create pipenv environment in the current directory from emacs
       (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
 
 
-<a id="org147a32e"></a>
+<a id="org7878046"></a>
 
-## Flymake
-
-Here is where I can configure extra addons for flymake.
+## Flymake Shellcheck
 
 This enables integration with [shellcheck](https://www.shellcheck.net/).
 
-    (add-hook 'sh-mode-hook 'flymake-mode)
-    (add-hook 'sh-mode-hook 'flymake-shellcheck-load)
+    (defun my-flymake-shellcheck-setup ()
+      (add-hook 'sh-mode-hook 'flymake-mode)
+      (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
+    
+    (if (require 'flymake-shellcheck)
+        (my-flymake-shellcheck-setup))
 
 
-<a id="orgb09d0c4"></a>
+<a id="org50422ea"></a>
 
 ## Helm
 
@@ -801,7 +805,7 @@ of these settings.
         (my-helm-setup))
 
 
-<a id="org7d462d7"></a>
+<a id="orgb19d218"></a>
 
 ## Helm Tramp
 
@@ -817,7 +821,7 @@ Enable the helm tramp config if it is installed
         (my-helm-tramp-setup))
 
 
-<a id="org69e19ae"></a>
+<a id="org0609611"></a>
 
 ## Magit
 
@@ -832,7 +836,7 @@ with Emacs. It's the most robust Git interface out there.
         (my-magit-setup))
 
 
-<a id="org37a606d"></a>
+<a id="orgfbc1745"></a>
 
 ## Paredit
 
@@ -856,7 +860,7 @@ If paredit is installed enable the config defined above
         (my-paredit-setup))
 
 
-<a id="org300432e"></a>
+<a id="org7ed6f7c"></a>
 
 ## Projectile
 
@@ -877,7 +881,7 @@ efficiently.
         (my-projectile-keybindings))
 
 
-<a id="orgd922965"></a>
+<a id="orgcc89a6f"></a>
 
 ## Neotree
 
@@ -910,7 +914,7 @@ installed. This is accomplished by `M-x all-the-icons-install-fonts`.
         (my-neotree-setup))
 
 
-<a id="orgd78a859"></a>
+<a id="orgfe413f6"></a>
 
 ## Themeing
 
@@ -933,7 +937,7 @@ impact, it just make the editor a little nicer to look at.
     		  (org-bullets-mode 1))))
 
 
-<a id="org0b16a52"></a>
+<a id="org4be08a1"></a>
 
 # Systemd unit file
 
@@ -961,7 +965,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org9b9863e"></a>
+<a id="org21ead45"></a>
 
 # Nautilus Scripts
 
@@ -975,7 +979,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="orgca81e8c"></a>
+<a id="org8501a42"></a>
 
 # Licensing
 
