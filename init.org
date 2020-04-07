@@ -550,7 +550,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      magit
 		      markdown-mode
 		      ;; moe-theme
-		      ;; neotree
+		      neotree
 		      nord-theme
 		      org-bullets
 		      paredit
@@ -587,7 +587,7 @@ so if there is no internet there should be no issue.
         (auto-package-mgmt)))
 #+END_SRC
 
-** COMMENT All the icons
+** All the icons
 This package provides icons for neo-tree
 #+BEGIN_SRC emacs-lisp
   (require 'all-the-icons)
@@ -832,7 +832,7 @@ efficiently.
       (my-projectile-keybindings))
 #+END_SRC
 
-** COMMENT Neotree
+** Neotree
 Adds a file tree to the left hand side, like in most IDEs. This only
 works if you are in a project.
 
