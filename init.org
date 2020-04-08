@@ -535,7 +535,7 @@ installed to take full advantage of this configuration. The [[https://github.com
 Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 #+BEGIN_SRC emacs-lisp
   (setq my-packages '(ag
-		      all-the-icons
+		      ;; all-the-icons
 		      auto-complete
 		      decide
 		      docker
@@ -556,7 +556,7 @@ Searcher]] should be installed to use the =ag= and =helm-ag= packages.
 		      ;; moe-theme
 		      neotree
 		      nord-theme
-		      org-bullets
+		      ;; org-bullets
 		      paredit
 		      pipenv
 		      projectile
@@ -591,7 +591,7 @@ so if there is no internet there should be no issue.
         (auto-package-mgmt)))
 #+END_SRC
 
-** All the icons
+** COMMENT All the icons
 This package provides icons for neo-tree
 #+BEGIN_SRC emacs-lisp
   (require 'all-the-icons)
@@ -869,7 +869,7 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 
   (defun my-neotree-setup ()
     (global-set-key [f8] 'neotree-project-dir)
-    (setq neo-theme 'icons)
+    (setq neo-theme 'arrow)
     (setq projectile-switch-project-action 'neotree-projectile-action)
     (setq neo-window-width 30))
 
@@ -878,6 +878,15 @@ installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 #+END_SRC
 
 ** Themeing
+
+*** COMMENT Org Bullets
+Adds GUI like bullet points to org mode
+#+BEGIN_SRC emacs-lisp
+    (if (require 'org-bullets)
+	  (add-hook 'org-mode-hook
+		    (lambda ()
+		      (org-bullets-mode 1))))
+#+END_SRC
 
 *** [[https://www.nordtheme.com/][Nord theme]]
 Here we do some themeing of emacs. None of this has any functional
@@ -889,11 +898,6 @@ impact, it just make the editor a little nicer to look at.
 
   (if (require 'nord-theme)
       (my-nord-theme-setup))
-
-  (if (require 'org-bullets)
-	(add-hook 'org-mode-hook
-		  (lambda ()
-		    (org-bullets-mode 1))))
 #+END_SRC
 
 *** COMMENT Moe Theme
