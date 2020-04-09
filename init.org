@@ -850,9 +850,6 @@ efficiently.
 ** Neotree
 Adds a file tree to the left hand side, like in most IDEs. This only
 works if you are in a project.
-
-In order for this to look right the fonts for =all-the-icons= must be
-installed. This is accomplished by =M-x all-the-icons-install-fonts=.
 #+BEGIN_SRC emacs-lisp
   (defun neotree-project-dir ()
     "Open NeoTree using the git root."
