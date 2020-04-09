@@ -866,6 +866,7 @@ works if you are in a project.
 
   (defun my-neotree-setup ()
     (global-set-key [f8] 'neotree-project-dir)
+    (setq neo-autorefresh nil)
     (setq neo-theme 'arrow)
     (setq projectile-switch-project-action 'neotree-projectile-action)
     (setq neo-window-width 30))
