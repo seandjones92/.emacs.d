@@ -540,6 +540,7 @@ Once installed we can start up =use-package=.
 #+BEGIN_SRC emacs-lisp
   (eval-when-compile
     (require 'use-package))
+  (require'bind-key)
 #+END_SRC
 
 ** [[https://github.com/Wilfred/ag.el][ag]]
@@ -579,8 +580,15 @@ work.
 			       ac-source-dictionary)))
 #+END_SRC
 
-** decide
-** docker
+** [[https://github.com/Silex/docker.el][docker]]
+Supports docker containers, images, volumes, networks, docker-machine
+and docker-compose.
+#+BEGIN_SRC emacs-lisp
+  (use-package docker
+    :ensure t
+    :bind ("C-c d" . docker))
+#+END_SRC
+
 ** docker-compose-mode
 ** docker-tramp
 ** dockerfile-mode
