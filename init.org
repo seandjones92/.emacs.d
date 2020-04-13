@@ -717,14 +717,40 @@ as an Emacs package.
 	   ("C-x M-g" . magit-dispatch-popup)))
 #+END_SRC
 
-** markdown-mode
-** neotree
+** [[https://github.com/defunkt/markdown-mode][markdown-mode]]
+markdown-mode is a major mode for editing Markdown-formatted text.
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t)
+#+END_SRC
+
+** [[https://github.com/jaypei/emacs-neotree][neotree]]
+A Emacs tree plugin like NerdTree for Vim.
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree
+    :ensure t
+    :bind ([f8] . neotree-toggle)
+    :custom
+    (neo-autorefresh nil)
+    (neo-theme 'icons)
+    (projectile-switch-project-action 'neotree-projectile-action))
+#+END_SRC
+
 ** nord-theme
 ** paredit
 ** pipenv
-** projectile
-** vlf
+** [[https://github.com/bbatsov/projectile][projectile]]
+Projectile is a project interaction library for Emacs. Its goal is to
+provide a nice set of features operating on a project level without
+introducing external dependencies (when feasible).
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-discover-projects-in-directory default-directory))
+#+END_SRC
 
+** vlf
 
 ** COMMENT OLD CONFIG
 *** Packages
