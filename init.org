@@ -775,7 +775,9 @@ A fancy and fast mode-line inspired by minimalism design.
 #+BEGIN_SRC emacs-lisp
   (use-package doom-modeline
     :ensure t
-    :init (doom-modeline-mode 1))
+    :init (doom-modeline-mode 1)
+    :config
+    (display-battery-mode 1))
 #+END_SRC
 
 ** COMMENT OLD CONFIG
