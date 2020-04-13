@@ -161,8 +161,7 @@ Enable battery mode. This is good for when you set emacs to full screen so your 
 
 For me this allows for better handling of parenthesis and quotes. As
 you type =(= a matching =)= is also created. The same goes for
-quotes. It also adds some inteligent handling. Further in the
-configuration we use =paredit=, which takes things a step further.
+quotes. It also adds some inteligent handling.
 #+BEGIN_SRC emacs-lisp
   (electric-pair-mode 1)
   (require 'paren)
