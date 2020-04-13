@@ -475,7 +475,6 @@ This is where I define my custom keybindings.
   (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
   (global-set-key (kbd "C-c k") 'kill-this-buffer)
   (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
-  (global-set-key (kbd "C-c p") 'helm-projectile)
   (global-set-key (kbd "C-+") 'calc)
   (global-set-key (kbd "C-c S") 'toggle-truncate-lines)
   (global-set-key (kbd "C-!") 'become-root)
