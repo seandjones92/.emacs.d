@@ -674,7 +674,8 @@ selections.
     (helm-autoresize-mode 1)
     (helm-autoresize-max-height 65)
     :config
-    (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
+    (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
+    (helm-mode 1))
 
   (use-package helm-files
     :bind (:map helm-find-files-map
