@@ -759,6 +759,20 @@ View Large Files in Emacs
     :ensure t)
 #+END_SRC
 
+** [[https://github.com/hlissner/emacs-doom-themes][doom-themes]]
+An opinionated pack of modern color-themes
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-themes
+    :ensure t
+    :config
+    (setq doom-themes-enable-bold t
+	  doom-themes-enable-italic t)
+    (load-theme 'doom-one t)
+    (doom-themes-visual-bell-config)
+    (doom-themes-neotree-config)
+    (doom-themes-org-config))
+#+END_SRC
+
 ** COMMENT OLD CONFIG
 *** Packages
  This section goes over the configuration of package management. To
