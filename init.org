@@ -527,7 +527,7 @@ and get the latest package metadata from the repos.
   (unless package-archive-contents (package-refresh-contents))
 #+END_SRC
 
-** [[https://github.com/jwiegley/use-package#installing-use-package][use-package]]
+** [[https://github.com/jwiegley/use-package][use-package]]
 We need to configure =use-package= first since it will assist us in
 configuring the remaining packages in the config.
 
