@@ -770,6 +770,14 @@ An opinionated pack of modern color-themes
     (doom-themes-org-config))
 #+END_SRC
 
+** [[https://github.com/seagle0128/doom-modeline][doom-modeline]]
+A fancy and fast mode-line inspired by minimalism design.
+#+BEGIN_SRC emacs-lisp
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
+#+END_SRC
+
 ** COMMENT OLD CONFIG
 *** Packages
  This section goes over the configuration of package management. To
