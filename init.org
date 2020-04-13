@@ -599,11 +599,91 @@ directly (C-c C-b) from the buffer.
     (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 #+END_SRC
 
-** elpy
-** flymake-python-pyflakes
-** flymake-shellcheck
-** gist
-** helm
+** [[https://github.com/jorgenschaefer/elpy][elpy]]
+Elpy is an Emacs package to bring powerful Python editing to Emacs. It
+combines and configures a number of other packages, both written in
+Emacs Lisp as well as Python. Elpy is fully documented at [[https://elpy.readthedocs.io/en/latest/index.html][Readthedocs]].
+#+BEGIN_SRC emacs-lisp
+  (use-package elpy
+    :ensure t
+    :bind (:map elpy-mode-map
+		("C-." . elpy-goto-definition-other-window))
+    :custom
+    (elpy-rpc-python-command "python3")
+    (python-shell-interpreter "python3")
+    :config
+    (elpy-enable)
+    (global-company-mode)
+    (yas-global-mode)
+    (setenv "WORKON_HOME"
+	    (concat (getenv "HOME") "/.local/share/virtualenvs"))
+    (defun pyvenv-create ()
+      "Use pipenv to create a new virtual environment at the current directory"
+      (interactive)
+      (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out")))
+#+END_SRC
+
+** [[https://github.com/purcell/flymake-python-pyflakes][flymake-python-pyflakes]]
+An Emacs flymake handler for syntax-checking Python source code using
+pyflakes or flake8.
+#+BEGIN_SRC emacs-lisp
+  (use-package flymake-python-pyflakes
+    :ensure t
+    :hook python-mode
+    :custom
+    (flymake-python-pyflakes-executable "flake8"))
+#+END_SRC
+
+** [[https://github.com/federicotdn/flymake-shellcheck][flymake-shellcheck]]
+An Emacs (26+) Flymake handler for bash/sh scripts, using
+ShellCheck. Installing Flymake is not necessary as it is included with
+Emacs itself.
+#+BEGIN_SRC emacs-lisp
+  (use-package flymake-shellcheck
+    :commands flymake-shellcheck-load
+    :hook sh-mode)
+#+END_SRC
+
+** [[https://github.com/emacs-helm/helm][helm]]
+Helm is an Emacs framework for incremental completions and narrowing
+selections.
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :ensure t
+    :bind (("M-x" . helm-M-x)
+	   ("C-x C-f" . helm-find-files)
+	   ("C-x x" . helm-mini)
+	   ("C-x C-b" . helm-buffers-list)
+	   ("C-c h o" . helm-occur)
+	   ("M-y" . helm-show-kill-ring))
+    :custom
+    (helm-M-x-fuzzy-match t)
+    (helm-buffers-fuzzy-matching t)
+    (helm-recentf-fuzzy-match t)
+    (helm-semantic-fuzzy-match t)
+    (helm-imenu-fuzzy-match t)
+    (helm-apropos-fuzzy-match t)
+    (helm-lisp-fuzzy-completion t)
+    (helm-mode-fuzzy-match t)
+    (helm-completion-in-region-fuzzy-match t)
+    (helm-net-prefer-curl t)
+    (helm-split-window-inside-p t)
+    (helm-move-to-line-cycle-in-source t)
+    (helm-ff-search-library-in-sexp t)
+    (helm-scroll-amount 8)
+    (helm-ff-file-name-history-recentf t)
+    (helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f")
+    (helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")
+    (helm-autoresize-mode 1)
+    (helm-autoresize-max-height 65)
+    :config
+    (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages))
+
+  (use-package helm-files
+    :bind (:map helm-find-files-map
+		([tab] . helm-execute-persistent-action)))
+#+END_SRC
+
 ** helm-ag
 ** helm-projectile
 ** helm-tramp
