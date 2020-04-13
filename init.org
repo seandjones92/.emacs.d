@@ -693,7 +693,8 @@ Helm UI for Projectile
 #+BEGIN_SRC emacs-lisp
   (use-package helm-projectile
     :ensure t
-    :bind ("C-c a" . helm-projectile-ag))
+    :bind (("C-c a" . helm-projectile-ag)
+	   ("C-c p" . helm-projectile)))
 #+END_SRC
 
 ** [[https://github.com/masasam/emacs-helm-tramp][helm-tramp]]
