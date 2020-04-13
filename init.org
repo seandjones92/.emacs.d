@@ -616,11 +616,8 @@ Emacs Lisp as well as Python. Elpy is fully documented at [[https://elpy.readthe
     (global-company-mode)
     (yas-global-mode)
     (setenv "WORKON_HOME"
-	    (concat (getenv "HOME") "/.local/share/virtualenvs"))
-    (defun pyvenv-create ()
-      "Use pipenv to create a new virtual environment at the current directory"
-      (interactive)
-      (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out")))
+	    (concat (getenv "HOME") "/.local/share/virtualenvs")))
+
 #+END_SRC
 
 ** [[https://github.com/purcell/flymake-python-pyflakes][flymake-python-pyflakes]]
@@ -736,9 +733,13 @@ A Emacs tree plugin like NerdTree for Vim.
     (projectile-switch-project-action 'neotree-projectile-action))
 #+END_SRC
 
-** nord-theme
-** paredit
-** pipenv
+** [[https://github.com/pwalsh/pipenv.el][pipenv]]
+A Pipenv porcelain inside Emacs.
+#+BEGIN_SRC emacs-lisp
+  (use-package pipenv
+    :ensure t)
+#+END_SRC
+
 ** [[https://github.com/bbatsov/projectile][projectile]]
 Projectile is a project interaction library for Emacs. Its goal is to
 provide a nice set of features operating on a project level without
@@ -750,7 +751,12 @@ introducing external dependencies (when feasible).
     (projectile-discover-projects-in-directory default-directory))
 #+END_SRC
 
-** vlf
+** [[https://github.com/m00natic/vlfi][vlf]]
+View Large Files in Emacs
+#+BEGIN_SRC emacs-lisp
+  (use-package vlf
+    :ensure t)
+#+END_SRC
 
 ** COMMENT OLD CONFIG
 *** Packages
