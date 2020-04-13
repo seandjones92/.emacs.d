@@ -750,7 +750,8 @@ introducing external dependencies (when feasible).
   (use-package projectile
     :ensure t
     :config
-    (projectile-discover-projects-in-directory default-directory))
+    ;; (projectile-discover-projects-in-directory default-directory))
+    (projectile-discover-projects-in-directory "~/Code"))
 #+END_SRC
 
 ** [[https://github.com/m00natic/vlfi][vlf]]
