@@ -1,35 +1,50 @@
 
 # Table of Contents
 
-1.  [About](#org77c8380)
-2.  [Installation](#orgdfa76ce)
-3.  [Configurations (Internal)](#org504ab65)
-    1.  [Meta](#org18d49f8)
-    2.  [Base defaults](#orgd08f091)
-    3.  [Functions](#orgd3921ab)
-    4.  [Org Mode](#org11ace5a)
-    5.  [Mode hooks](#orgf7ff789)
-    6.  [Keybindings](#orgcc9faeb)
-4.  [Configurations (External)](#orgc9d5e7c)
-    1.  [Packages](#orgbeb5171)
-    2.  [Auto Complete](#org3f024fc)
-    3.  [Docker](#org477f889)
-    4.  [Elpy](#orgd315832)
-    5.  [Flymake Shellcheck](#orgd857bce)
-    6.  [Helm](#org3c20b83)
-    7.  [Helm Tramp](#org3ce7503)
-    8.  [Magit](#org7117b75)
-    9.  [Paredit](#orgd43d629)
-    10. [Projectile](#orge816189)
-    11. [Neotree](#org387e954)
-    12. [Themeing](#orga74ef21)
-5.  [Systemd unit file](#org624a9c5)
-6.  [Nautilus Scripts](#org8ffa0d8)
-7.  [Licensing](#org1fb39f5)
+1.  [About](#org58dd692)
+2.  [Installation](#org804bd74)
+3.  [Base Config](#orgb31a07d)
+    1.  [Meta](#org0a9d6b3)
+    2.  [Base defaults](#orgd041cc7)
+    3.  [Functions](#org2074618)
+    4.  [Org Mode](#org8da861b)
+    5.  [Mode hooks](#org9c1573c)
+    6.  [Keybindings](#orgc064a6c)
+4.  [Packages](#org0741e52)
+    1.  [Repositories](#org293f68d)
+    2.  [use-package](#org1590699)
+    3.  [ag](#org7df28bd)
+    4.  [all-the-icons](#orgbadd216)
+    5.  [auto-complete](#orgd3eb8cf)
+    6.  [decide](#orgaa24bbb)
+    7.  [docker](#org18cf88a)
+    8.  [docker-compose-mode](#orgae3f6ce)
+    9.  [docker-tramp](#org482d144)
+    10. [dockerfile-mode](#orge118af1)
+    11. [elpy](#org108e39b)
+    12. [flymake-python-pyflakes](#org9930ea1)
+    13. [flymake-shellcheck](#orgbb663d9)
+    14. [gist](#org07c6cae)
+    15. [helm](#org7244718)
+    16. [helm-ag](#orge7ebee7)
+    17. [helm-projectile](#org114cf9a)
+    18. [helm-tramp](#org68436f2)
+    19. [htmlize](#orgfc9d29a)
+    20. [magit](#org1550602)
+    21. [markdown-mode](#org75a45c0)
+    22. [neotree](#org907b704)
+    23. [nord-theme](#org13f66ce)
+    24. [paredit](#org2f596e0)
+    25. [pipenv](#org9bdd934)
+    26. [projectile](#org51df495)
+    27. [vlf](#org813408f)
+5.  [Systemd unit file](#org6b173e9)
+6.  [Nautilus Scripts](#org379c49d)
+7.  [Licensing](#org63eb37e)
 
 
 
-<a id="org77c8380"></a>
+<a id="org58dd692"></a>
 
 # About
 
@@ -38,7 +53,7 @@ that the configuration should serve as it's own plain english
 documentation.
 
 
-<a id="orgdfa76ce"></a>
+<a id="org804bd74"></a>
 
 # Installation
 
@@ -57,9 +72,9 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org504ab65"></a>
+<a id="orgb31a07d"></a>
 
-# Configurations (Internal)
+# Base Config
 
 This section contains all of the configurations that do not rely on
 external packages. If the configuration cannot be accomplished by a
@@ -67,7 +82,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org18d49f8"></a>
+<a id="org0a9d6b3"></a>
 
 ## Meta
 
@@ -138,7 +153,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="orgd08f091"></a>
+<a id="orgd041cc7"></a>
 
 ## Base defaults
 
@@ -185,8 +200,7 @@ Enable battery mode. This is good for when you set emacs to full screen so your 
 
 For me this allows for better handling of parenthesis and quotes. As
 you type `(` a matching `)` is also created. The same goes for
-quotes. It also adds some inteligent handling. Further in the
-configuration we use `paredit`, which takes things a step further.
+quotes. It also adds some inteligent handling.
 
     (electric-pair-mode 1)
     (require 'paren)
@@ -212,7 +226,7 @@ of the buffer.
     (setq initial-scratch-message ";; Scratch page\n\n")
 
 
-<a id="orgd3921ab"></a>
+<a id="org2074618"></a>
 
 ## Functions
 
@@ -440,7 +454,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="org11ace5a"></a>
+<a id="org8da861b"></a>
 
 ## Org Mode
 
@@ -462,7 +476,7 @@ and pretty.
     (add-hook 'org-mode-hook 'turn-on-font-lock)
 
 
-<a id="orgf7ff789"></a>
+<a id="org9c1573c"></a>
 
 ## Mode hooks
 
@@ -481,7 +495,7 @@ modes.
     (add-hook 'python-mode-hook 'linum-mode)
 
 
-<a id="orgcc9faeb"></a>
+<a id="orgc064a6c"></a>
 
 ## Keybindings
 
@@ -490,7 +504,6 @@ This is where I define my custom keybindings.
     (global-set-key (kbd "C-x C-k") 'smart-buffer-kill)
     (global-set-key (kbd "C-c k") 'kill-this-buffer)
     (global-set-key (kbd "C-x C-s") 'save-buffer-clean)
-    (global-set-key (kbd "C-c p") 'helm-projectile)
     (global-set-key (kbd "C-+") 'calc)
     (global-set-key (kbd "C-c S") 'toggle-truncate-lines)
     (global-set-key (kbd "C-!") 'become-root)
@@ -516,22 +529,21 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-defun 'disabled nil)
 
 
-<a id="orgc9d5e7c"></a>
+<a id="org0741e52"></a>
 
-# Configurations (External)
+# Packages
 
 Configurations after this point rely on external packages. Anything
 added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="orgbeb5171"></a>
+<a id="org293f68d"></a>
 
-## Packages
+## Repositories
 
-This section goes over the configuration of package management. To
-start this off we need to define a few things. First we will configure
-the repositories we wish to use.
+Here we initialize the Emacs package management system and configure
+our package repositories.
 
     (require 'package)
     (setq package-archives
@@ -542,386 +554,171 @@ the repositories we wish to use.
           '(("melpa stable" . 10)
     	("melpa"        . 0)))
 
-Next we define a function to determine if we have access to the
-internet.
-
-    (defun internet-up ()
-      (call-process "ping" nil nil nil "-c" "1" "www.google.com"))
-
-Next we define a list containing all of the packages that should be
-installed to take full advantage of this configuration. The [Silver
-Searcher](https://github.com/ggreer/the_silver_searcher) should be installed to use the `ag` and `helm-ag` packages.
-
-    (setq my-packages '(ag
-    		    ;; all-the-icons
-    		    auto-complete
-    		    decide
-    		    docker
-    		    docker-compose-mode
-    		    docker-tramp
-    		    dockerfile-mode
-    		    elpy
-    		    flymake-python-pyflakes
-    		    flymake-shellcheck
-    		    gist
-    		    helm
-    		    helm-ag
-    		    helm-projectile
-    		    helm-tramp
-    		    htmlize
-    		    magit
-    		    markdown-mode
-    		    ;; moe-theme
-    		    neotree
-    		    nord-theme
-    		    ;; org-bullets
-    		    paredit
-    		    pipenv
-    		    projectile
-    		    vlf))
-
-The next function defined is to loop through the provided list of
-packages and to check if they are present. If not, the package is
-installed:
-
-    (defun auto-package-mgmt ()
-      "Install my packages"
-      (interactive)
-      (package-initialize)
-      (package-refresh-contents)
-      (dolist (package my-packages)
-        (if (ignore-errors (require package))
-    	(message "%s is already installed..." package)
-          (package-install package))))
-
-To tie it all together we bring in the logic. If this is the first
-launch of Emacs and we have access to the internet, loop through the
-list of packages to ensure they are installed. If we do not have
-access to the internet, or if this is not Emacs first launch then
-nothing is done. Package dependent configuration is handled gracefully
-so if there is no internet there should be no issue.
-
-    (if (file-directory-p (concat user-emacs-directory "elpa"))
-        (package-initialize)
-      (if (internet-up)
-          (auto-package-mgmt)))
-
-
-<a id="org3f024fc"></a>
-
-## Auto Complete
-
-Here is where auto complete is configured. The `ac-sources` variable
-needs to be set or the completion framework won't kick in.
-
-    (defun my-autocomplete-setup ()
-      (ac-config-default)
-      (setq-default ac-sources '(ac-source-filename
-    			     ac-source-functions
-    			     ac-source-yasnippet
-    			     ac-source-variables
-    			     ac-source-symbols
-    			     ac-source-features
-    			     ac-source-abbrev
-    			     ac-source-words-in-same-mode-buffers
-    			     ac-source-dictionary)))
-    
-    (if (require 'auto-complete-config)
-        (my-autocomplete-setup))
-
-
-<a id="org477f889"></a>
-
-## Docker
-
-The default configuration for docker is fine for me. I just want to
-map the high level menu for easy access.
-
-    (defun my-docker-setup ()
-      (global-set-key (kbd "C-c d") 'docker))
-    
-    (if (require 'docker)
-        (my-docker-setup))
-
+One the repositories are installed let's initialize package management
+and get the latest package metadata from the repos.
 
-<a id="orgd315832"></a>
+    (package-initialize)
+    (unless package-archive-contents (package-refresh-contents))
 
-## Elpy
 
-[Elpy](https://github.com/jorgenschaefer/elpy) provides some python IDE features.
+<a id="org1590699"></a>
 
-This ensures that Elpy can find virtual environments created by `pipenv`.
+## [use-package](https://github.com/jwiegley/use-package#installing-use-package)
 
-    (setenv "WORKON_HOME"
-    	(concat (getenv "HOME") "/.local/share/virtualenvs"))
+We need to configure `use-package` first since it will assist us in
+configuring the remaining packages in the config.
 
-The section below ensures that it uses Python3 by default.
+First we need to ensure that `use-package` is installed.
 
-    (defun my-elpy-variables ()
-      (setq elpy-rpc-python-command "python3")
-      (setq python-shell-interpreter "python3"))
+    (package-install 'use-package)
 
-These things need to be enabled for elpy to work properly
+Once installed we can start up `use-package`.
 
-    (defun my-elpy-prereqs ()
-      (elpy-enable)
-      (global-company-mode)
-      (yas-global-mode))
-
-Set custom elpy keybindings
+    (eval-when-compile
+      (require 'use-package))
 
-    (defun my-elpy-keybindings ()
-      (define-key-after elpy-mode-map (kbd "C-.") 'elpy-goto-definition-other-window))
-
-Tie the two functions above together and enable the elpy config if the
-package is installed
-
-    (defun my-elpy-setup ()
-      (my-elpy-variables)
-      (my-elpy-prereqs)
-      (my-elpy-keybindings))
-    
-    (if (require 'elpy)
-        (my-elpy-setup))
-
-TODO: Find a better way to do this
-create pipenv environment in the current directory from emacs
-
-    (defun pyvenv-create ()
-      "Use pipenv to create a new virtual environment at the current
-      directory"
-      (interactive)
-      (async-shell-command "pipenv install --dev flake8" "pyvenv-create-out"))
-
-
-<a id="orgd857bce"></a>
-
-## Flymake Shellcheck
 
-This enables integration with [shellcheck](https://www.shellcheck.net/).
+<a id="org7df28bd"></a>
 
-    (defun my-flymake-shellcheck-setup ()
-      (add-hook 'sh-mode-hook 'flymake-mode)
-      (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
-    
-    (if (require 'flymake-shellcheck)
-        (my-flymake-shellcheck-setup))
+## [ag](https://github.com/Wilfred/ag.el)
 
+Ag.el allows you to search using ag from inside Emacs. You can filter by file type, edit results inline, or find files.
 
-<a id="org3c20b83"></a>
+    (use-package ag
+      :ensure t)
 
-## Helm
 
-[Helm](https://github.com/emacs-helm/helm) is an Emacs framework for incremental completions and narrowing
-selections. It's a much better way to interact with Emacs. I've broken
-it out into smaller chunks so I can better explain what's going on.
+<a id="orgbadd216"></a>
 
-This section enables fuzzy finding in almost everything Helm
-does. This helps to really speed up interaction with emacs since you
-can just type a couple partially completed words to get full phrases
-instead of spelling everything out.
+## [all-the-icons](https://github.com/domtronn/all-the-icons.el)
 
-    (defun my-helm-fuzzy-settings ()
-      (setq helm-M-x-fuzzy-match t
-    	helm-buffers-fuzzy-matching t
-    	helm-recentf-fuzzy-match t
-    	helm-semantic-fuzzy-match t
-    	helm-imenu-fuzzy-match t
-    	helm-apropos-fuzzy-match t
-    	helm-lisp-fuzzy-completion t
-    	helm-mode-fuzzy-match t
-    	helm-completion-in-region-fuzzy-match t))
+A utility package to collect various Icon Fonts and propertize them within Emacs.
 
-This part is where keybindings relevant to Helm are defined. The one
-I've found to be most useful is `helm-mini` which is activated with
-`C-x x`. This will show you currently open buffers and recent files.
+    (use-package all-the-icons
+      :ensure t)
 
-    (defun my-helm-keybindings ()
-      (global-set-key (kbd "C-c h") 'helm-command-prefix)
-      (global-unset-key (kbd "C-x c"))
-      (global-set-key (kbd "M-x") 'helm-M-x)
-      (global-set-key (kbd "M-y") 'helm-show-kill-ring)
-      (global-set-key (kbd "C-x x") 'helm-mini)
-      (global-set-key (kbd "C-x C-f") 'helm-find-files)
-      (global-set-key (kbd "C-c h o") 'helm-occur)
-      (global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-      (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action)
-      (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-      (define-key helm-map (kbd "C-z") 'helm-select-action))
 
-This section has some more miscellaneous settings. In all honesty I
-need to research them a bit more to accuratly describe what each of
-these does.
+<a id="orgd3eb8cf"></a>
 
-    (defun my-helm-misc ()
-      (add-to-list 'helm-sources-using-default-as-input 'helm-source-man-pages)
-    
-      (when (executable-find "curl")
-        (setq helm-net-prefer-curl t))
-    
-      (when (executable-find "ack-grep")
-        (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-    	  helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f"))
-    
-      (setq helm-split-window-inside-p t
-    	helm-move-to-line-cycle-in-source t
-    	helm-ff-search-library-in-sexp t
-    	helm-scroll-amount 8
-    	helm-ff-file-name-history-recentf t))
+## [auto-complete](https://github.com/auto-complete/auto-complete)
 
-This section tells the Helm interface that it should resize itself
-depending on how much content it has to display, but should take up no
-more than 65 percent of the Emacs interface.
+Auto-Complete is an intelligent auto-completion extension for Emacs. It extends the standard Emacs completion interface and provides an environment that allows users to concentrate more on their own work.
 
-    (defun my-helm-sizing ()
-      (helm-autoresize-mode 1)
-      (setq helm-autoresize-max-height 65))
+    (use-package auto-complete
+      :ensure t)
 
-Next we tie all of these pieces together in a setup function. It is
-important to have the `(require 'helm-config)` on top or else the
-configuration will fail.
 
-    (defun my-helm-setup ()
-      (require 'helm-config)
-      (my-helm-fuzzy-settings)
-      (my-helm-keybindings)
-      (my-helm-misc)
-      (my-helm-sizing)
-      (helm-mode 1))
+<a id="orgaa24bbb"></a>
 
-Finally we will check to see if Helm is available before applying any
-of these settings.
+## decide
 
-    (if (require 'helm)
-        (my-helm-setup))
 
+<a id="org18cf88a"></a>
 
-<a id="org3ce7503"></a>
+## docker
 
-## Helm Tramp
 
-Helm TRAMP is used to quickly connect to machines in `~/.ssh/config`
-and Docker containers.
+<a id="orgae3f6ce"></a>
 
-    (defun my-helm-tramp-setup ()
-      (global-set-key (kbd "C-c h h") 'helm-tramp))
+## docker-compose-mode
 
-Enable the helm tramp config if it is installed
 
-    (if (require 'helm-tramp)
-        (my-helm-tramp-setup))
+<a id="org482d144"></a>
 
+## docker-tramp
 
-<a id="org7117b75"></a>
 
-## Magit
+<a id="orge118af1"></a>
 
-Magit is something that, in my opinion, should be shipped by default
-with Emacs. It's the most robust Git interface out there.
+## dockerfile-mode
 
-    (defun my-magit-setup ()
-      (global-set-key (kbd "C-x g") 'magit-status)
-      (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup))
-    
-    (if (require 'magit)
-        (my-magit-setup))
 
+<a id="org108e39b"></a>
 
-<a id="orgd43d629"></a>
+## elpy
 
-## Paredit
 
-This is for better handling of S-expressions in lisp languages.
+<a id="org9930ea1"></a>
 
-    (defun my-paredit-setup ()
-      (autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t)
-      (add-hook 'emacs-lisp-mode-hook       #'enable-paredit-mode)
-      (add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)
-      (add-hook 'ielm-mode-hook             #'enable-paredit-mode)
-      (add-hook 'lisp-mode-hook             #'enable-paredit-mode)
-      (add-hook 'lisp-interaction-mode-hook #'enable-paredit-mode)
-      (add-hook 'scheme-mode-hook           #'enable-paredit-mode)
-      (add-hook 'eshell-mode-hook           #'enable-paredit-mode)
-      (add-hook 'clojure-mode-hook          #'enable-paredit-mode)
-      (add-hook 'cider-repl-mode            #'enable-paredit-mode))
+## flymake-python-pyflakes
 
-If paredit is installed enable the config defined above
 
-    (if (require 'paredit)
-        (my-paredit-setup))
+<a id="orgbb663d9"></a>
 
+## flymake-shellcheck
 
-<a id="orge816189"></a>
 
-## Projectile
+<a id="org07c6cae"></a>
 
-Projectile makes emacs "project aware". This is good if you work on
-multiple code bases and want to navigate between them and within them
-efficiently.
+## gist
 
-    (defun my-projectile-keybindings ()
-      (define-key projectile-mode-map (kbd "C-c a") 'helm-projectile-ag))
-    
-    (defun my-projectile-setup ()
-      (projectile-mode)
-      (projectile-discover-projects-in-directory default-directory)
-      (add-hook 'projectile-mode-hook 'my-projectile-keybindings))
-    
-    (if (require 'projectile)
-        (my-projectile-setup)
-        (my-projectile-keybindings))
 
+<a id="org7244718"></a>
 
-<a id="org387e954"></a>
+## helm
 
-## Neotree
 
-Adds a file tree to the left hand side, like in most IDEs. This only
-works if you are in a project.
+<a id="orge7ebee7"></a>
 
-    (defun neotree-project-dir ()
-      "Open NeoTree using the git root."
-      (interactive)
-      (let ((project-dir (projectile-project-root))
-    	(file-name (buffer-file-name)))
-        (neotree-toggle)
-        (if project-dir
-    	(if (neo-global--window-exists-p)
-    	    (progn
-    	      (neotree-dir project-dir)
-    	      (neotree-find file-name)))
-          (message "Could not find git project root."))))
-    
-    (defun my-neotree-setup ()
-      (global-set-key [f8] 'neotree-project-dir)
-      (setq neo-autorefresh nil)
-      (setq neo-theme 'arrow)
-      (setq projectile-switch-project-action 'neotree-projectile-action)
-      (setq neo-window-width 30))
-    
-    (if (require 'neotree)
-        (my-neotree-setup))
+## helm-ag
 
 
-<a id="orga74ef21"></a>
+<a id="org114cf9a"></a>
 
-## Themeing
+## helm-projectile
 
 
-### [Nord theme](https://www.nordtheme.com/)
+<a id="org68436f2"></a>
 
-Here we do some themeing of emacs. None of this has any functional
-impact, it just make the editor a little nicer to look at.
+## helm-tramp
 
-    (defun my-nord-theme-setup ()
-      (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
-      (load-theme 'nord t))
-    
-    (if (require 'nord-theme)
-        (my-nord-theme-setup))
 
+<a id="orgfc9d29a"></a>
 
-<a id="org624a9c5"></a>
+## htmlize
+
+
+<a id="org1550602"></a>
+
+## magit
+
+
+<a id="org75a45c0"></a>
+
+## markdown-mode
+
+
+<a id="org907b704"></a>
+
+## neotree
+
+
+<a id="org13f66ce"></a>
+
+## nord-theme
+
+
+<a id="org2f596e0"></a>
+
+## paredit
+
+
+<a id="org9bdd934"></a>
+
+## pipenv
+
+
+<a id="org51df495"></a>
+
+## projectile
+
+
+<a id="org813408f"></a>
+
+## vlf
+
+
+<a id="org6b173e9"></a>
 
 # Systemd unit file
 
@@ -949,7 +746,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="org8ffa0d8"></a>
+<a id="org379c49d"></a>
 
 # Nautilus Scripts
 
@@ -963,7 +760,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org1fb39f5"></a>
+<a id="org63eb37e"></a>
 
 # Licensing
 
