@@ -506,7 +506,52 @@ Configurations after this point rely on external packages. Anything
 added from here on out should be designed to fail gracefully in case
 the package is not available.
 
-** Package list
+** Repositories
+Here we initialize the Emacs package management system and configure
+our package repositories.
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+  (setq package-archives
+	'(("gnu" . "https://elpa.gnu.org/packages/")
+	  ("melpa stable" . "https://stable.melpa.org/packages/")
+	  ("melpa" . "https://melpa.org/packages/"))
+	package-archive-priorities
+	'(("melpa stable" . 10)
+	  ("melpa"        . 0)))
+#+END_SRC
+
+** [[https://github.com/jwiegley/use-package#installing-use-package][use-package]]
+We need to configure =use-package= first since it will assist us in
+configuring the remaining packages in the config.
+
+*** Installation
+Next we define a function to determine if we have access to the
+internet.
+#+BEGIN_SRC emacs-lisp
+  (defun internet-up ()
+    (call-process "ping" nil nil nil "-c" "1" "www.google.com"))
+#+END_SRC
+
+If this is the first launch of Emacs and we have access to the
+internet ensure that =use-package= is installed. If we do not have
+access to the internet, or if this is not Emacs first launch then
+nothing is done. Package dependent configuration is handled gracefully
+so if there is no internet there should be no issue.
+#+BEGIN_SRC emacs-lisp
+  (if (file-directory-p (concat user-emacs-directory "elpa"))
+      (package-initialize)
+    (if (internet-up)
+	(package-install use-package)))
+#+END_SRC
+
+*** Configuration
+Now that we know =use-package= is installed we can initialize it for
+use with the remaining packages.
+#+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'use-package))
+#+END_SRC
+
 ** ag
 ** all-the-icons
 ** auto-complete
