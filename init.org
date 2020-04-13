@@ -543,24 +543,40 @@ Once installed we can start up =use-package=.
 #+END_SRC
 
 ** [[https://github.com/Wilfred/ag.el][ag]]
-Ag.el allows you to search using ag from inside Emacs. You can filter by file type, edit results inline, or find files.
+Ag.el allows you to search using ag from inside Emacs. You can filter
+by file type, edit results inline, or find files.
 #+BEGIN_SRC emacs-lisp
   (use-package ag
     :ensure t)
 #+END_SRC
 
 ** [[https://github.com/domtronn/all-the-icons.el][all-the-icons]]
-A utility package to collect various Icon Fonts and propertize them within Emacs.
+A utility package to collect various Icon Fonts and propertize them
+within Emacs.
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons
     :ensure t)
 #+END_SRC
 
 ** [[https://github.com/auto-complete/auto-complete][auto-complete]]
-Auto-Complete is an intelligent auto-completion extension for Emacs. It extends the standard Emacs completion interface and provides an environment that allows users to concentrate more on their own work.
+Auto-Complete is an intelligent auto-completion extension for
+Emacs. It extends the standard Emacs completion interface and provides
+an environment that allows users to concentrate more on their own
+work.
 #+BEGIN_SRC emacs-lisp
   (use-package auto-complete
-    :ensure t)
+    :ensure t
+    :config
+    (ac-config-default)
+    (setq-default ac-sources '(ac-source-filename
+			       ac-source-functions
+			       ac-source-yasnippet
+			       ac-source-variables
+			       ac-source-symbols
+			       ac-source-features
+			       ac-source-abbrev
+			       ac-source-words-in-same-mode-buffers
+			       ac-source-dictionary)))
 #+END_SRC
 
 ** decide
