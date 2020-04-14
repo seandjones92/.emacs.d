@@ -609,6 +609,7 @@ tabs plugin for Emacs with a lot of customization options.
 	 (string-prefix-p "*scratch*" name)
 	 (string-prefix-p "*Messages*" name)
 	 (string-prefix-p "*Help*" name)
+	 (string-prefix-p "*Backtrace*" name)
 	 (string-prefix-p "*epc" name)
 	 (string-prefix-p "*helm" name)
 	 (string-prefix-p "*Compile-Log*" name)
