@@ -664,6 +664,8 @@ Emacs Lisp as well as Python. Elpy is fully documented at [[https://elpy.readthe
     :custom
     (elpy-rpc-python-command "python3")
     (python-shell-interpreter "python3")
+    :init
+    (elpy-enable)
     :config
     (elpy-enable)
     (global-company-mode)
