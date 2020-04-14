@@ -660,6 +660,7 @@ Emacs Lisp as well as Python. Elpy is fully documented at [[https://elpy.readthe
 #+BEGIN_SRC emacs-lisp
   (use-package elpy
     :ensure t
+    :after python
     :bind (:map elpy-mode-map
 		("C-." . elpy-goto-definition-other-window))
     :custom
@@ -668,7 +669,6 @@ Emacs Lisp as well as Python. Elpy is fully documented at [[https://elpy.readthe
     :init
     (elpy-enable)
     :config
-    (elpy-enable)
     (global-company-mode)
     (yas-global-mode)
     (setenv "WORKON_HOME"
