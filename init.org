@@ -445,7 +445,7 @@ and pretty.
   (add-hook 'org-mode-hook 'turn-on-font-lock)
 #+END_SRC
 
-** TODO Mode hooks [0/1]
+** Mode hooks
 
 This is where mode hooks are manipulated.
 
@@ -456,13 +456,10 @@ enabled. For me this makes sense when thinking about regular old
   (add-hook 'text-mode-hook 'toggle-truncate-lines)
 #+END_SRC
 
-- [ ] This isn't working for some reason. Need to find out why
-  =linum-mode= isn't kicking in
 I don't like =global-linum-mode= so I only turn it on for specific
 modes.
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'sh-mode-hook 'linum-mode)
-  (add-hook 'python-mode-hook 'linum-mode)
+  (add-hook 'prog-mode-hook 'linum-mode)
 #+END_SRC
 
 ** Keybindings
