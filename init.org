@@ -687,22 +687,6 @@ Emacs itself.
     :hook sh-mode)
 #+END_SRC
 
-** [[https://github.com/emacsorphanage/git-gutter-fringe][git-gutter-fringe]]
-git-gutter-fringe.el is fringe version of of git-gutter.el.
-
-git-gutter.el does not work with linum-mode but git-gutter-fringe.el
-can work with linum-mode. In contrast, git-gutter-fringe.el does not
-work in tty frame(emacs -nw), but git-gutter.el can work in tty frame.
-
-NOTE: You can not use both git-gutter.el and git-gutter-fringe.el
-#+BEGIN_SRC emacs-lisp
-  (use-package git-gutter-fringe
-    :ensure t
-    :hook (prog-mode . git-gutter-mode)
-    :config
-    (git-gutter-mode))
-#+END_SRC
-
 ** [[https://github.com/emacs-helm/helm][helm]]
 Helm is an Emacs framework for incremental completions and narrowing
 selections.
