@@ -596,6 +596,7 @@ and doesn’t lock up Emacs. It is also more efficient than using tramps
 own encoding methods for moving data between systems.
 #+BEGIN_SRC emacs-lisp
   (use-package dired-rsync
+    :ensure t
     :config
     (bind-key "C-c C-r" 'dired-rsync dired-mode-map))
 #+END_SRC
