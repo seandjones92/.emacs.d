@@ -770,30 +770,48 @@ View Large Files in Emacs
   (use-package vlf
     :ensure t)
 #+END_SRC
+** Themeing
+Themeing configuration should happen last
 
-** [[https://github.com/hlissner/emacs-doom-themes][doom-themes]]
-An opinionated pack of modern color-themes
+*** [[https://github.com/hlissner/emacs-solaire-mode][solaire-mode]]
+solaire-mode is an aesthetic plugin that helps visually distinguish
+file-visiting windows from other types of windows (like popups or
+sidebars) by giving them a slightly different -- often brighter --
+background.
 #+BEGIN_SRC emacs-lisp
-  (use-package doom-themes
+  (use-package solaire-mode
     :ensure t
+    :hook
+    ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+    (minibuffer-setup . solaire-mode-in-minibuffer)
     :config
-    (setq doom-themes-enable-bold t
-	  doom-themes-enable-italic t)
-    (load-theme 'doom-one t)
-    (doom-themes-visual-bell-config)
-    (doom-themes-neotree-config)
-    (doom-themes-org-config))
+    (solaire-global-mode +1)
+    (solaire-mode-swap-bg))
 #+END_SRC
 
-** [[https://github.com/seagle0128/doom-modeline][doom-modeline]]
-A fancy and fast mode-line inspired by minimalism design.
-#+BEGIN_SRC emacs-lisp
-  (use-package doom-modeline
-    :ensure t
-    :init (doom-modeline-mode 1)
-    :config
-    (display-battery-mode 1))
-#+END_SRC
+*** [[https://github.com/hlissner/emacs-doom-themes][doom-themes]]
+ An opinionated pack of modern color-themes
+ #+BEGIN_SRC emacs-lisp
+   (use-package doom-themes
+     :ensure t
+     :config
+     (setq doom-themes-enable-bold t
+	   doom-themes-enable-italic t)
+     (load-theme 'doom-one t)
+     (doom-themes-visual-bell-config)
+     (doom-themes-neotree-config)
+     (doom-themes-org-config))
+ #+END_SRC
+
+*** [[https://github.com/seagle0128/doom-modeline][doom-modeline]]
+ A fancy and fast mode-line inspired by minimalism design.
+ #+BEGIN_SRC emacs-lisp
+   (use-package doom-modeline
+     :ensure t
+     :init (doom-modeline-mode 1)
+     :config
+     (display-battery-mode 1))
+ #+END_SRC
 
 ** COMMENT OLD CONFIG
 *** Packages
