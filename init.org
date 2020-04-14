@@ -713,7 +713,7 @@ git-gutter.el is an Emacs port of the Sublime Text plugin [[https://github.com/j
 #+BEGIN_SRC emacs-lisp
   (use-package git-gutter
     :ensure t
-    :hook prog-mode)
+    :hook (prog-mode . git-gutter-mode))
 #+END_SRC
 
 ** [[https://github.com/emacs-helm/helm][helm]]
