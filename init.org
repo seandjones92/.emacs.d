@@ -596,6 +596,7 @@ tabs plugin for Emacs with a lot of customization options.
     (prog-mode . centaur-tabs-mode)
     (neotree-mode . centaur-tabs-local-mode)
     (dired-mode . centaur-tabs-local-mode)
+    (eshell-mode . centaur-tabs-local-mode)
     :config
     (centaur-tabs-headline-match)
     (setq centaur-tabs-style "bar")
@@ -609,6 +610,7 @@ tabs plugin for Emacs with a lot of customization options.
 	 (string-prefix-p "*Help*" name)
 	 (string-prefix-p "*Backtrace*" name)
 	 (string-prefix-p "*Find*" name)
+	 (string-prefix-p "*Pipenv*" name)
 	 (string-prefix-p "*epc" name)
 	 (string-prefix-p "*helm" name)
 	 (string-prefix-p "*Compile-Log*" name)
@@ -699,7 +701,6 @@ git-gutter.el is an Emacs port of the Sublime Text plugin [[https://github.com/j
     :ensure t
     :hook prog-mode)
 #+END_SRC
-
 
 ** [[https://github.com/emacs-helm/helm][helm]]
 Helm is an Emacs framework for incremental completions and narrowing
