@@ -179,6 +179,12 @@ This change makes =dired= list files with "human readable" size instead of just 
   (setq dired-listing-switches "-lh")
 #+END_SRC
 
+This disables backup and autosave files.
+#+BEGIN_SRC emacs-lisp
+  (setq auto-save-default nil)
+  (setq make-backup-files nil)
+#+END_SRC
+
 ** TODO Home screen [0/5]
 - [ ] create start page that lists projectile projects and their git status
 - [ ] it should also show the ~/.emacs.d git status
