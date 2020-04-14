@@ -635,9 +635,7 @@ Emacs itself.
     :hook sh-mode)
 #+END_SRC
 
-** TODO [[https://github.com/emacsorphanage/git-gutter-fringe][git-gutter-fringe]] [0/1]
-- [ ] figure out if this can be enabled globally, otherwise add some
-  hooks so it kicks in automatically
+** [[https://github.com/emacsorphanage/git-gutter-fringe][git-gutter-fringe]]
 git-gutter-fringe.el is fringe version of of git-gutter.el.
 
 git-gutter.el does not work with linum-mode but git-gutter-fringe.el
@@ -648,6 +646,7 @@ NOTE: You can not use both git-gutter.el and git-gutter-fringe.el
 #+BEGIN_SRC emacs-lisp
   (use-package git-gutter-fringe
     :ensure t
+    :hook (prog-mode . git-gutter-mode)
     :config
     (git-gutter-mode))
 #+END_SRC
