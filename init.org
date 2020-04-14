@@ -458,7 +458,7 @@ and pretty.
   (add-hook 'org-mode-hook 'turn-on-font-lock)
 #+END_SRC
 
-** Mode hooks
+** TODO Mode hooks [0/1]
 
 This is where mode hooks are manipulated.
 
@@ -469,12 +469,13 @@ enabled. For me this makes sense when thinking about regular old
   (add-hook 'text-mode-hook 'toggle-truncate-lines)
 #+END_SRC
 
-I don't like =global-linum-mode= so I only turn it on for specific
-modes.
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'prog-mode-hook 'linum-mode)
-  (add-hook 'prog-mode-hook 'hl-line-mode)
-#+END_SRC
+- [ ] Find a better way to do line numbers and highlighting. The config below tends to break
+# I don't like =global-linum-mode= so I only turn it on for specific
+# modes.
+# #+BEGIN_SRC emacs-lisp
+#   (add-hook 'prog-mode-hook 'linum-mode)
+#   (add-hook 'prog-mode-hook 'hl-line-mode)
+# #+END_SRC
 
 ** Keybindings
 
