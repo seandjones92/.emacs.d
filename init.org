@@ -458,7 +458,7 @@ and pretty.
   (add-hook 'org-mode-hook 'turn-on-font-lock)
 #+END_SRC
 
-** TODO Mode hooks [0/1]
+** Mode hooks
 
 This is where mode hooks are manipulated.
 
@@ -468,14 +468,6 @@ enabled. For me this makes sense when thinking about regular old
 #+BEGIN_SRC emacs-lisp
   (add-hook 'text-mode-hook 'toggle-truncate-lines)
 #+END_SRC
-
-- [ ] Find a better way to do line numbers and highlighting. The config below tends to break
-# I don't like =global-linum-mode= so I only turn it on for specific
-# modes.
-# #+BEGIN_SRC emacs-lisp
-#   (add-hook 'prog-mode-hook 'linum-mode)
-#   (add-hook 'prog-mode-hook 'hl-line-mode)
-# #+END_SRC
 
 ** Keybindings
 
@@ -772,6 +764,16 @@ Tramp helm interface for ssh server and docker and vagrant.
   (use-package helm-tramp
     :ensure t
     :bind ("C-c h h" . helm-tramp))
+#+END_SRC
+
+** [[https://elpa.gnu.org/packages/nlinum.html][nlinum]]
+Show line numbers in the margin.
+#+BEGIN_SRC emacs-lisp
+  (use-package nlinum
+    :ensure t
+    :hook (prog-mode . nlinum-mode)
+    :custom
+    (nlinum-highlight-current-line 1))
 #+END_SRC
 
 ** [[https://github.com/magit/magit][magit]]
