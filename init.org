@@ -752,16 +752,6 @@ Tramp helm interface for ssh server and docker and vagrant.
     :bind ("C-c h h" . helm-tramp))
 #+END_SRC
 
-** [[https://elpa.gnu.org/packages/nlinum.html][nlinum]]
-Show line numbers in the margin.
-#+BEGIN_SRC emacs-lisp
-  (use-package nlinum
-    :ensure t
-    :hook (prog-mode . nlinum-mode)
-    :custom
-    (nlinum-highlight-current-line 1))
-#+END_SRC
-
 ** [[https://github.com/magit/magit][magit]]
 Magit is an interface to the version control system Git, implemented
 as an Emacs package.
