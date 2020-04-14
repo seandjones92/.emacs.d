@@ -588,6 +588,18 @@ work.
 			       ac-source-dictionary)))
 #+END_SRC
 
+** [[https://github.com/stsquad/dired-rsync][dired-rsync]]
+This package adds a single command =dired-rsync= which allows the user
+to copy marked files in a =dired= buffer via rsync. This is useful,
+especially for large files, because the copy happens in the background
+and doesn’t lock up Emacs. It is also more efficient than using tramps
+own encoding methods for moving data between systems.
+#+BEGIN_SRC emacs-lisp
+  (use-package dired-rsync
+    :config
+    (bind-key "C-c C-r" 'dired-rsync dired-mode-map))
+#+END_SRC
+
 ** [[https://github.com/Silex/docker.el][docker]]
 Supports docker containers, images, volumes, networks, docker-machine
 and docker-compose.
