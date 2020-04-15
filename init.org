@@ -605,6 +605,7 @@ tabs plugin for Emacs with a lot of customization options.
 	 (string-prefix-p "*Backtrace*" name)
 	 (string-prefix-p "*dashboard*" name)
 	 (string-prefix-p "*Find*" name)
+	 (string-prefix-p "COMMIT_EDITMSG" name)
 	 (string-prefix-p "*Pipenv*" name)
 	 (string-prefix-p "*Python*" name)
 	 (string-prefix-p "*epc" name)
