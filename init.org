@@ -847,6 +847,11 @@ An extensible emacs startup screen showing you what’s most important.
 #+BEGIN_SRC emacs-lisp
   (use-package dashboard
     :ensure t
+    :custom
+    (dashboard-set-heading-icons t)
+    (dashboard-set-file-icons t)
+    (dashboard-startup-banner 'logo)
+    (dashboard-center-content t)
     :config
     (dashboard-setup-startup-hook))
 #+END_SRC
