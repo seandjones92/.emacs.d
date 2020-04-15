@@ -603,6 +603,7 @@ tabs plugin for Emacs with a lot of customization options.
 	 (string-prefix-p "*Messages*" name)
 	 (string-prefix-p "*Help*" name)
 	 (string-prefix-p "*Backtrace*" name)
+	 (string-prefix-p "*dashboard*" name)
 	 (string-prefix-p "*Find*" name)
 	 (string-prefix-p "*Pipenv*" name)
 	 (string-prefix-p "*Python*" name)
@@ -842,11 +843,7 @@ This is needed for the dashboard configuration to work.
     :ensure t)
 #+END_SRC
 
-*** TODO [[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]] [0/4]
-- [ ] projects aren't showing up in dashboard
-- [ ] figure out how to add bookmarks
-- [ ] figure out how to integrate agenda
-- [ ] figure out what registers are
+*** [[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]]
 
 An extensible emacs startup screen showing you what’s most important.
 #+BEGIN_SRC emacs-lisp
@@ -860,8 +857,7 @@ An extensible emacs startup screen showing you what’s most important.
     (dashboard-items '((recents . 5)
 		       (bookmarks . 5)
 		       (projects . 5)
-		       (agenda . 5)
-		       (registers . 5)))
+		       (agenda . 5)))
     :config
     (dashboard-setup-startup-hook))
 #+END_SRC
