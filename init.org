@@ -185,13 +185,7 @@ This disables backup and autosave files.
   (setq make-backup-files nil)
 #+END_SRC
 
-** TODO Home screen [0/5]
-- [ ] create start page that lists projectile projects and their git status
-- [ ] it should also show the ~/.emacs.d git status
-- [ ] have it list any TODO items in ~/.emacs.d/init.org
-- [ ] have it show if any packages need updating
-- [ ] have it show the startup time
-
+** COMMENT Home screen
 Use =*scratch*= as initial screen. Also, modify the message at the top
 of the buffer.
 #+BEGIN_SRC emacs-lisp
@@ -837,6 +831,25 @@ View Large Files in Emacs
 #+END_SRC
 ** Themeing
 Themeing configuration should happen last
+
+*** [[https://github.com/purcell/page-break-lines][page-break-lines]]
+This Emacs library provides a global mode which displays ugly form
+feed characters as tidy horizontal rules.
+
+This is needed for the dashboard configuration to work.
+#+BEGIN_SRC emacs-lisp
+  (use-package page-break-lines
+    :ensure t)
+#+END_SRC
+
+*** [[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]]
+An extensible emacs startup screen showing you what’s most important.
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :ensure t
+    :config
+    (dashboard-setup-startup-hook))
+#+END_SRC
 
 *** [[https://github.com/hlissner/emacs-solaire-mode][solaire-mode]]
 solaire-mode is an aesthetic plugin that helps visually distinguish
