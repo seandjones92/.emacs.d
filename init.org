@@ -603,6 +603,7 @@ tabs plugin for Emacs with a lot of customization options.
     (neotree-mode . centaur-tabs-local-mode)
     (dired-mode . centaur-tabs-local-mode)
     (eshell-mode . centaur-tabs-local-mode)
+    (org-mode . centaur-tabs-local-mode)
     :config
     (centaur-tabs-headline-match)
     (setq centaur-tabs-style "bar")
