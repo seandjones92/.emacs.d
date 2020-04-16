@@ -1,48 +1,48 @@
 
 # Table of Contents
 
-1.  [About](#orgf2fc354)
-2.  [Installation](#orgc18735b)
-3.  [Base Config](#org3a39e6c)
-    1.  [Meta](#org18c8283)
-    2.  [Base defaults](#org32059db)
-    3.  [Functions](#orgd5fd083)
-    4.  [Org Mode](#orgcf856f9)
-    5.  [Mode hooks](#orgb6c2ab1)
-    6.  [Keybindings](#orgd99f51f)
-4.  [Packages](#orgd2e9bea)
-    1.  [Repositories](#org8044e86)
-    2.  [use-package](#org26cb486)
-    3.  [ag](#org225abe4)
-    4.  [all-the-icons](#org64a8b7e)
-    5.  [auto-complete](#org880a489)
-    6.  [centaur-tabs](#orgf3558af)
-    7.  [dired-rsync](#orgb598531)
-    8.  [docker](#orgc1e0391)
-    9.  [dockerfile-mode](#org1d35bf6)
-    10. [elpy](#org6b948e9)
-    11. [emojify](#org3c0d8bc)
-    12. [flymake-python-pyflakes](#orgb6be170)
-    13. [flymake-shellcheck](#orgd2b837e)
-    14. [git-gutter](#org43bea79)
-    15. [helm](#org93d315c)
-    16. [helm-ag](#org19e236c)
-    17. [helm-projectile](#org3239627)
-    18. [helm-tramp](#org05a20bd)
-    19. [magit](#org455321e)
-    20. [markdown-mode](#orga6ff42d)
-    21. [neotree](#orgd25bf94)
-    22. [pipenv](#orgdf5c42d)
-    23. [projectile](#org4e00dd3)
-    24. [vlf](#org28c7fa6)
-    25. [Themeing](#org724fb9b)
-5.  [Systemd unit file](#org7ae5b37)
-6.  [Nautilus Scripts](#orgc56d69a)
-7.  [Licensing](#org66ab24d)
+1.  [About](#orgb3d0b2c)
+2.  [Installation](#org3ed6334)
+3.  [Base Config](#org23cbe48)
+    1.  [Meta](#org7ac5864)
+    2.  [Base defaults](#org8c5fd83)
+    3.  [Functions](#orgae9c073)
+    4.  [Org Mode](#org9f22f17)
+    5.  [Mode hooks](#org671e68b)
+    6.  [Keybindings](#org1e1ea9b)
+4.  [Packages](#org159eae4)
+    1.  [Repositories](#orge165308)
+    2.  [use-package](#org0e07c3e)
+    3.  [ag](#orgf95f13b)
+    4.  [all-the-icons](#org596e86d)
+    5.  [auto-complete](#org75c789b)
+    6.  [centaur-tabs](#org18effe5)
+    7.  [dired-rsync](#org4dbcc5a)
+    8.  [docker](#org0cef8bb)
+    9.  [dockerfile-mode](#org4e91824)
+    10. [elpy](#org41cba37)
+    11. [emojify](#org81124f5)
+    12. [flymake-python-pyflakes](#org1ac0ba6)
+    13. [flymake-shellcheck](#org63ce35d)
+    14. [git-gutter](#orgc05a643)
+    15. [helm](#orgb0def23)
+    16. [helm-ag](#org3b34bde)
+    17. [helm-projectile](#org11974c3)
+    18. [helm-tramp](#org2df39dd)
+    19. [magit](#org544571a)
+    20. [markdown-mode](#orgc2d0608)
+    21. [neotree](#org70388e7)
+    22. [pipenv](#org2c13662)
+    23. [projectile](#org04cacdc)
+    24. [vlf](#orgd4ea4d4)
+    25. [Themeing](#orga60576d)
+5.  [Systemd unit file](#orgaf49b2e)
+6.  [Nautilus Scripts](#org5b01998)
+7.  [Licensing](#org473d6f8)
 
 
 
-<a id="orgf2fc354"></a>
+<a id="orgb3d0b2c"></a>
 
 # About
 
@@ -51,7 +51,7 @@ that the configuration should serve as it's own plain english
 documentation.
 
 
-<a id="orgc18735b"></a>
+<a id="org3ed6334"></a>
 
 # Installation
 
@@ -70,7 +70,7 @@ If you want to make changes to the repo-version of init.el start tracking again 
     git update-index --no-assume-unchanged init.el
 
 
-<a id="org3a39e6c"></a>
+<a id="org23cbe48"></a>
 
 # Base Config
 
@@ -80,7 +80,7 @@ standalone Emacs installation with no internet connection then it does
 not belong here.
 
 
-<a id="org18c8283"></a>
+<a id="org7ac5864"></a>
 
 ## Meta
 
@@ -151,7 +151,7 @@ and therefore not in this configuration) put it in
            (load-file private-file)))))
 
 
-<a id="org32059db"></a>
+<a id="org8c5fd83"></a>
 
 ## Base defaults
 
@@ -219,7 +219,7 @@ This disables backup and autosave files.
     (setq make-backup-files nil)
 
 
-<a id="orgd5fd083"></a>
+<a id="orgae9c073"></a>
 
 ## Functions
 
@@ -447,7 +447,7 @@ This function will take you directly to the scratch page.
       (switch-to-buffer "*scratch*"))
 
 
-<a id="orgcf856f9"></a>
+<a id="org9f22f17"></a>
 
 ## Org Mode
 
@@ -480,7 +480,7 @@ org agenda to my phone.
     (setq org-archive-location "~/Dropbox/archive.org::")
 
 
-<a id="orgb6c2ab1"></a>
+<a id="org671e68b"></a>
 
 ## Mode hooks
 
@@ -497,7 +497,7 @@ This sets up line numbers for programming.
     (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 
-<a id="orgd99f51f"></a>
+<a id="org1e1ea9b"></a>
 
 ## Keybindings
 
@@ -531,7 +531,7 @@ Enable keybindings that are disabled by default:
     (put 'narrow-to-defun 'disabled nil)
 
 
-<a id="orgd2e9bea"></a>
+<a id="org159eae4"></a>
 
 # Packages
 
@@ -540,7 +540,7 @@ added from here on out should be designed to fail gracefully in case
 the package is not available.
 
 
-<a id="org8044e86"></a>
+<a id="orge165308"></a>
 
 ## Repositories
 
@@ -563,7 +563,7 @@ and get the latest package metadata from the repos.
     (unless package-archive-contents (package-refresh-contents))
 
 
-<a id="org26cb486"></a>
+<a id="org0e07c3e"></a>
 
 ## [use-package](https://github.com/jwiegley/use-package)
 
@@ -581,7 +581,7 @@ Once installed we can start up `use-package`.
     (require'bind-key)
 
 
-<a id="org225abe4"></a>
+<a id="orgf95f13b"></a>
 
 ## [ag](https://github.com/Wilfred/ag.el)
 
@@ -592,7 +592,7 @@ by file type, edit results inline, or find files.
       :ensure t)
 
 
-<a id="org64a8b7e"></a>
+<a id="org596e86d"></a>
 
 ## [all-the-icons](https://github.com/domtronn/all-the-icons.el)
 
@@ -603,7 +603,7 @@ within Emacs.
       :ensure t)
 
 
-<a id="org880a489"></a>
+<a id="org75c789b"></a>
 
 ## [auto-complete](https://github.com/auto-complete/auto-complete)
 
@@ -627,7 +627,7 @@ work.
     			     ac-source-dictionary)))
 
 
-<a id="orgf3558af"></a>
+<a id="org18effe5"></a>
 
 ## [centaur-tabs](https://github.com/ema2159/centaur-tabs)
 
@@ -667,7 +667,7 @@ tabs plugin for Emacs with a lot of customization options.
            ))))
 
 
-<a id="orgb598531"></a>
+<a id="org4dbcc5a"></a>
 
 ## [dired-rsync](https://github.com/stsquad/dired-rsync)
 
@@ -683,7 +683,7 @@ own encoding methods for moving data between systems.
       (bind-key "C-c C-r" 'dired-rsync dired-mode-map))
 
 
-<a id="orgc1e0391"></a>
+<a id="org0cef8bb"></a>
 
 ## [docker](https://github.com/Silex/docker.el)
 
@@ -695,7 +695,7 @@ and docker-compose.
       :bind ("C-c d" . docker))
 
 
-<a id="org1d35bf6"></a>
+<a id="org4e91824"></a>
 
 ## [dockerfile-mode](https://github.com/spotify/dockerfile-mode)
 
@@ -708,7 +708,7 @@ directly (C-c C-b) from the buffer.
       (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode)))
 
 
-<a id="org6b948e9"></a>
+<a id="org41cba37"></a>
 
 ## [elpy](https://github.com/jorgenschaefer/elpy)
 
@@ -733,7 +733,7 @@ Emacs Lisp as well as Python. Elpy is fully documented at [Readthedocs](https://
     	  (concat (getenv "HOME") "/.local/share/virtualenvs")))
 
 
-<a id="org3c0d8bc"></a>
+<a id="org81124f5"></a>
 
 ## [emojify](https://github.com/iqbalansari/emacs-emojify)
 
@@ -747,7 +747,7 @@ as efficient as possible, while also providing a lot of flexibility
       (add-hook 'after-init-hook #'global-emojify-mode))
 
 
-<a id="orgb6be170"></a>
+<a id="org1ac0ba6"></a>
 
 ## [flymake-python-pyflakes](https://github.com/purcell/flymake-python-pyflakes)
 
@@ -761,7 +761,7 @@ pyflakes or flake8.
       (flymake-python-pyflakes-executable "flake8"))
 
 
-<a id="orgd2b837e"></a>
+<a id="org63ce35d"></a>
 
 ## [flymake-shellcheck](https://github.com/federicotdn/flymake-shellcheck)
 
@@ -774,7 +774,7 @@ Emacs itself.
       :hook sh-mode)
 
 
-<a id="org43bea79"></a>
+<a id="orgc05a643"></a>
 
 ## [git-gutter](https://github.com/emacsorphanage/git-gutter)
 
@@ -785,7 +785,7 @@ git-gutter.el is an Emacs port of the Sublime Text plugin [GitGutter](https://gi
       :hook (prog-mode . git-gutter-mode))
 
 
-<a id="org93d315c"></a>
+<a id="orgb0def23"></a>
 
 ## [helm](https://github.com/emacs-helm/helm)
 
@@ -829,7 +829,7 @@ selections.
     	      ([tab] . helm-execute-persistent-action)))
 
 
-<a id="org19e236c"></a>
+<a id="org3b34bde"></a>
 
 ## [helm-ag](https://github.com/emacsorphanage/helm-ag)
 
@@ -839,7 +839,7 @@ helm-ag.el provides interfaces of [The Silver Searcher](https://github.com/ggree
       :ensure t)
 
 
-<a id="org3239627"></a>
+<a id="org11974c3"></a>
 
 ## [helm-projectile](https://github.com/bbatsov/helm-projectile)
 
@@ -851,7 +851,7 @@ Helm UI for Projectile
     	 ("C-c p" . helm-projectile)))
 
 
-<a id="org05a20bd"></a>
+<a id="org2df39dd"></a>
 
 ## [helm-tramp](https://github.com/masasam/emacs-helm-tramp)
 
@@ -862,7 +862,7 @@ Tramp helm interface for ssh server and docker and vagrant.
       :bind ("C-c h h" . helm-tramp))
 
 
-<a id="org455321e"></a>
+<a id="org544571a"></a>
 
 ## [magit](https://github.com/magit/magit)
 
@@ -875,7 +875,7 @@ as an Emacs package.
     	 ("C-x M-g" . magit-dispatch-popup)))
 
 
-<a id="orga6ff42d"></a>
+<a id="orgc2d0608"></a>
 
 ## [markdown-mode](https://github.com/defunkt/markdown-mode)
 
@@ -885,7 +885,7 @@ markdown-mode is a major mode for editing Markdown-formatted text.
       :ensure t)
 
 
-<a id="orgd25bf94"></a>
+<a id="org70388e7"></a>
 
 ## [neotree](https://github.com/jaypei/emacs-neotree)
 
@@ -900,7 +900,7 @@ A Emacs tree plugin like NerdTree for Vim.
       (projectile-switch-project-action 'neotree-projectile-action))
 
 
-<a id="orgdf5c42d"></a>
+<a id="org2c13662"></a>
 
 ## [pipenv](https://github.com/pwalsh/pipenv.el)
 
@@ -910,7 +910,7 @@ A Pipenv porcelain inside Emacs.
       :ensure t)
 
 
-<a id="org4e00dd3"></a>
+<a id="org04cacdc"></a>
 
 ## [projectile](https://github.com/bbatsov/projectile)
 
@@ -925,7 +925,7 @@ introducing external dependencies (when feasible).
       (projectile-discover-projects-in-directory "~/Code"))
 
 
-<a id="org28c7fa6"></a>
+<a id="orgd4ea4d4"></a>
 
 ## [vlf](https://github.com/m00natic/vlfi)
 
@@ -935,7 +935,7 @@ View Large Files in Emacs
       :ensure t)
 
 
-<a id="org724fb9b"></a>
+<a id="orga60576d"></a>
 
 ## Themeing
 
@@ -965,7 +965,6 @@ An extensible emacs startup screen showing you what’s most important.
       (dashboard-startup-banner 'logo)
       (dashboard-center-content t)
       (dashboard-items '((agenda . 5)
-    		     (projects . 5)
     		     (recents . 5)))
       :config
       (dashboard-setup-startup-hook))
@@ -1014,7 +1013,7 @@ A fancy and fast mode-line inspired by minimalism design.
       (display-battery-mode 1))
 
 
-<a id="org7ae5b37"></a>
+<a id="orgaf49b2e"></a>
 
 # Systemd unit file
 
@@ -1042,7 +1041,7 @@ To launch a client map a keyboard shortcut to:
     /usr/bin/emacsclient -c -e "(progn (raise-frame) (x-focus-frame (selected-frame)))"
 
 
-<a id="orgc56d69a"></a>
+<a id="org5b01998"></a>
 
 # Nautilus Scripts
 
@@ -1056,7 +1055,7 @@ executable.
     emacsclient -c "$@"
 
 
-<a id="org66ab24d"></a>
+<a id="org473d6f8"></a>
 
 # Licensing
 

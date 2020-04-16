@@ -868,7 +868,6 @@ An extensible emacs startup screen showing you what’s most important.
     (dashboard-startup-banner 'logo)
     (dashboard-center-content t)
     (dashboard-items '((agenda . 5)
-		       (projects . 5)
 		       (recents . 5)))
     :config
     (dashboard-setup-startup-hook))
