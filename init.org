@@ -457,6 +457,10 @@ org agenda to my phone.
 #+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-c o a") 'org-agenda)
   (setq org-agenda-files '("~/Dropbox"))
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (setq org-default-notes-file "~/Dropbox/Todo.org")
+  (global-set-key (kbd "C-c C-o")
+		  (lambda () (interactive) (find-file "~/Dropbox/Todo.org")))
 #+END_SRC
 
 ** Mode hooks
@@ -863,7 +867,6 @@ An extensible emacs startup screen showing you what’s most important.
     (dashboard-startup-banner 'logo)
     (dashboard-center-content t)
     (dashboard-items '((agenda . 5)
-		       (bookmarks . 5)
 		       (projects . 5)
 		       (recents . 5)))
     :config
