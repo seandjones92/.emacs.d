@@ -461,6 +461,7 @@ org agenda to my phone.
   (setq org-default-notes-file "~/Dropbox/Todo.org")
   (global-set-key (kbd "C-c C-o")
 		  (lambda () (interactive) (find-file "~/Dropbox/Todo.org")))
+  (setq org-archive-location "~/Dropbox/archive.org::")
 #+END_SRC
 
 ** Mode hooks
