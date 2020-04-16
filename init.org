@@ -592,44 +592,6 @@ work.
 			       ac-source-dictionary)))
 #+END_SRC
 
-** [[https://github.com/ema2159/centaur-tabs][centaur-tabs]]
-This projects aims to become an aesthetic, functional and efficient
-tabs plugin for Emacs with a lot of customization options.
-#+BEGIN_SRC emacs-lisp
-  (use-package centaur-tabs
-    :ensure t
-    :hook
-    (prog-mode . centaur-tabs-mode)
-    (neotree-mode . centaur-tabs-local-mode)
-    (dired-mode . centaur-tabs-local-mode)
-    (eshell-mode . centaur-tabs-local-mode)
-    (org-mode . centaur-tabs-local-mode)
-    :config
-    (centaur-tabs-headline-match)
-    (setq centaur-tabs-style "bar")
-    (setq centaur-tabs-set-icons t)
-    (setq centaur-tabs-set-bar 'left)
-    (defun centaur-tabs-hide-tab (x)
-      (let ((name (format "%s" x)))
-	(or
-	 (string-prefix-p "*scratch*" name)
-	 (string-prefix-p "*Messages*" name)
-	 (string-prefix-p "*Help*" name)
-	 (string-prefix-p "*Backtrace*" name)
-	 (string-prefix-p "*dashboard*" name)
-	 (string-prefix-p "*Find*" name)
-	 (string-prefix-p "COMMIT_EDITMSG" name)
-	 (string-prefix-p "*Pipenv*" name)
-	 (string-prefix-p "*Python*" name)
-	 (string-prefix-p "*epc" name)
-	 (string-prefix-p "*helm" name)
-	 (string-prefix-p "*Compile-Log*" name)
-	 (string-prefix-p "*lsp" name)
-	 (and (string-prefix-p "magit" name)
-	      (not (file-name-extension name)))
-	 ))))
-#+END_SRC
-
 ** [[https://github.com/stsquad/dired-rsync][dired-rsync]]
 This package adds a single command =dired-rsync= which allows the user
 to copy marked files in a =dired= buffer via rsync. This is useful,
