@@ -812,7 +812,8 @@ A Emacs tree plugin like NerdTree for Vim.
 #+BEGIN_SRC emacs-lisp
   (use-package neotree
     :ensure t
-    :bind ([f8] . neotree-toggle)
+    :bind (([f8] . neotree-toggle)
+	   ([f7] . neotree-projectile-action))
     :custom
     (neo-autorefresh nil)
     (neo-theme 'icons)
