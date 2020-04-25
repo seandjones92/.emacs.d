@@ -752,6 +752,31 @@ Tramp helm interface for ssh server and docker and vagrant.
     :bind ("C-c h h" . helm-tramp))
 #+END_SRC
 
+** [[https://emacs-lsp.github.io/lsp-dart/][lsp-dart]]
+Emacs Dart IDE using lsp-mode to connect to Dart Analysis Server.
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-mode
+    :ensure t
+    :config
+    (setenv "PATH"
+	    (concat
+	     (concat (getenv "HOME") "/Code/flutter/bin" ":")
+	     (getenv "PATH"))))
+
+  (use-package lsp-dart
+    :ensure t
+    :hook (dart-mode . lsp))
+
+  (use-package lsp-ui :ensure t)
+  (use-package company-capf :ensure t)
+
+
+  (setenv "PATH"
+	  (concat
+	   (concat (getenv "HOME") "/Code/flutter/bin" ":")
+	   (getenv "PATH")))
+#+END_SRC
+
 ** [[https://github.com/magit/magit][magit]]
 Magit is an interface to the version control system Git, implemented
 as an Emacs package.
