@@ -755,26 +755,6 @@ Tramp helm interface for ssh server and docker and vagrant.
 ** [[https://emacs-lsp.github.io/lsp-dart/][lsp-dart]]
 Emacs Dart IDE using lsp-mode to connect to Dart Analysis Server.
 #+BEGIN_SRC emacs-lisp
-  (use-package lsp-mode
-    :ensure t
-    :config
-    (setenv "PATH"
-	    (concat
-	     (concat (getenv "HOME") "/Code/flutter/bin" ":")
-	     (getenv "PATH"))))
-
-  (use-package lsp-dart
-    :ensure t
-    :hook (dart-mode . lsp))
-
-  (use-package lsp-ui :ensure t)
-  (use-package company-capf :ensure t)
-
-
-  (setenv "PATH"
-	  (concat
-	   (concat (getenv "HOME") "/Code/flutter/bin" ":")
-	   (getenv "PATH")))
 #+END_SRC
 
 ** [[https://github.com/magit/magit][magit]]
