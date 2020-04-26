@@ -807,6 +807,16 @@ View Large Files in Emacs
   (use-package vlf
     :ensure t)
 #+END_SRC
+
+** [[https://github.com/justbur/emacs-which-key/][which-key]]
+Emacs package that displays available keybindings in popup
+#+BEGIN_SRC emacs-lisp
+  (use-package which-key
+    :ensure t
+    :init
+    (which-key-mode))
+#+END_SRC
+
 ** Themeing
 Themeing configuration should happen last
 
