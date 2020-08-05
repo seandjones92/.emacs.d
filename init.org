@@ -452,18 +452,6 @@ and pretty.
   (add-hook 'org-mode-hook 'turn-on-font-lock)
 #+END_SRC
 
-Here we configure the org agenda. I use [[http://www.orgzly.com/][orgzly]] and [[https://syncthing.net/][syncthing]] to sync my
-org agenda to my phone.
-#+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-c o a") 'org-agenda)
-  (setq org-agenda-files '("~/OrgAgenda"))
-  (global-set-key (kbd "C-c c") 'org-capture)
-  (setq org-default-notes-file "~/OrgAgenda/Todo.org")
-  (global-set-key (kbd "C-c C-o")
-		  (lambda () (interactive) (find-file "~/OrgAgenda/Todo.org")))
-  (setq org-archive-location "~/OrgAgenda/archive.org::")
-#+END_SRC
-
 ** Mode hooks
 
 This is where mode hooks are manipulated.
