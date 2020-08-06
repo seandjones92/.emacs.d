@@ -829,9 +829,7 @@ An extensible emacs startup screen showing you what’s most important.
     (dashboard-set-file-icons t)
     (dashboard-startup-banner 'logo)
     (dashboard-center-content t)
-    (show-week-agenda-p t)
-    (dashboard-items '((agenda . 5)
-		       (bookmarks . 5)
+    (dashboard-items '((bookmarks . 5)
 		       (recents . 5)
 		       (projects . 10)))
     :config
