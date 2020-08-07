@@ -654,7 +654,7 @@ general, Evil is extensible in Emacs Lisp.
 #+BEGIN_SRC emacs-lisp
   (use-package evil
     :ensure t
-    :config
+    :init
     (evil-mode))
 #+END_SRC
 
