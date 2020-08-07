@@ -646,6 +646,18 @@ as efficient as possible, while also providing a lot of flexibility
     (add-hook 'after-init-hook #'global-emojify-mode))
 #+END_SRC
 
+** [[https://github.com/emacs-evil/evil][evil]]
+Evil is an extensible vi layer for Emacs. It emulates the main
+features of Vim, [1] turning Emacs into a modal editor. Like Emacs in
+general, Evil is extensible in Emacs Lisp.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package evil
+    :ensure t
+    :config
+    (evil-mode 1))
+#+END_SRC
+
 ** [[https://github.com/purcell/flymake-python-pyflakes][flymake-python-pyflakes]]
 An Emacs flymake handler for syntax-checking Python source code using
 pyflakes or flake8.
