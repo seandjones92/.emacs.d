@@ -655,7 +655,7 @@ general, Evil is extensible in Emacs Lisp.
   (use-package evil
     :ensure t
     :config
-    (evil-mode 1))
+    (evil-mode))
 #+END_SRC
 
 ** [[https://github.com/purcell/flymake-python-pyflakes][flymake-python-pyflakes]]
